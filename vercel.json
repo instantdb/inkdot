@@ -1,0 +1,3 @@
+{
+  "buildCommand": "bash scripts/setup-preview-db.sh && pnpm build"
+}
