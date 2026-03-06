@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Pumpkin body -->
+    <ellipse cx="400" cy="360" rx="220" ry="180"/>
+    <!-- Pumpkin ribs -->
+    <path d="M400 180 C380 280 380 440 400 540" fill="none"/>
+    <path d="M300 200 C310 300 310 420 300 520" fill="none"/>
+    <path d="M500 200 C490 300 490 420 500 520" fill="none"/>
+    <path d="M220 260 C240 340 240 400 220 470" fill="none"/>
+    <path d="M580 260 C560 340 560 400 580 470" fill="none"/>
+    <!-- Stem -->
+    <path d="M380 185 C375 140 385 100 410 90 C430 85 440 100 435 130 C430 155 420 180 420 185" fill-opacity="0.08"/>
+    <!-- Vine -->
+    <path d="M415 100 C440 80 470 75 490 90 C500 100 490 110 475 105" fill="none"/>
+    <!-- Left eye - triangle -->
+    <path d="M310 300 L340 250 L370 300 Z" fill-opacity="0.08"/>
+    <!-- Right eye - triangle -->
+    <path d="M430 300 L460 250 L490 300 Z" fill-opacity="0.08"/>
+    <!-- Nose - triangle -->
+    <path d="M385 340 L400 310 L415 340 Z" fill-opacity="0.08"/>
+    <!-- Mouth - jagged -->
+    <path d="M290 400 L320 380 L350 410 L380 380 L400 400 L420 380 L450 410 L480 380 L510 400 L490 430 L460 410 L430 440 L400 420 L370 440 L340 410 L310 430 Z" fill-opacity="0.08"/>
+  </g>
+</svg>

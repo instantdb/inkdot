@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Main whale body - proper whale shape with arched back -->
+  <path d="M160 320 Q180 240 260 210 Q340 190 420 200 Q500 210 560 240 Q620 270 650 310 Q670 340 665 370 Q655 400 620 420 Q560 450 480 460 Q400 465 320 455 Q240 440 190 410 Q165 390 160 360Z" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Lower jaw / mouth line -->
+  <path d="M160 340 Q180 360 220 370 Q280 380 340 375" fill="none" stroke-width="2" opacity="0.3"/>
+  <!-- Mouth opening -->
+  <path d="M160 320 Q155 330 160 340" stroke-width="2"/>
+
+  <!-- Eye -->
+  <circle cx="210" cy="300" r="10" fill="#888" fill-opacity="0.08"/>
+  <circle cx="212" cy="299" r="5" fill="#888" stroke="none"/>
+  <circle cx="214" cy="297" r="2" fill="white" stroke="none"/>
+
+  <!-- Blowhole -->
+  <path d="M310 200 Q308 195 310 190" stroke-width="2" opacity="0.3"/>
+  <!-- Water spout from blowhole -->
+  <g stroke-width="1.5" opacity="0.25">
+    <path d="M310 190 Q295 150 280 120 Q270 100 265 80"/>
+    <path d="M310 190 Q310 145 315 110 Q318 90 320 70"/>
+    <path d="M310 190 Q325 150 340 125 Q350 105 355 85"/>
+    <!-- Spout droplets -->
+    <circle cx="260" cy="72" r="4" fill="#888" fill-opacity="0.04"/>
+    <circle cx="320" cy="62" r="5" fill="#888" fill-opacity="0.04"/>
+    <circle cx="358" cy="78" r="4" fill="#888" fill-opacity="0.04"/>
+    <circle cx="290" cy="90" r="3" fill="#888" fill-opacity="0.03"/>
+    <circle cx="340" cy="85" r="3" fill="#888" fill-opacity="0.03"/>
+  </g>
+
+  <!-- Flipper / pectoral fin -->
+  <path d="M300 390 Q280 430 260 460 Q250 475 265 478 Q285 475 310 450 Q330 425 340 400" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Belly grooves / ventral pleats -->
+  <g stroke-width="1" opacity="0.12">
+    <path d="M200 370 Q260 395 340 400"/>
+    <path d="M210 385 Q270 408 350 412"/>
+    <path d="M225 398 Q285 418 360 422"/>
+    <path d="M240 408 Q300 428 370 430"/>
+    <path d="M260 418 Q320 435 380 436"/>
+  </g>
+
+  <!-- Tail section - narrowing -->
+  <path d="M620 350 Q660 340 690 330 Q720 320 740 310" fill="none" stroke-width="2" opacity="0.3"/>
+  <path d="M620 400 Q660 395 690 380 Q720 365 740 350" fill="none" stroke-width="2" opacity="0.3"/>
+
+  <!-- Tail flukes -->
+  <path d="M740 310 Q750 290 770 270 Q785 258 790 265 Q788 280 775 300 Q760 320 740 330" fill="#888" fill-opacity="0.04"/>
+  <path d="M740 350 Q750 370 770 390 Q785 402 790 395 Q788 380 775 360 Q760 340 740 330" fill="#888" fill-opacity="0.04"/>
+  <!-- Fluke center notch -->
+  <path d="M738 325 Q742 330 738 335" fill="none" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Water line hint -->
+  <path d="M50 480 Q150 470 300 478 Q450 486 600 475 Q700 468 780 478" stroke-width="1" opacity="0.08"/>
+  <path d="M30 500 Q180 490 350 498 Q500 505 650 495 Q750 488 790 498" stroke-width="1" opacity="0.06"/>
+</svg>

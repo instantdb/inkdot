@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Crown (top facets) -->
+    <polygon points="400,80 260,200 540,200" fill="#888" fill-opacity="0.04"/>
+    <!-- Table top line -->
+    <line x1="310" y1="130" x2="490" y2="130"/>
+    <!-- Crown left facet -->
+    <polygon points="260,200 310,130 400,200" fill="#888" fill-opacity="0.03"/>
+    <!-- Crown right facet -->
+    <polygon points="540,200 490,130 400,200" fill="#888" fill-opacity="0.03"/>
+    <!-- Crown top left -->
+    <polygon points="400,80 310,130 260,200" fill="#888" fill-opacity="0.05"/>
+    <!-- Crown top right -->
+    <polygon points="400,80 490,130 540,200" fill="#888" fill-opacity="0.05"/>
+    <!-- Crown center -->
+    <polygon points="310,130 490,130 400,200" fill="#888" fill-opacity="0.04"/>
+    <!-- Pavilion (bottom) -->
+    <polygon points="260,200 540,200 400,520" fill="#888" fill-opacity="0.04"/>
+    <!-- Pavilion facet lines -->
+    <line x1="260" y1="200" x2="400" y2="520"/>
+    <line x1="540" y1="200" x2="400" y2="520"/>
+    <line x1="330" y1="200" x2="400" y2="520"/>
+    <line x1="470" y1="200" x2="400" y2="520"/>
+    <line x1="400" y1="200" x2="400" y2="520"/>
+    <!-- Girdle line -->
+    <line x1="260" y1="200" x2="540" y2="200"/>
+    <!-- Star facet lines -->
+    <line x1="400" y1="80" x2="310" y2="130"/>
+    <line x1="400" y1="80" x2="490" y2="130"/>
+    <!-- Sparkle accents -->
+    <line x1="180" y1="120" x2="200" y2="120"/>
+    <line x1="190" y1="110" x2="190" y2="130"/>
+    <line x1="600" y1="150" x2="620" y2="150"/>
+    <line x1="610" y1="140" x2="610" y2="160"/>
+    <line x1="160" y1="260" x2="175" y2="260"/>
+    <line x1="167" y1="253" x2="167" y2="267"/>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Rubber duck (debugging companion) -->
+
+  <!-- Body -->
+  <ellipse cx="400" cy="380" rx="170" ry="130" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Head -->
+  <circle cx="440" cy="200" r="90" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Head tuft -->
+  <path d="M440 110 Q450 85 445 70 Q440 80 435 75 Q438 90 430 110" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Eye -->
+  <circle cx="475" cy="185" r="12" fill="#888" fill-opacity="0.08"/>
+  <circle cx="478" cy="183" r="6" fill="#888" stroke="none"/>
+  <circle cx="480" cy="180" r="2.5" fill="white" stroke="none"/>
+
+  <!-- Beak -->
+  <path d="M510 210 Q550 205 570 220 Q575 230 565 240 Q545 250 510 240" fill="#888" fill-opacity="0.08"/>
+  <!-- Beak line -->
+  <path d="M515 225 Q545 225 565 230" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Cheek -->
+  <circle cx="490" cy="230" r="12" fill="#888" fill-opacity="0.03" stroke="none"/>
+
+  <!-- Wing (on body) -->
+  <path d="M310 340 Q290 370 295 410 Q300 440 320 455 Q340 465 360 455 Q370 445 365 420 Q360 390 340 360" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Wing line details -->
+  <path d="M320 380 Q335 385 345 400" stroke-width="1.5" opacity="0.15"/>
+  <path d="M315 400 Q330 408 340 420" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Tail -->
+  <path d="M240 350 Q220 340 215 350 Q210 365 225 370" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Water line -->
+  <path d="M150 440 Q250 420 350 440 Q450 460 550 435 Q620 420 700 440" stroke-width="2" opacity="0.15"/>
+
+  <!-- Water ripples -->
+  <path d="M250 470 Q350 460 450 475 Q520 485 600 470" stroke-width="1" opacity="0.1"/>
+  <path d="M200 495 Q320 485 440 500 Q540 510 650 495" stroke-width="1" opacity="0.08"/>
+
+  <!-- Bubbles -->
+  <g fill="none" opacity="0.15">
+    <circle cx="580" cy="350" r="10"/>
+    <circle cx="610" cy="320" r="7"/>
+    <circle cx="595" cy="290" r="5"/>
+  </g>
+</svg>

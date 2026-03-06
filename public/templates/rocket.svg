@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Rocket body -->
+  <path d="M370 120 Q400 60 430 120 L440 400 Q440 430 430 440 L370 440 Q360 430 360 400Z" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Nose cone -->
+  <path d="M370 120 Q400 50 430 120" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Window -->
+  <circle cx="400" cy="220" r="30" fill="#888" fill-opacity="0.06"/>
+  <circle cx="400" cy="220" r="22" fill="#888" fill-opacity="0.03"/>
+  <!-- Window shine -->
+  <path d="M388 208 Q398 200 410 208" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Body stripes -->
+  <line x1="365" y1="300" x2="435" y2="300" stroke-width="1.5" opacity="0.2"/>
+  <line x1="363" y1="320" x2="437" y2="320" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Left fin -->
+  <path d="M360 350 Q320 380 310 440 Q315 450 330 445 L360 410" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Right fin -->
+  <path d="M440 350 Q480 380 490 440 Q485 450 470 445 L440 410" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Engine nozzle -->
+  <path d="M375 440 L365 470 Q380 480 400 480 Q420 480 435 470 L425 440" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Exhaust flames -->
+  <g stroke-width="2" opacity="0.25">
+    <path d="M385 480 Q380 510 390 540 Q395 555 400 540 Q405 555 410 540 Q420 510 415 480" fill="#888" fill-opacity="0.04"/>
+    <path d="M390 480 Q388 500 395 520 Q400 530 405 520 Q412 500 410 480" fill="#888" fill-opacity="0.03"/>
+  </g>
+
+  <!-- Stars -->
+  <g fill="#888" stroke="none" opacity="0.15">
+    <circle cx="150" cy="100" r="3"/>
+    <circle cx="650" cy="150" r="3"/>
+    <circle cx="200" cy="300" r="2"/>
+    <circle cx="600" cy="80" r="2"/>
+    <circle cx="700" cy="350" r="3"/>
+    <circle cx="100" cy="450" r="2"/>
+    <circle cx="680" cy="500" r="2"/>
+    <circle cx="550" cy="280" r="2"/>
+    <circle cx="250" cy="180" r="2"/>
+  </g>
+</svg>

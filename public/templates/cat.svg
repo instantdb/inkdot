@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Body -->
+  <ellipse cx="400" cy="380" rx="130" ry="120" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Head -->
+  <circle cx="400" cy="210" r="90" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Ears (triangular) -->
+  <path d="M325 145 L300 60 L365 120" fill="#888" fill-opacity="0.05"/>
+  <path d="M475 145 L500 60 L435 120" fill="#888" fill-opacity="0.05"/>
+  <!-- Inner ears -->
+  <path d="M330 135 L315 80 L355 125" fill="#888" fill-opacity="0.03"/>
+  <path d="M470 135 L485 80 L445 125" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Eyes (cat-like, slightly angled) -->
+  <ellipse cx="365" cy="200" rx="20" ry="16" fill="#888" fill-opacity="0.05"/>
+  <ellipse cx="435" cy="200" rx="20" ry="16" fill="#888" fill-opacity="0.05"/>
+  <!-- Vertical slit pupils -->
+  <ellipse cx="365" cy="200" rx="6" ry="14" fill="#888" stroke="none"/>
+  <ellipse cx="435" cy="200" rx="6" ry="14" fill="#888" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="370" cy="195" r="3" fill="white" stroke="none"/>
+  <circle cx="440" cy="195" r="3" fill="white" stroke="none"/>
+
+  <!-- Nose -->
+  <path d="M395 230 L400 240 L405 230Z" fill="#888" fill-opacity="0.1"/>
+
+  <!-- Mouth -->
+  <path d="M400 240 L400 252" stroke-width="1.5"/>
+  <path d="M385 255 Q400 265 415 255" fill="none"/>
+
+  <!-- Whiskers -->
+  <g stroke-width="1.5" opacity="0.4">
+    <line x1="320" y1="235" x2="365" y2="240"/>
+    <line x1="315" y1="250" x2="363" y2="248"/>
+    <line x1="320" y1="265" x2="365" y2="256"/>
+    <line x1="435" y1="240" x2="480" y2="235"/>
+    <line x1="437" y1="248" x2="485" y2="250"/>
+    <line x1="435" y1="256" x2="480" y2="265"/>
+  </g>
+
+  <!-- Front paws -->
+  <path d="M330 430 L325 500 Q330 515 345 515 Q360 515 365 500 L360 430" fill="#888" fill-opacity="0.04"/>
+  <path d="M440 430 L435 500 Q440 515 455 515 Q470 515 475 500 L470 430" fill="#888" fill-opacity="0.04"/>
+  <!-- Paw details -->
+  <g opacity="0.3" stroke-width="1.5">
+    <path d="M335 508 Q340 512 345 508"/>
+    <path d="M345 508 Q350 512 355 508"/>
+    <path d="M445 508 Q450 512 455 508"/>
+    <path d="M455 508 Q460 512 465 508"/>
+  </g>
+
+  <!-- Tail -->
+  <path d="M530 400 Q570 380 590 340 Q600 310 580 290 Q560 280 550 300" fill="none" stroke-width="3" opacity="0.3"/>
+
+  <!-- Belly stripe hint -->
+  <path d="M370 340 Q400 330 430 340" stroke-width="1" opacity="0.15"/>
+  <path d="M365 370 Q400 358 435 370" stroke-width="1" opacity="0.15"/>
+
+</svg>

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- === SWIRLING SKY - bold dramatic waves === -->
+  <g stroke-width="4" opacity="0.32">
+    <path d="M0 15 Q100 0 220 32 Q380 68 520 15 Q660 -20 800 18"/>
+    <path d="M0 50 Q130 30 250 65 Q400 100 540 48 Q670 10 800 55"/>
+    <path d="M0 82 Q140 60 270 95 Q410 128 560 78 Q685 42 800 88"/>
+    <path d="M0 112 Q150 92 290 122 Q430 152 575 108 Q700 72 800 118"/>
+    <path d="M0 140 Q160 122 310 148 Q450 174 590 135 Q712 102 800 146"/>
+    <path d="M0 168 Q170 152 330 172 Q465 194 605 162 Q722 132 800 172"/>
+    <path d="M0 194 Q180 180 350 198 Q480 212 620 186 Q732 162 800 198"/>
+  </g>
+
+  <!-- === HORIZON LINE === -->
+  <path d="M0 218 Q200 210 400 222 Q600 236 800 220" stroke-width="2.5" opacity="0.25"/>
+
+  <!-- === RIVER / FJORD - wavy water between bridge and hill === -->
+  <g stroke-width="2.5" opacity="0.2">
+    <path d="M220 240 Q320 232 420 248 Q480 258 540 245 Q580 238 620 248"/>
+    <path d="M210 262 Q315 254 415 270 Q478 280 545 268 Q590 260 630 270"/>
+    <path d="M205 285 Q310 278 410 292 Q475 302 548 290 Q595 284 640 292"/>
+    <path d="M200 308 Q305 300 405 315 Q470 324 550 312 Q600 306 650 315"/>
+    <path d="M198 332 Q300 325 400 338 Q468 346 552 335 Q605 328 658 338"/>
+  </g>
+
+  <!-- === DARK HILL / CLIFF ON RIGHT === -->
+  <path d="M520 230 Q600 218 680 255 Q740 300 775 370 Q800 440 800 530"
+        stroke-width="4" opacity="0.35" fill="#888" fill-opacity="0.08"/>
+  <g stroke-width="3" opacity="0.22">
+    <path d="M550 248 Q625 238 700 272 Q752 318 782 395 Q800 460 800 550"/>
+    <path d="M575 265 Q645 255 715 290 Q762 335 790 415"/>
+    <path d="M598 282 Q662 272 728 308 Q770 352 796 435"/>
+  </g>
+
+  <!-- === BRIDGE (strong perspective from bottom toward upper-left) === -->
+  <!-- Left railing - outer post (very bold) -->
+  <path d="M20 600 L108 220" stroke-width="6"/>
+  <!-- Left railing - inner post -->
+  <path d="M90 600 L165 228" stroke-width="4.5"/>
+
+  <!-- Horizontal fence bars (thick, prominent) -->
+  <g stroke-width="3.5" opacity="0.55">
+    <line x1="115" y1="242" x2="172" y2="248"/>
+    <line x1="112" y1="288" x2="170" y2="294"/>
+    <line x1="108" y1="338" x2="166" y2="344"/>
+    <line x1="104" y1="392" x2="160" y2="398"/>
+    <line x1="98" y1="450" x2="152" y2="455"/>
+    <line x1="90" y1="512" x2="142" y2="516"/>
+    <line x1="80" y1="570" x2="130" y2="574"/>
+  </g>
+
+  <!-- Right edge of bridge -->
+  <path d="M540 600 L450 240" stroke-width="2.5" opacity="0.22"/>
+
+  <!-- Bridge planks (perspective lines) -->
+  <g stroke-width="2.2" opacity="0.2">
+    <line x1="90" y1="592" x2="540" y2="592"/>
+    <line x1="90" y1="565" x2="530" y2="570"/>
+    <line x1="90" y1="535" x2="518" y2="542"/>
+    <line x1="92" y1="502" x2="506" y2="514"/>
+    <line x1="94" y1="468" x2="494" y2="484"/>
+    <line x1="98" y1="432" x2="482" y2="452"/>
+    <line x1="102" y1="396" x2="472" y2="420"/>
+    <line x1="108" y1="360" x2="464" y2="388"/>
+    <line x1="116" y1="326" x2="458" y2="358"/>
+    <line x1="126" y1="294" x2="454" y2="330"/>
+    <line x1="138" y1="264" x2="452" y2="304"/>
+    <line x1="152" y1="238" x2="450" y2="280"/>
+  </g>
+
+  <!-- === TWO BACKGROUND FIGURES (larger, on bridge) === -->
+  <g opacity="0.55" stroke-width="3">
+    <!-- Figure 1 -->
+    <ellipse cx="185" cy="248" rx="8" ry="12" fill="#888" fill-opacity="0.18"/>
+    <path d="M185 260 L185 298 M185 280 L178 290 M185 280 L192 290 M185 298 L179 318 M185 298 L191 318"/>
+    <!-- Figure 2 -->
+    <ellipse cx="208" cy="252" rx="8" ry="12" fill="#888" fill-opacity="0.18"/>
+    <path d="M208 264 L208 302 M208 284 L201 294 M208 284 L215 294 M208 302 L202 322 M208 302 L214 322"/>
+  </g>
+
+  <!-- === MAIN FIGURE (large, dominant) === -->
+
+  <!-- Head - wide egg/skull shape, rounder at top -->
+  <path d="M330 260
+           C328 232 348 210 390 206
+           C432 210 452 232 450 260
+           C448 290 444 318 436 342
+           C426 368 412 382 390 386
+           C368 382 354 368 344 342
+           C336 318 332 290 330 260 Z"
+        fill="#888" fill-opacity="0.1" stroke-width="2.8"/>
+
+  <!-- Eyes - small dark pits -->
+  <ellipse cx="370" cy="278" rx="5" ry="6" fill="#888" fill-opacity="0.22" stroke-width="1.5"/>
+  <ellipse cx="410" cy="278" rx="5" ry="6" fill="#888" fill-opacity="0.22" stroke-width="1.5"/>
+  <circle cx="370" cy="279" r="3" fill="#888" fill-opacity="0.5" stroke="none"/>
+  <circle cx="410" cy="279" r="3" fill="#888" fill-opacity="0.5" stroke="none"/>
+
+  <!-- Nostrils -->
+  <circle cx="386" cy="320" r="2.5" fill="#888" fill-opacity="0.2"/>
+  <circle cx="394" cy="320" r="2.5" fill="#888" fill-opacity="0.2"/>
+
+  <!-- Screaming mouth - big dark oval -->
+  <ellipse cx="390" cy="354" rx="15" ry="22" fill="#888" fill-opacity="0.18" stroke-width="2.8"/>
+
+  <!-- === BODY - consistent taper from bottom up to hands === -->
+  <!-- Left contour -->
+  <path d="M310 600 Q316 550 322 500 Q328 455 332 420
+           Q336 390 338 365 Q336 340 332 318
+           Q328 298 326 280"
+        stroke-width="3.2"/>
+  <!-- Right contour -->
+  <path d="M470 600 Q464 550 458 500 Q452 455 448 420
+           Q444 390 442 365 Q444 340 448 318
+           Q452 298 454 280"
+        stroke-width="3.2"/>
+
+  <!-- Body fill -->
+  <path d="M310 600 Q316 550 322 500 Q328 455 332 420 Q336 390 338 365
+           Q336 340 332 318 Q328 298 326 280
+           Q330 262 336 248 L330 260
+           C328 232 348 210 390 206 C432 210 452 232 450 260
+           L444 248 Q450 262 454 280
+           Q452 298 448 318 Q444 340 442 365
+           Q444 390 448 420 Q452 455 458 500 Q464 550 470 600 Z"
+        fill="#888" fill-opacity="0.07" stroke="none"/>
+
+  <!-- LEFT HAND cupping left cheek -->
+  <!-- Palm outline against cheek -->
+  <path d="M326 280 Q322 264 326 248 Q330 236 338 228"
+        stroke-width="2.8"/>
+  <!-- Fingers going up alongside head -->
+  <path d="M324 270 Q316 254 320 238 Q324 226 332 218" stroke-width="2.5" opacity="0.55"/>
+  <path d="M322 284 Q312 266 316 248 Q320 234 328 224" stroke-width="2.5" opacity="0.5"/>
+  <path d="M324 298 Q312 280 316 260 Q320 246 328 236" stroke-width="2.2" opacity="0.42"/>
+
+  <!-- RIGHT HAND cupping right cheek -->
+  <!-- Palm outline against cheek -->
+  <path d="M454 280 Q458 264 454 248 Q450 236 442 228"
+        stroke-width="2.8"/>
+  <!-- Fingers going up alongside head -->
+  <path d="M456 270 Q464 254 460 238 Q456 226 448 218" stroke-width="2.5" opacity="0.55"/>
+  <path d="M458 284 Q468 266 464 248 Q460 234 452 224" stroke-width="2.5" opacity="0.5"/>
+  <path d="M456 298 Q468 280 464 260 Q460 246 452 236" stroke-width="2.2" opacity="0.42"/>
+
+  <!-- Body undulating curves -->
+  <g stroke-width="2" opacity="0.18">
+    <path d="M336 438 Q390 428 444 440"/>
+    <path d="M330 478 Q390 468 450 480"/>
+    <path d="M322 520 Q390 510 458 522"/>
+    <path d="M316 562 Q390 552 464 564"/>
+  </g>
+
+  <!-- Landscape curves flowing from figure into the dark hill -->
+  <g stroke-width="2.5" opacity="0.18">
+    <path d="M460 302 Q500 290 550 302 Q600 318 660 298"/>
+    <path d="M462 340 Q508 328 560 340 Q614 358 675 338"/>
+    <path d="M464 378 Q514 366 570 378 Q628 396 690 376"/>
+  </g>
+
+</svg>

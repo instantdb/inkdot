@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Antenna -->
+  <line x1="400" y1="60" x2="400" y2="100" stroke-width="2"/>
+  <circle cx="400" cy="52" r="10" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Head -->
+  <rect x="310" y="100" width="180" height="130" rx="20" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Eyes (screen-like) -->
+  <rect x="340" y="135" width="45" height="35" rx="8" fill="#888" fill-opacity="0.06"/>
+  <rect x="415" y="135" width="45" height="35" rx="8" fill="#888" fill-opacity="0.06"/>
+  <!-- Pupils -->
+  <circle cx="362" cy="155" r="8" fill="#888" fill-opacity="0.1"/>
+  <circle cx="437" cy="155" r="8" fill="#888" fill-opacity="0.1"/>
+  <!-- Highlights -->
+  <circle cx="366" cy="151" r="3" fill="white" stroke="none"/>
+  <circle cx="441" cy="151" r="3" fill="white" stroke="none"/>
+
+  <!-- Mouth (grid) -->
+  <rect x="360" y="190" width="80" height="25" rx="5" fill="#888" fill-opacity="0.05"/>
+  <g stroke-width="1.5" opacity="0.2">
+    <line x1="380" y1="190" x2="380" y2="215"/>
+    <line x1="400" y1="190" x2="400" y2="215"/>
+    <line x1="420" y1="190" x2="420" y2="215"/>
+  </g>
+
+  <!-- Ear bolts -->
+  <circle cx="305" cy="165" r="8" fill="#888" fill-opacity="0.06"/>
+  <circle cx="495" cy="165" r="8" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Neck -->
+  <rect x="375" y="230" width="50" height="25" rx="4" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Body -->
+  <rect x="290" y="255" width="220" height="200" rx="15" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Chest panel -->
+  <rect x="340" y="280" width="120" height="80" rx="8" fill="#888" fill-opacity="0.04"/>
+  <!-- Buttons -->
+  <circle cx="370" cy="310" r="8" fill="#888" fill-opacity="0.06"/>
+  <circle cx="400" cy="310" r="8" fill="#888" fill-opacity="0.06"/>
+  <circle cx="430" cy="310" r="8" fill="#888" fill-opacity="0.06"/>
+  <!-- Meter -->
+  <rect x="355" y="335" width="90" height="12" rx="4" fill="#888" fill-opacity="0.04"/>
+  <rect x="357" y="337" width="50" height="8" rx="3" fill="#888" fill-opacity="0.06" stroke="none"/>
+
+  <!-- Arms -->
+  <path d="M290 280 L240 280 Q220 280 220 300 L220 370 Q220 390 240 390 L260 390" fill="#888" fill-opacity="0.04"/>
+  <path d="M510 280 L560 280 Q580 280 580 300 L580 370 Q580 390 560 390 L540 390" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Hands (claws) -->
+  <path d="M240 390 L230 410 Q225 420 235 420" stroke-width="2" opacity="0.4"/>
+  <path d="M250 390 L245 415 Q242 425 252 422" stroke-width="2" opacity="0.4"/>
+  <path d="M260 390 L260 415 Q260 425 268 420" stroke-width="2" opacity="0.4"/>
+
+  <path d="M540 390 L550 410 Q555 420 545 420" stroke-width="2" opacity="0.4"/>
+  <path d="M550 390 L555 415 Q558 425 548 422" stroke-width="2" opacity="0.4"/>
+  <path d="M560 390 L560 415 Q560 425 552 420" stroke-width="2" opacity="0.4"/>
+
+  <!-- Legs -->
+  <rect x="330" y="455" width="50" height="80" rx="8" fill="#888" fill-opacity="0.04"/>
+  <rect x="420" y="455" width="50" height="80" rx="8" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Feet -->
+  <path d="M320 530 L320 545 Q320 555 335 555 L385 555 Q395 555 395 545 L395 535" fill="#888" fill-opacity="0.04"/>
+  <path d="M410 535 L410 545 Q410 555 425 555 L475 555 Q485 555 485 545 L485 530" fill="#888" fill-opacity="0.04"/>
+</svg>

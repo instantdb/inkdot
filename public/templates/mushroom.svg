@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Super Mario style mushroom -->
+
+  <!-- Cap -->
+  <path d="M200 280 Q200 120 400 100 Q600 120 600 280Z" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Cap spots -->
+  <circle cx="320" cy="180" r="40" fill="#888" fill-opacity="0.05"/>
+  <circle cx="480" cy="170" r="45" fill="#888" fill-opacity="0.05"/>
+  <circle cx="400" cy="140" r="30" fill="#888" fill-opacity="0.05"/>
+  <circle cx="260" cy="240" r="30" fill="#888" fill-opacity="0.05"/>
+  <circle cx="540" cy="230" r="35" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Cap rim -->
+  <path d="M200 280 Q300 300 400 300 Q500 300 600 280" fill="none" stroke-width="2"/>
+
+  <!-- Stem -->
+  <path d="M320 300 Q310 310 310 340 L310 480 Q310 510 340 510 L460 510 Q490 510 490 480 L490 340 Q490 310 480 300" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Face area (white patch on stem) -->
+  <ellipse cx="400" cy="400" rx="70" ry="80" fill="#888" fill-opacity="0.02"/>
+
+  <!-- Eyes -->
+  <ellipse cx="365" cy="380" rx="16" ry="20" fill="#888" fill-opacity="0.06"/>
+  <ellipse cx="435" cy="380" rx="16" ry="20" fill="#888" fill-opacity="0.06"/>
+  <circle cx="368" cy="382" r="8" fill="#888" stroke="none"/>
+  <circle cx="438" cy="382" r="8" fill="#888" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="371" cy="378" r="3" fill="white" stroke="none"/>
+  <circle cx="441" cy="378" r="3" fill="white" stroke="none"/>
+
+  <!-- Mouth (happy) -->
+  <path d="M380 420 Q400 440 420 420" fill="none" stroke-width="2"/>
+
+  <!-- Ground line -->
+  <path d="M200 520 Q300 515 400 520 Q500 525 600 518" stroke-width="1.5" opacity="0.15"/>
+</svg>

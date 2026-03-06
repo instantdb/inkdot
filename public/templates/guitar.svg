@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Guitar body - figure-8 shape: upper bout, waist, lower bout -->
+  <path d="
+    M390 258
+    C 448 258 482 275 482 305
+    C 482 332 450 342 435 342
+    C 458 342 518 368 518 432
+    C 518 496 458 535 390 535
+    C 322 535 262 496 262 432
+    C 262 368 322 342 345 342
+    C 330 342 298 332 298 305
+    C 298 275 332 258 390 258
+    Z
+  " fill="#888" fill-opacity="0.05"/>
+
+  <!-- Sound hole -->
+  <circle cx="390" cy="400" r="32" fill="#888" fill-opacity="0.06"/>
+  <circle cx="390" cy="400" r="27" fill="none" stroke-width="1" opacity="0.2"/>
+  <!-- Rosette rings -->
+  <circle cx="390" cy="400" r="37" fill="none" stroke-width="1" opacity="0.15"/>
+  <circle cx="390" cy="400" r="40" fill="none" stroke-width="1" opacity="0.1"/>
+
+  <!-- Bridge -->
+  <rect x="365" y="462" width="50" height="8" rx="3" fill="#888" fill-opacity="0.06"/>
+  <!-- Bridge pins -->
+  <g fill="#888" stroke="none" opacity="0.3">
+    <circle cx="372" cy="474" r="2"/>
+    <circle cx="380" cy="474" r="2"/>
+    <circle cx="388" cy="474" r="2"/>
+    <circle cx="396" cy="474" r="2"/>
+    <circle cx="404" cy="474" r="2"/>
+    <circle cx="412" cy="474" r="2"/>
+  </g>
+
+  <!-- Neck -->
+  <rect x="365" y="90" width="50" height="180" rx="4" fill="#888" fill-opacity="0.04"/>
+  <!-- Fret lines -->
+  <g stroke-width="1" opacity="0.2">
+    <line x1="368" y1="120" x2="412" y2="120"/>
+    <line x1="368" y1="148" x2="412" y2="148"/>
+    <line x1="368" y1="173" x2="412" y2="173"/>
+    <line x1="368" y1="195" x2="412" y2="195"/>
+    <line x1="368" y1="215" x2="412" y2="215"/>
+    <line x1="368" y1="233" x2="412" y2="233"/>
+    <line x1="368" y1="249" x2="412" y2="249"/>
+  </g>
+  <!-- Fret dots -->
+  <g fill="#888" stroke="none" opacity="0.2">
+    <circle cx="390" cy="135" r="3"/>
+    <circle cx="390" cy="184" r="3"/>
+    <circle cx="390" cy="224" r="3"/>
+  </g>
+
+  <!-- Headstock -->
+  <path d="M362 90 L358 40 Q358 28 370 28 L410 28 Q422 28 422 40 L418 90" fill="#888" fill-opacity="0.05"/>
+  <!-- Nut -->
+  <line x1="365" y1="90" x2="415" y2="90" stroke-width="3" opacity="0.3"/>
+
+  <!-- Tuning pegs - left -->
+  <g fill="#888" fill-opacity="0.08" stroke-width="1.5">
+    <circle cx="350" cy="45" r="6"/>
+    <line x1="356" y1="45" x2="362" y2="45"/>
+    <circle cx="350" cy="62" r="6"/>
+    <line x1="356" y1="62" x2="362" y2="62"/>
+    <circle cx="350" cy="79" r="6"/>
+    <line x1="356" y1="79" x2="362" y2="79"/>
+  </g>
+  <!-- Tuning pegs - right -->
+  <g fill="#888" fill-opacity="0.08" stroke-width="1.5">
+    <circle cx="430" cy="45" r="6"/>
+    <line x1="424" y1="45" x2="418" y2="45"/>
+    <circle cx="430" cy="62" r="6"/>
+    <line x1="424" y1="62" x2="418" y2="62"/>
+    <circle cx="430" cy="79" r="6"/>
+    <line x1="424" y1="79" x2="418" y2="79"/>
+  </g>
+
+  <!-- Strings -->
+  <g stroke-width="0.8" opacity="0.2">
+    <line x1="374" y1="90" x2="374" y2="470"/>
+    <line x1="380" y1="90" x2="380" y2="470"/>
+    <line x1="386" y1="90" x2="386" y2="470"/>
+    <line x1="394" y1="90" x2="394" y2="470"/>
+    <line x1="400" y1="90" x2="400" y2="470"/>
+    <line x1="406" y1="90" x2="406" y2="470"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Main crewmate body -->
+  <path d="M340 150 Q340 100 400 80 Q460 100 460 150 L460 380 Q460 420 440 430 L440 480 Q440 500 420 500 L400 500 Q380 500 380 480 L380 430 L360 430 L360 480 Q360 500 340 500 L320 500 Q300 500 300 480 L300 430 Q280 420 280 380 L280 200 Q280 170 310 160 L310 150 Q310 145 340 150Z"
+    fill="#888" fill-opacity="0.06"/>
+
+  <!-- Visor -->
+  <path d="M370 150 Q370 120 420 115 Q470 120 470 150 Q470 180 440 185 L370 185 Q350 180 370 150Z"
+    fill="#888" fill-opacity="0.1"/>
+  <!-- Visor shine -->
+  <path d="M390 135 Q410 128 430 135" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Backpack -->
+  <path d="M270 200 Q250 200 245 220 L245 330 Q245 350 270 350 L280 350 L280 200Z"
+    fill="#888" fill-opacity="0.06"/>
+
+  <!-- Leg gap -->
+  <line x1="370" y1="430" x2="370" y2="500" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Small crewmate (mini) in background -->
+  <g transform="translate(560, 280) scale(0.45)" opacity="0.4">
+    <path d="M340 150 Q340 100 400 80 Q460 100 460 150 L460 380 Q460 420 440 430 L440 480 Q440 500 420 500 L400 500 Q380 500 380 480 L380 430 L360 430 L360 480 Q360 500 340 500 L320 500 Q300 500 300 480 L300 430 Q280 420 280 380 L280 200 Q280 170 310 160 L310 150 Q310 145 340 150Z"
+      fill="#888" fill-opacity="0.06"/>
+    <path d="M370 150 Q370 120 420 115 Q470 120 470 150 Q470 180 440 185 L370 185 Q350 180 370 150Z"
+      fill="#888" fill-opacity="0.1"/>
+    <path d="M270 200 Q250 200 245 220 L245 330 Q245 350 270 350 L280 350 L280 200Z"
+      fill="#888" fill-opacity="0.06"/>
+  </g>
+
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ring at top -->
+    <circle cx="400" cy="120" r="35" fill="#888" fill-opacity="0.05"/>
+    <!-- Vertical shank -->
+    <line x1="400" y1="155" x2="400" y2="480"/>
+    <!-- Horizontal crossbar -->
+    <line x1="300" y1="280" x2="500" y2="280"/>
+    <!-- Left arm curving down -->
+    <path d="M400 480 Q400 520 360 540 Q280 560 220 500 Q180 460 200 420" fill="#888" fill-opacity="0.04"/>
+    <!-- Right arm curving down -->
+    <path d="M400 480 Q400 520 440 540 Q520 560 580 500 Q620 460 600 420" fill="#888" fill-opacity="0.04"/>
+    <!-- Left arm tip -->
+    <line x1="200" y1="420" x2="185" y2="400"/>
+    <line x1="200" y1="420" x2="215" y2="400"/>
+    <!-- Right arm tip -->
+    <line x1="600" y1="420" x2="585" y2="400"/>
+    <line x1="600" y1="420" x2="615" y2="400"/>
+    <!-- Top cross piece -->
+    <line x1="370" y1="155" x2="430" y2="155"/>
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Tripod leg - left -->
+    <line x1="400" y1="300" x2="250" y2="540"/>
+    <line x1="400" y1="300" x2="260" y2="540"/>
+    <!-- Tripod leg - right -->
+    <line x1="400" y1="300" x2="550" y2="540"/>
+    <line x1="400" y1="300" x2="540" y2="540"/>
+    <!-- Tripod leg - back/center -->
+    <line x1="400" y1="300" x2="400" y2="545"/>
+    <line x1="400" y1="300" x2="410" y2="545"/>
+    <!-- Tripod feet -->
+    <path d="M240 540 L260 545 L270 540" fill="#888" fill-opacity="0.05"/>
+    <path d="M530 540 L550 545 L560 540" fill="#888" fill-opacity="0.05"/>
+    <path d="M390 545 L405 550 L420 545" fill="#888" fill-opacity="0.05"/>
+    <!-- Tripod cross brace -->
+    <path d="M310 440 Q400 420 490 440"/>
+    <path d="M340 430 Q400 460 460 430"/>
+    <!-- Mount/pivot hub -->
+    <circle cx="400" cy="295" r="15" fill="#888" fill-opacity="0.06"/>
+    <!-- Altitude adjustment knob -->
+    <circle cx="420" cy="295" r="8" fill="#888" fill-opacity="0.05"/>
+    <!-- Telescope tube - main body (angled upward) -->
+    <path d="M385 285 L260 170" />
+    <path d="M395 275 L270 160" />
+    <!-- Telescope tube fill -->
+    <path d="M385 285 L260 170 L270 160 L395 275Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Objective lens end (wider) -->
+    <path d="M255 175 L245 165 L235 175" />
+    <path d="M270 163 L260 150 L248 160"/>
+    <!-- Lens housing -->
+    <path d="M240 170 Q252 155 268 162" fill="#888" fill-opacity="0.05"/>
+    <!-- Lens glint -->
+    <path d="M248 165 L255 160"/>
+    <!-- Eyepiece end -->
+    <path d="M395 280 L415 295 L405 300" fill="#888" fill-opacity="0.05"/>
+    <!-- Eyepiece tube -->
+    <path d="M410 290 L430 305"/>
+    <path d="M405 298 L425 313"/>
+    <!-- Eyepiece lens -->
+    <circle cx="428" cy="310" r="6" fill="#888" fill-opacity="0.05"/>
+    <!-- Finder scope (small tube on top) -->
+    <path d="M340 240 L300 210"/>
+    <path d="M345 235 L305 205"/>
+    <!-- Finder scope rings -->
+    <circle cx="320" cy="225" r="4"/>
+    <circle cx="340" cy="240" r="4"/>
+    <!-- Focus knob -->
+    <circle cx="350" cy="260" r="7" fill="#888" fill-opacity="0.05"/>
+    <!-- Dew shield extension at front -->
+    <path d="M235 178 L220 165 Q225 155 240 160"/>
+    <!-- Stars in sky -->
+    <circle cx="150" cy="80" r="2" fill="#888" fill-opacity="0.08"/>
+    <circle cx="200" cy="120" r="1.5" fill="#888" fill-opacity="0.06"/>
+    <circle cx="120" cy="150" r="1.5" fill="#888" fill-opacity="0.06"/>
+    <circle cx="180" cy="60" r="2" fill="#888" fill-opacity="0.07"/>
+    <circle cx="650" cy="90" r="2" fill="#888" fill-opacity="0.07"/>
+    <circle cx="600" cy="60" r="1.5" fill="#888" fill-opacity="0.06"/>
+    <circle cx="700" cy="130" r="1.5" fill="#888" fill-opacity="0.06"/>
+    <circle cx="550" cy="100" r="2" fill="#888" fill-opacity="0.08"/>
+    <!-- Moon/planet being observed -->
+    <circle cx="160" cy="110" r="20" fill="#888" fill-opacity="0.04"/>
+    <path d="M155 95 Q165 100 160 110 Q155 120 148 115" fill="#888" fill-opacity="0.03"/>
+    <!-- Ground line -->
+    <path d="M150 550 Q300 545 400 550 Q500 545 650 550"/>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Astronaut floating in space -->
+
+  <!-- Helmet -->
+  <circle cx="400" cy="160" r="75" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Visor (reflective) -->
+  <path d="M345 140 Q345 100 400 90 Q455 100 455 140 Q455 180 430 190 L370 190 Q345 180 345 140" fill="#888" fill-opacity="0.08"/>
+  <!-- Visor reflection -->
+  <path d="M365 120 Q385 108 410 118" stroke-width="2" opacity="0.2"/>
+  <path d="M370 140 Q390 130 405 138" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Helmet ring -->
+  <ellipse cx="400" cy="230" rx="60" ry="15" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Body/suit (bulky) -->
+  <path d="M330 240 Q320 260 315 300 L310 420 Q310 450 340 460 L460 460 Q490 450 490 420 L485 300 Q480 260 470 240" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Chest pack -->
+  <rect x="350" y="280" width="100" height="70" rx="8" fill="#888" fill-opacity="0.04"/>
+  <!-- Pack details -->
+  <rect x="365" y="295" width="30" height="20" rx="3" fill="#888" fill-opacity="0.04"/>
+  <rect x="405" y="295" width="30" height="20" rx="3" fill="#888" fill-opacity="0.04"/>
+  <circle cx="380" cy="335" r="5" fill="#888" fill-opacity="0.05"/>
+  <circle cx="400" cy="335" r="5" fill="#888" fill-opacity="0.05"/>
+  <circle cx="420" cy="335" r="5" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Left arm (reaching out) -->
+  <path d="M315 270 Q270 280 240 310 Q220 340 230 370" fill="none" stroke-width="3"/>
+  <!-- Glove -->
+  <path d="M230 370 Q220 385 225 400 Q230 410 245 408 Q255 405 260 395 Q265 385 255 375" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Right arm -->
+  <path d="M485 280 Q530 300 550 340 Q560 370 555 400" fill="none" stroke-width="3"/>
+  <!-- Glove -->
+  <path d="M555 400 Q558 415 550 425 Q540 430 530 425 Q525 415 530 405 Q535 395 545 395" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Legs -->
+  <path d="M350 460 L340 520 Q340 540 360 540 L380 540" fill="none" stroke-width="3"/>
+  <path d="M450 460 L460 520 Q460 540 440 540 L420 540" fill="none" stroke-width="3"/>
+
+  <!-- Boots -->
+  <path d="M340 530 Q330 545 340 555 Q355 560 380 555 Q390 548 385 535" fill="#888" fill-opacity="0.05"/>
+  <path d="M460 530 Q470 545 460 555 Q445 560 420 555 Q410 548 415 535" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Backpack (life support) -->
+  <rect x="460" y="260" width="45" height="80" rx="8" fill="#888" fill-opacity="0.04"/>
+  <g stroke-width="1" opacity="0.15">
+    <line x1="470" y1="280" x2="495" y2="280"/>
+    <line x1="470" y1="300" x2="495" y2="300"/>
+    <line x1="470" y1="320" x2="495" y2="320"/>
+  </g>
+
+  <!-- Tether line -->
+  <path d="M505 300 Q550 280 580 240 Q600 210 590 180 Q580 160 560 170" stroke-width="1.5" opacity="0.2" stroke-dasharray="6 4"/>
+
+  <!-- Stars -->
+  <g fill="#888" stroke="none" opacity="0.1">
+    <circle cx="100" cy="80" r="2.5"/>
+    <circle cx="700" cy="120" r="2"/>
+    <circle cx="150" cy="400" r="2"/>
+    <circle cx="680" cy="450" r="2.5"/>
+    <circle cx="80" cy="250" r="2"/>
+    <circle cx="720" cy="300" r="2"/>
+  </g>
+</svg>

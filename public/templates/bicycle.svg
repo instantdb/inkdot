@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Rear wheel -->
+    <circle cx="230" cy="400" r="110" fill="#888" fill-opacity="0.04"/>
+    <!-- Front wheel -->
+    <circle cx="570" cy="400" r="110" fill="#888" fill-opacity="0.04"/>
+    <!-- Rear hub -->
+    <circle cx="230" cy="400" r="8" fill="#888" fill-opacity="0.06"/>
+    <!-- Front hub -->
+    <circle cx="570" cy="400" r="8" fill="#888" fill-opacity="0.06"/>
+    <!-- Seat tube -->
+    <line x1="300" y1="200" x2="230" y2="400"/>
+    <!-- Down tube -->
+    <line x1="300" y1="200" x2="420" y2="370"/>
+    <!-- Chain stay -->
+    <line x1="230" y1="400" x2="420" y2="370"/>
+    <!-- Seat stay -->
+    <line x1="230" y1="400" x2="340" y2="260"/>
+    <!-- Top tube -->
+    <line x1="300" y1="200" x2="480" y2="210"/>
+    <!-- Head tube -->
+    <line x1="480" y1="210" x2="420" y2="370"/>
+    <!-- Fork -->
+    <line x1="480" y1="210" x2="570" y2="400"/>
+    <!-- Handlebars -->
+    <path d="M460 180 Q480 170 500 180 Q510 190 505 210"/>
+    <!-- Seat -->
+    <path d="M270 195 Q300 185 330 195"/>
+    <!-- Seat post -->
+    <line x1="300" y1="195" x2="300" y2="200"/>
+    <!-- Pedal crank -->
+    <circle cx="420" cy="370" r="20"/>
+    <!-- Pedals -->
+    <line x1="402" y1="360" x2="392" y2="355"/>
+    <line x1="438" y1="380" x2="448" y2="385"/>
+    <!-- Rear wheel spokes -->
+    <line x1="230" y1="290" x2="230" y2="510"/>
+    <line x1="120" y1="400" x2="340" y2="400"/>
+    <line x1="152" y1="322" x2="308" y2="478"/>
+    <line x1="152" y1="478" x2="308" y2="322"/>
+    <!-- Front wheel spokes -->
+    <line x1="570" y1="290" x2="570" y2="510"/>
+    <line x1="460" y1="400" x2="680" y2="400"/>
+    <line x1="492" y1="322" x2="648" y2="478"/>
+    <line x1="492" y1="478" x2="648" y2="322"/>
+  </g>
+</svg>

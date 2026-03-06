@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Origami crane body -->
+    <!-- Main body diamond shape -->
+    <path d="M400 250 L480 320 L400 400 L320 320Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Body center fold line -->
+    <line x1="400" y1="250" x2="400" y2="400"/>
+    <!-- Left wing (upper, extended) -->
+    <path d="M320 320 L200 200 L280 280" fill="#888" fill-opacity="0.04"/>
+    <path d="M320 320 L180 220" />
+    <!-- Left wing fold detail -->
+    <line x1="280" y1="280" x2="240" y2="250"/>
+    <line x1="300" y1="300" x2="220" y2="240"/>
+    <!-- Right wing (upper, extended) -->
+    <path d="M480 320 L600 200 L520 280" fill="#888" fill-opacity="0.04"/>
+    <path d="M480 320 L620 220"/>
+    <!-- Right wing fold detail -->
+    <line x1="520" y1="280" x2="560" y2="250"/>
+    <line x1="500" y1="300" x2="580" y2="240"/>
+    <!-- Left wing lower fold -->
+    <path d="M320 320 L220 350 L200 200" fill="#888" fill-opacity="0.03"/>
+    <!-- Right wing lower fold -->
+    <path d="M480 320 L580 350 L600 200" fill="#888" fill-opacity="0.03"/>
+    <!-- Neck (forward, left) -->
+    <path d="M400 250 L320 180 L300 120" fill="#888" fill-opacity="0.04"/>
+    <line x1="400" y1="250" x2="300" y2="120"/>
+    <!-- Head -->
+    <path d="M300 120 L270 100 L290 130" fill="#888" fill-opacity="0.06"/>
+    <path d="M300 120 L275 95"/>
+    <!-- Beak -->
+    <path d="M275 95 L255 90 L270 100"/>
+    <!-- Neck fold lines -->
+    <line x1="360" y1="220" x2="330" y2="170"/>
+    <line x1="380" y1="240" x2="340" y2="185"/>
+    <!-- Tail (backward, right) -->
+    <path d="M400 400 L470 460 L500 520" fill="#888" fill-opacity="0.04"/>
+    <path d="M400 400 L500 520"/>
+    <!-- Tail spread -->
+    <path d="M500 520 L520 530 L490 525" fill="#888" fill-opacity="0.05"/>
+    <path d="M500 520 L510 540 L485 530"/>
+    <!-- Tail fold lines -->
+    <line x1="430" y1="420" x2="460" y2="460"/>
+    <line x1="420" y1="440" x2="475" y2="480"/>
+    <!-- Body interior fold lines -->
+    <line x1="360" y1="280" x2="360" y2="360"/>
+    <line x1="440" y1="280" x2="440" y2="360"/>
+    <!-- Shadow on surface -->
+    <ellipse cx="400" cy="550" rx="150" ry="15" fill="#888" fill-opacity="0.04" stroke="none"/>
+    <path d="M250 550 Q400 535 550 550" opacity="0.4"/>
+  </g>
+</svg>

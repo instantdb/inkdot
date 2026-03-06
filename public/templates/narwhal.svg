@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Body -->
+    <path d="M200 300 C200 250 280 200 400 200 C520 200 600 240 650 280 C680 300 680 340 650 360 C600 400 520 420 400 420 C280 420 200 380 200 340 Z"/>
+    <!-- Horn/tusk -->
+    <line x1="200" y1="290" x2="60" y2="230" stroke-width="3"/>
+    <!-- Horn spiral lines -->
+    <path d="M190 288 C175 275 160 278 155 270" fill="none" stroke-width="1.5"/>
+    <path d="M170 282 C155 269 140 272 135 264" fill="none" stroke-width="1.5"/>
+    <path d="M145 274 C130 261 115 264 110 256" fill="none" stroke-width="1.5"/>
+    <path d="M120 266 C105 253 90 256 85 248" fill="none" stroke-width="1.5"/>
+    <!-- Head detail -->
+    <path d="M200 300 C210 295 215 305 210 310" fill="none"/>
+    <!-- Eye -->
+    <circle cx="230" cy="290" r="8" fill-opacity="0.08"/>
+    <circle cx="228" cy="288" r="3" fill-opacity="0.08"/>
+    <!-- Mouth/smile -->
+    <path d="M205 320 C215 330 230 335 240 330" fill="none"/>
+    <!-- Dorsal fin -->
+    <path d="M420 200 C430 160 460 140 470 150 C480 160 470 190 460 200" fill-opacity="0.06"/>
+    <!-- Tail fin -->
+    <path d="M650 310 C690 280 720 260 740 270 C750 278 740 300 720 310" fill-opacity="0.06"/>
+    <path d="M650 330 C690 360 720 380 740 370 C750 362 740 340 720 330" fill-opacity="0.06"/>
+    <!-- Pectoral fin -->
+    <path d="M300 400 C310 430 330 450 350 440 C360 435 350 415 340 405" fill-opacity="0.06"/>
+    <!-- Belly line -->
+    <path d="M240 370 C320 400 480 400 620 350" fill="none" stroke-opacity="0.4"/>
+    <!-- Water splashes -->
+    <path d="M150 380 C140 370 130 375 120 380" fill="none" stroke-opacity="0.3"/>
+    <path d="M160 400 C150 390 140 395 130 400" fill="none" stroke-opacity="0.3"/>
+    <!-- Bubbles -->
+    <circle cx="260" cy="260" r="6" fill="none" stroke-opacity="0.3"/>
+    <circle cx="280" cy="240" r="4" fill="none" stroke-opacity="0.3"/>
+    <circle cx="250" cy="235" r="5" fill="none" stroke-opacity="0.3"/>
+    <!-- Water line -->
+    <path d="M50 420 C100 410 150 430 200 420 C250 410 300 430 350 420 C400 410 450 430 500 420 C550 410 600 430 650 420 C700 410 750 430 780 420" fill="none" stroke-opacity="0.25"/>
+  </g>
+</svg>

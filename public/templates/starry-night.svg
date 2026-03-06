@@ -1,0 +1,258 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- === SKY: Flowing lines that curve around the spiral === -->
+  <g stroke-width="2.5" opacity="0.25">
+    <!-- Upper sky sweeps -->
+    <path d="M0 42 C120 28 220 55 300 62 C400 70 500 35 620 30 C720 26 770 48 800 42"/>
+    <path d="M0 82 C100 62 200 92 300 98 C400 105 480 68 600 60 C720 55 770 78 800 78"/>
+    <!-- Lines that curve AROUND the main spiral (centered ~420,185) -->
+    <path d="M0 130 C100 118 200 140 285 158 C340 170 365 200 350 240 C332 275 290 285 240 272 C170 252 80 210 0 195"/>
+    <path d="M500 130 C540 128 590 148 640 162 C700 180 755 168 800 152"/>
+    <path d="M0 195 C80 182 160 205 235 228 C290 245 310 278 292 310 C270 342 220 348 165 330 C100 308 40 268 0 248"/>
+    <path d="M500 195 C550 188 610 210 670 225 C730 240 770 228 800 215"/>
+    <path d="M510 255 C560 248 620 268 690 282 C745 292 778 278 800 268"/>
+    <!-- Lower sky -->
+    <path d="M0 295 C130 280 260 305 370 318 C450 328 520 308 610 298 C710 290 770 308 800 305"/>
+    <path d="M0 340 C140 328 280 348 400 358 C480 365 550 348 640 340 C730 332 775 348 800 345"/>
+  </g>
+
+  <!-- === MAIN SPIRAL - the iconic vortex === -->
+  <g stroke-width="2.5" opacity="0.32">
+    <path d="
+      M545 185
+      C545 268 485 318 418 318
+      C350 318 290 262 290 185
+      C290 108 348 52 418 52
+      C488 52 540 108 540 180
+      C540 252 485 298 418 298
+      C355 298 310 248 310 185
+      C310 122 358 78 418 78
+      C475 78 520 125 518 180
+      C518 240 475 278 418 278
+      C362 278 332 238 332 185
+      C332 140 368 105 418 105
+      C462 105 492 142 490 182
+      C488 222 462 252 418 252
+      C378 252 355 222 355 185
+      C355 155 378 132 418 132
+      C450 132 468 158 465 182
+    "/>
+  </g>
+
+  <!-- === SECONDARY SWIRL (upper right) - bigger === -->
+  <g stroke-width="2.5" opacity="0.28">
+    <path d="
+      M690 108
+      C690 152 660 182 628 182
+      C596 182 566 152 566 115
+      C566 78 596 48 628 48
+      C660 48 686 75 686 112
+      C686 145 662 168 632 168
+      C604 168 580 142 580 115
+      C580 88 602 65 628 65
+      C652 65 672 85 670 112
+      C668 132 652 148 635 148
+      C618 148 608 132 608 118
+      C608 105 618 95 630 95
+    "/>
+  </g>
+
+  <!-- === SMALL SWIRL (left of cypress) === -->
+  <g stroke-width="1.5" opacity="0.2">
+    <path d="
+      M238 152
+      C238 175 220 192 200 192
+      C180 192 162 175 162 155
+      C162 135 180 118 200 118
+      C218 118 235 132 235 152
+      C234 168 222 180 205 178
+      C190 176 180 165 180 155
+      C180 145 190 135 200 135
+      C210 135 215 145 212 152
+    "/>
+  </g>
+
+  <!-- === STARS with radiating halos === -->
+  <g stroke-width="1.5" opacity="0.38">
+    <!-- Star 1 - large -->
+    <circle cx="280" cy="62" r="6" fill="#888" fill-opacity="0.08"/>
+    <circle cx="280" cy="62" r="16"/>
+    <circle cx="280" cy="62" r="28"/>
+    <circle cx="280" cy="62" r="40"/>
+
+    <!-- Star 2 - large -->
+    <circle cx="555" cy="50" r="5" fill="#888" fill-opacity="0.07"/>
+    <circle cx="555" cy="50" r="14"/>
+    <circle cx="555" cy="50" r="25"/>
+    <circle cx="555" cy="50" r="36"/>
+
+    <!-- Star 3 -->
+    <circle cx="170" cy="45" r="4" fill="#888" fill-opacity="0.06"/>
+    <circle cx="170" cy="45" r="12"/>
+    <circle cx="170" cy="45" r="21"/>
+
+    <!-- Star 4 -->
+    <circle cx="350" cy="30" r="4" fill="#888" fill-opacity="0.06"/>
+    <circle cx="350" cy="30" r="12"/>
+    <circle cx="350" cy="30" r="20"/>
+
+    <!-- Star 5 -->
+    <circle cx="490" cy="25" r="4" fill="#888" fill-opacity="0.05"/>
+    <circle cx="490" cy="25" r="11"/>
+    <circle cx="490" cy="25" r="19"/>
+
+    <!-- Star 6 -->
+    <circle cx="665" cy="195" r="4" fill="#888" fill-opacity="0.05"/>
+    <circle cx="665" cy="195" r="11"/>
+    <circle cx="665" cy="195" r="18"/>
+
+    <!-- Star 7 -->
+    <circle cx="90" cy="38" r="3" fill="#888" fill-opacity="0.04"/>
+    <circle cx="90" cy="38" r="9"/>
+    <circle cx="90" cy="38" r="16"/>
+
+    <!-- Star 8 -->
+    <circle cx="430" cy="22" r="3" fill="#888" fill-opacity="0.04"/>
+    <circle cx="430" cy="22" r="9"/>
+    <circle cx="430" cy="22" r="16"/>
+
+    <!-- Star 9 -->
+    <circle cx="740" cy="145" r="3" fill="#888" fill-opacity="0.04"/>
+    <circle cx="740" cy="145" r="9"/>
+    <circle cx="740" cy="145" r="15"/>
+
+    <!-- Star 10 -->
+    <circle cx="590" cy="38" r="3" fill="#888" fill-opacity="0.04"/>
+    <circle cx="590" cy="38" r="8"/>
+    <circle cx="590" cy="38" r="14"/>
+
+    <!-- Star 11 -->
+    <circle cx="320" cy="55" r="3" fill="#888" fill-opacity="0.04"/>
+    <circle cx="320" cy="55" r="8"/>
+    <circle cx="320" cy="55" r="14"/>
+  </g>
+
+  <!-- === CRESCENT MOON with glow === -->
+  <circle cx="730" cy="55" r="42" fill="#888" fill-opacity="0.1" stroke-width="2"/>
+  <circle cx="750" cy="42" r="34" fill="white" stroke="none"/>
+  <circle cx="730" cy="55" r="50" stroke-width="1" opacity="0.12"/>
+  <circle cx="730" cy="55" r="60" stroke-width="1" opacity="0.08"/>
+
+  <!-- === ROLLING HILLS === -->
+  <path d="M0 405 Q95 368 190 390 Q330 420 440 378 Q550 342 660 385 Q740 412 800 385 L800 600 L0 600Z" fill="#888" fill-opacity="0.04" stroke-width="1.5"/>
+  <path d="M0 455 Q180 425 340 458 Q490 488 640 448 Q745 425 800 452 L800 600 L0 600Z" fill="#888" fill-opacity="0.03" stroke-width="1"/>
+
+  <!-- === CYPRESS TREE - gentle wavy edges, dense dark fill === -->
+  <!-- Main shape - gradual even taper (30px top → 126px bottom) -->
+  <path d="
+    M120 100
+    Q114 142 108 185
+    Q100 230 94 275
+    Q88 320 82 365
+    Q76 410 72 452
+    Q70 488 76 520
+    Q88 542 108 552
+    L162 552
+    Q182 542 194 520
+    Q200 488 198 452
+    Q194 410 188 365
+    Q182 320 176 275
+    Q170 230 162 185
+    Q156 142 150 100
+    C146 74 142 64 136 62
+    C130 64 126 74 120 100
+    Z
+  " fill="#888" fill-opacity="0.14" stroke-width="2.5"/>
+  <!-- Inner density layer -->
+  <path d="
+    M126 130
+    Q122 168 116 208
+    Q110 250 104 295
+    Q98 338 94 380
+    Q88 420 86 458
+    Q84 490 88 515
+    Q98 538 112 548
+    L158 548
+    Q172 538 182 515
+    Q186 490 184 458
+    Q182 420 176 380
+    Q172 338 166 295
+    Q160 250 154 208
+    Q148 168 144 130
+    C142 112 140 105 135 102
+    C130 105 128 112 126 130
+    Z
+  " fill="#888" fill-opacity="0.06" stroke="none"/>
+
+  <!-- Wavy edge overlays for flame effect -->
+  <g stroke-width="2.5" opacity="0.25" fill="none">
+    <!-- Left edge waves -->
+    <path d="M116 115 Q124 140 112 170 Q104 200 112 232 Q102 262 94 295"/>
+    <path d="M94 295 Q90 325 84 355 Q78 388 74 418 Q72 445 72 465"/>
+    <!-- Right edge waves -->
+    <path d="M154 115 Q146 142 158 172 Q166 202 158 234 Q168 264 176 298"/>
+    <path d="M176 298 Q180 328 186 358 Q192 390 196 420 Q198 448 198 468"/>
+  </g>
+
+  <!-- Vertical flame strokes -->
+  <g stroke-width="4" opacity="0.15" fill="none">
+    <path d="M126 85 Q112 190 96 310 Q82 415 86 505 Q94 540 108 555"/>
+    <path d="M144 85 Q158 192 174 312 Q188 418 184 508 Q176 542 162 557"/>
+    <path d="M132 110 Q116 215 100 335 Q86 430 90 512 Q98 545 115 558"/>
+    <path d="M138 112 Q154 218 170 338 Q184 432 180 514 Q172 548 155 560"/>
+  </g>
+  <!-- Inner texture strokes -->
+  <g stroke-width="2" opacity="0.12" fill="none">
+    <path d="M135 130 Q122 235 106 350 Q94 440 98 510 Q106 542 120 558"/>
+    <path d="M135 135 Q148 238 164 352 Q176 442 172 512 Q164 544 150 560"/>
+    <path d="M135 185 Q124 272 110 380 Q100 458 104 518 Q110 545 125 560"/>
+    <path d="M135 190 Q146 275 160 382 Q170 460 166 520 Q160 548 145 562"/>
+  </g>
+
+  <!-- === VILLAGE === -->
+  <g opacity="0.5" stroke-width="1.5">
+    <!-- Church steeple - tallest structure, very prominent -->
+    <rect x="393" y="332" width="40" height="112" fill="#888" fill-opacity="0.07"/>
+    <path d="M382 332 L413 235 L444 332" stroke-width="2"/>
+    <line x1="413" y1="235" x2="413" y2="215" stroke-width="2.5"/>
+    <line x1="404" y1="224" x2="422" y2="224" stroke-width="2.5"/>
+    <rect x="403" y="358" width="14" height="18" rx="7" stroke-width="1.5"/>
+
+    <!-- House 1 - left of church -->
+    <rect x="320" y="388" width="55" height="52" fill="#888" fill-opacity="0.05"/>
+    <path d="M314 388 L347 355 L380 388"/>
+    <rect x="332" y="402" width="11" height="11"/>
+    <rect x="352" y="402" width="11" height="11"/>
+
+    <!-- House 2 - far left -->
+    <rect x="255" y="395" width="48" height="45" fill="#888" fill-opacity="0.04"/>
+    <path d="M249 395 L279 365 L309 395"/>
+    <rect x="266" y="408" width="10" height="10"/>
+    <rect x="282" y="408" width="10" height="10"/>
+
+    <!-- House 3 - right of church -->
+    <rect x="445" y="382" width="55" height="58" fill="#888" fill-opacity="0.05"/>
+    <path d="M439 382 L472 348 L505 382"/>
+    <rect x="457" y="398" width="11" height="11"/>
+    <rect x="477" y="398" width="11" height="11"/>
+
+    <!-- House 4 -->
+    <rect x="510" y="388" width="50" height="50" fill="#888" fill-opacity="0.05"/>
+    <path d="M504 388 L535 358 L566 388"/>
+    <rect x="521" y="402" width="10" height="10"/>
+    <rect x="540" y="402" width="10" height="10"/>
+
+    <!-- House 5 -->
+    <rect x="570" y="395" width="44" height="42" fill="#888" fill-opacity="0.04"/>
+    <path d="M564 395 L592 368 L620 395"/>
+    <rect x="581" y="408" width="9" height="9"/>
+    <rect x="597" y="408" width="9" height="9"/>
+
+    <!-- House 6 - far left small -->
+    <rect x="210" y="402" width="38" height="35" fill="#888" fill-opacity="0.03"/>
+    <path d="M205 402 L229 380 L253 402"/>
+    <rect x="220" y="412" width="8" height="8"/>
+    <rect x="234" y="412" width="8" height="8"/>
+  </g>
+
+</svg>

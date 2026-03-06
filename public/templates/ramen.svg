@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bowl outer -->
+    <path d="M200 300 Q200 480 400 500 Q600 480 600 300" fill="#888" fill-opacity="0.04"/>
+    <!-- Bowl rim -->
+    <ellipse cx="400" cy="300" rx="200" ry="40" fill="#888" fill-opacity="0.05"/>
+    <!-- Bowl inner rim -->
+    <ellipse cx="400" cy="300" rx="185" ry="34" fill="#888" fill-opacity="0.03"/>
+    <!-- Bowl base -->
+    <ellipse cx="400" cy="490" rx="60" ry="10" fill="#888" fill-opacity="0.05"/>
+    <!-- Bowl pattern band -->
+    <path d="M220 350 Q400 380 580 350"/>
+    <!-- Bowl pattern details (Greek key simplified) -->
+    <path d="M250 340 L260 350 L250 360"/>
+    <path d="M300 345 L310 355 L300 365"/>
+    <path d="M350 348 L360 358 L350 368"/>
+    <path d="M450 348 L460 358 L450 368"/>
+    <path d="M500 345 L510 355 L500 365"/>
+    <path d="M550 340 L560 350 L550 360"/>
+    <!-- Broth surface -->
+    <ellipse cx="400" cy="300" rx="175" ry="30" fill="#888" fill-opacity="0.03" stroke="none"/>
+    <!-- Noodles visible in broth -->
+    <path d="M300 290 Q330 310 360 290 Q390 270 420 295 Q450 315 470 290"/>
+    <path d="M280 300 Q310 320 340 300 Q370 280 400 305 Q430 325 460 300"/>
+    <path d="M320 295 Q350 315 380 295 Q410 275 440 300 Q470 320 490 295"/>
+    <!-- Egg half (left side) -->
+    <ellipse cx="330" cy="280" rx="30" ry="22" fill="#888" fill-opacity="0.05"/>
+    <!-- Egg yolk -->
+    <circle cx="330" cy="280" r="12" fill="#888" fill-opacity="0.07"/>
+    <!-- Chashu/pork slice (right side) -->
+    <path d="M460 268 Q490 265 500 280 Q505 295 490 300 Q470 302 458 290 Q455 278 460 268Z" fill="#888" fill-opacity="0.06"/>
+    <!-- Chashu spiral -->
+    <path d="M472 278 Q480 275 485 282 Q487 290 480 292 Q474 293 472 286"/>
+    <!-- Nori (seaweed sheet, standing up) -->
+    <path d="M520 270 L530 200 Q535 195 540 200 L545 280" fill="#888" fill-opacity="0.06"/>
+    <path d="M525 240 Q535 235 540 240"/>
+    <path d="M523 255 Q533 250 542 255"/>
+    <!-- Green onion slices -->
+    <circle cx="380" cy="275" r="6" fill="#888" fill-opacity="0.05"/>
+    <circle cx="395" cy="280" r="5" fill="#888" fill-opacity="0.05"/>
+    <circle cx="410" cy="272" r="6" fill="#888" fill-opacity="0.05"/>
+    <!-- Narutomaki (fish cake) -->
+    <circle cx="440" cy="278" r="10" fill="#888" fill-opacity="0.05"/>
+    <path d="M435 278 Q440 272 445 278 Q440 284 435 278"/>
+    <!-- Chopsticks -->
+    <line x1="480" y1="170" x2="320" y2="310"/>
+    <line x1="510" y1="170" x2="350" y2="305"/>
+    <!-- Chopstick tips -->
+    <line x1="320" y1="310" x2="315" y2="315"/>
+    <line x1="350" y1="305" x2="345" y2="310"/>
+    <!-- Steam wisps -->
+    <path d="M320 240 Q315 220 325 200 Q330 185 320 170" opacity="0.5"/>
+    <path d="M400 230 Q395 210 405 190 Q410 175 400 155" opacity="0.5"/>
+    <path d="M480 240 Q475 220 485 200 Q490 185 480 165" opacity="0.5"/>
+    <!-- Table surface line -->
+    <path d="M120 510 Q400 530 680 510"/>
+  </g>
+</svg>

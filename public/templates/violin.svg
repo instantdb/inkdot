@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Scroll -->
+    <path d="M340 80 Q325 75 320 90 Q318 105 330 110 Q340 112 345 105 Q348 95 340 90" fill="#888" fill-opacity="0.06"/>
+    <path d="M340 80 Q350 78 355 85"/>
+    <!-- Pegbox -->
+    <path d="M345 105 L355 85 L360 160" />
+    <path d="M330 110 L340 108 L350 160"/>
+    <!-- Pegbox fill -->
+    <path d="M340 108 L355 85 L360 160 L350 160Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Tuning pegs -->
+    <line x1="340" y1="115" x2="330" y2="118"/>
+    <line x1="362" y1="120" x2="372" y2="118"/>
+    <line x1="342" y1="135" x2="332" y2="138"/>
+    <line x1="363" y1="140" x2="373" y2="138"/>
+    <!-- Peg knobs -->
+    <circle cx="327" cy="118" r="3" fill="#888" fill-opacity="0.06"/>
+    <circle cx="375" cy="118" r="3" fill="#888" fill-opacity="0.06"/>
+    <circle cx="329" cy="138" r="3" fill="#888" fill-opacity="0.06"/>
+    <circle cx="376" cy="138" r="3" fill="#888" fill-opacity="0.06"/>
+    <!-- Neck -->
+    <path d="M348 160 L345 240"/>
+    <path d="M360 160 L362 240"/>
+    <!-- Neck fill -->
+    <path d="M348 160 L345 240 L362 240 L360 160Z" fill="#888" fill-opacity="0.03"/>
+    <!-- Fingerboard on neck -->
+    <path d="M350 165 L348 238 L360 238 L358 165Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Upper bout (top curves of body) -->
+    <path d="M345 240 Q310 245 295 270 Q280 300 300 325" fill="#888" fill-opacity="0.04"/>
+    <path d="M362 240 Q395 245 412 270 Q425 300 408 325" fill="#888" fill-opacity="0.04"/>
+    <!-- C-bout waist (left) -->
+    <path d="M300 325 Q320 345 315 370" />
+    <!-- C-bout waist (right) -->
+    <path d="M408 325 Q388 345 392 370"/>
+    <!-- Lower bout (bottom curves) -->
+    <path d="M315 370 Q290 400 290 440 Q295 480 330 500 Q355 510 355 510" fill="#888" fill-opacity="0.04"/>
+    <path d="M392 370 Q418 400 418 440 Q412 480 380 500 Q355 510 355 510" fill="#888" fill-opacity="0.04"/>
+    <!-- Body outline connection at bottom -->
+    <path d="M330 500 Q355 515 380 500"/>
+    <!-- F-holes -->
+    <path d="M318 310 Q322 325 315 340 Q312 350 318 360" fill="#888" fill-opacity="0.03"/>
+    <circle cx="316" cy="355" r="3" fill="#888" fill-opacity="0.06"/>
+    <path d="M390 310 Q386 325 392 340 Q395 350 390 360" fill="#888" fill-opacity="0.03"/>
+    <circle cx="392" cy="355" r="3" fill="#888" fill-opacity="0.06"/>
+    <!-- Bridge -->
+    <path d="M330 395 L335 380 Q355 375 375 380 L378 395" fill="#888" fill-opacity="0.05"/>
+    <!-- Tailpiece -->
+    <path d="M340 440 L345 500 Q355 508 365 500 L368 440Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Tailgut -->
+    <line x1="355" y1="505" x2="355" y2="515"/>
+    <!-- End button -->
+    <circle cx="355" cy="517" r="4" fill="#888" fill-opacity="0.06"/>
+    <!-- Strings -->
+    <line x1="350" y1="165" x2="347" y2="440" opacity="0.5"/>
+    <line x1="353" y1="165" x2="352" y2="440" opacity="0.5"/>
+    <line x1="356" y1="165" x2="358" y2="440" opacity="0.5"/>
+    <line x1="359" y1="165" x2="363" y2="440" opacity="0.5"/>
+    <!-- Chinrest -->
+    <path d="M370 470 Q390 465 400 480 Q405 495 390 500 Q375 502 370 490Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Bow - stick -->
+    <path d="M480 60 Q500 300 520 540" stroke-width="2"/>
+    <!-- Bow curve -->
+    <path d="M480 60 Q510 300 520 540"/>
+    <!-- Bow tip -->
+    <path d="M478 60 L485 55 L482 65"/>
+    <!-- Bow frog (bottom grip) -->
+    <path d="M515 530 L525 535 L528 550 L518 548 L515 530" fill="#888" fill-opacity="0.06"/>
+    <!-- Bow hair -->
+    <path d="M482 65 Q495 300 518 535" opacity="0.4"/>
+    <!-- Bow grip winding -->
+    <path d="M518 510 Q523 508 520 515"/>
+    <path d="M519 500 Q524 498 521 505"/>
+    <path d="M519 490 Q524 488 521 495"/>
+  </g>
+</svg>

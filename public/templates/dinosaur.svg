@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- T-Rex facing right - chunky, muscular, short thick neck -->
+
+  <!-- Combined silhouette fill -->
+  <path d="
+    M60 340
+    Q80 310 120 288
+    Q170 265 230 248
+    Q290 232 340 222
+    Q380 214 410 208
+    Q435 200 455 188
+    Q475 172 495 155
+    Q520 138 555 128
+    Q590 120 630 118
+    Q670 118 700 132
+    Q725 148 732 170
+    Q738 195 730 215
+    Q722 230 708 238
+    Q718 248 720 262
+    Q718 278 700 290
+    Q680 300 655 304
+    Q635 306 620 300
+    Q605 292 590 278
+    Q575 268 555 260
+    Q530 285 515 315
+    Q502 348 498 380
+    Q495 410 488 435
+    Q478 458 460 470
+    Q435 482 400 485
+    Q350 488 310 482
+    Q270 475 248 458
+    Q232 440 222 415
+    Q210 400 185 392
+    Q155 385 125 392
+    Q95 400 75 410
+    Q62 418 60 400
+    Z
+  " fill="#888" fill-opacity="0.04" stroke="none"/>
+
+  <!-- Top outline: tail -> back -> neck -> head top -> snout -->
+  <path d="
+    M60 340
+    Q80 310 120 288
+    Q170 265 230 248
+    Q290 232 340 222
+    Q380 214 410 208
+    Q435 200 455 188
+    Q475 172 495 155
+    Q520 138 555 128
+    Q590 120 630 118
+    Q670 118 700 132
+    Q725 148 732 170
+  " fill="none"/>
+
+  <!-- Snout front + upper jaw -->
+  <path d="M732 170 Q738 195 730 215 Q722 230 708 238" fill="none"/>
+
+  <!-- MOUTH GAP - upper jaw curves down, lower jaw curves down more -->
+  <!-- Upper jaw bottom edge -->
+  <path d="M708 238 Q700 242 688 244 Q660 248 630 248 Q600 246 580 240" fill="none" stroke-width="2"/>
+  <!-- Lower jaw -->
+  <path d="M708 238 Q718 248 720 262 Q718 278 700 290 Q680 300 655 304 Q635 306 620 300 Q605 292 590 278 Q578 268 570 255" fill="none" stroke-width="2.5"/>
+
+  <!-- Teeth - upper (pointing down into mouth gap) -->
+  <g stroke-width="2" opacity="0.45">
+    <path d="M600 244 L604 260"/>
+    <path d="M622 246 L626 263"/>
+    <path d="M644 247 L648 264"/>
+    <path d="M664 246 L668 262"/>
+    <path d="M682 244 L686 260"/>
+    <path d="M698 240 L700 254"/>
+  </g>
+  <!-- Teeth - lower (pointing up into mouth gap) -->
+  <g stroke-width="2" opacity="0.45">
+    <path d="M592 276 L596 260"/>
+    <path d="M612 282 L616 265"/>
+    <path d="M632 286 L636 268"/>
+    <path d="M652 286 L656 268"/>
+    <path d="M672 282 L675 266"/>
+    <path d="M690 274 L692 260"/>
+  </g>
+
+  <!-- Throat + chest + belly -->
+  <path d="
+    M570 255
+    Q555 260 540 272
+    Q525 288 515 315
+    Q502 348 498 380
+    Q495 410 488 435
+    Q478 458 460 470
+    Q435 482 400 485
+    Q350 488 310 482
+    Q270 475 248 458
+    Q232 440 222 415
+  " fill="none"/>
+
+  <!-- Tail underside -->
+  <path d="
+    M222 415
+    Q210 400 185 392
+    Q155 385 125 392
+    Q95 400 75 410
+    Q62 418 60 400
+  " fill="none"/>
+
+  <!-- Eye - fierce -->
+  <circle cx="648" cy="162" r="15" fill="#888" fill-opacity="0.07"/>
+  <circle cx="651" cy="162" r="8" fill="#888" stroke="none"/>
+  <circle cx="654" cy="158" r="3" fill="white" stroke="none"/>
+  <!-- Brow ridge - heavy -->
+  <path d="M625 142 Q648 130 675 142" stroke-width="4" opacity="0.35"/>
+
+  <!-- Nostril -->
+  <circle cx="720" cy="158" r="5" fill="#888" fill-opacity="0.1"/>
+
+  <!-- Tiny arms with claws -->
+  <path d="M545 280 Q538 300 536 315 Q534 325 540 328 Q545 326 546 318" fill="none" stroke-width="3" opacity="0.5"/>
+  <path d="M546 318 L551 326" stroke-width="2" opacity="0.4"/>
+  <path d="M546 318 L540 325" stroke-width="2" opacity="0.4"/>
+
+  <path d="M530 295 Q525 312 524 326 Q523 335 528 337 Q533 335 533 328" fill="none" stroke-width="3" opacity="0.45"/>
+  <path d="M533 328 L538 336" stroke-width="2" opacity="0.4"/>
+  <path d="M533 328 L527 335" stroke-width="2" opacity="0.4"/>
+
+  <!-- Left hind leg - MASSIVE muscular thigh -->
+  <path d="
+    M310 455
+    Q295 462 282 480
+    Q270 502 272 528
+    Q276 548 295 555
+    L338 555
+    Q352 555 348 542
+    Q338 522 342 495
+    Q348 470 365 452
+  " fill="#888" fill-opacity="0.05"/>
+  <!-- Toes with claws -->
+  <g stroke-width="2.5" opacity="0.4">
+    <path d="M286 552 L275 570"/>
+    <path d="M308 555 L302 572"/>
+    <path d="M328 553 L328 570"/>
+  </g>
+
+  <!-- Right hind leg (behind, slightly offset) -->
+  <path d="
+    M380 458
+    Q368 468 358 488
+    Q350 510 352 532
+    Q356 548 372 552
+    L410 552
+    Q422 552 418 542
+    Q410 524 413 498
+    Q418 475 430 456
+  " fill="#888" fill-opacity="0.03" stroke-width="2" opacity="0.5"/>
+  <!-- Toes -->
+  <g stroke-width="2" opacity="0.3">
+    <path d="M364 550 L356 566"/>
+    <path d="M382 552 L378 568"/>
+    <path d="M400 550 L400 566"/>
+  </g>
+
+  <!-- Spine bumps along the back -->
+  <g stroke-width="2" opacity="0.25">
+    <path d="M445 200 L438 182 L453 204"/>
+    <path d="M418 210 L410 192 L426 214"/>
+    <path d="M390 218 L380 200 L398 222"/>
+    <path d="M360 226 L348 210 L368 230"/>
+    <path d="M330 234 L318 220 L338 238"/>
+    <path d="M300 244 L288 232 L308 248"/>
+    <path d="M270 254 L258 244 L278 258"/>
+  </g>
+
+  <!-- Tail tip -->
+  <path d="M60 340 Q52 330 58 322 Q66 328 60 340" fill="#888" fill-opacity="0.06" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Skin texture -->
+  <g stroke-width="1" opacity="0.1">
+    <path d="M430 320 Q448 328 455 348"/>
+    <path d="M400 365 Q418 372 428 388"/>
+    <path d="M480 280 Q495 286 502 300"/>
+  </g>
+</svg>

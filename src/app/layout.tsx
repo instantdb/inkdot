@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { getUnverifiedUserFromInstantCookie } from '@instantdb/react/nextjs';
+import { InstantProvider } from './InstantProvider';
 import './globals.css';
 
 const geistSans = Geist({
@@ -13,21 +15,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Create Instant App',
-  description: 'Instant DB Starter App',
+  title: 'InkDot',
+  description: 'Draw, stream, and replay tiny sketches.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getUnverifiedUserFromInstantCookie(
+    process.env.NEXT_PUBLIC_INSTANT_APP_ID!,
+  );
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <InstantProvider user={user ?? undefined}>{children}</InstantProvider>
       </body>
     </html>
   );

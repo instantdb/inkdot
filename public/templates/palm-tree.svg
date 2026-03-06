@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Trunk -->
+    <path d="M390 520 Q385 450 395 380 Q400 310 405 260 Q410 220 400 180" fill="#888" fill-opacity="0.04"/>
+    <path d="M410 520 Q415 450 412 380 Q408 310 415 260 Q418 220 400 180"/>
+    <!-- Trunk texture/segments -->
+    <path d="M392 480 Q400 475 410 480"/>
+    <path d="M393 440 Q400 435 410 440"/>
+    <path d="M394 400 Q402 395 411 400"/>
+    <path d="M395 360 Q403 355 412 360"/>
+    <path d="M397 320 Q404 315 413 320"/>
+    <path d="M398 280 Q405 275 414 280"/>
+    <path d="M400 240 Q407 235 414 240"/>
+    <!-- Frond 1 - top right -->
+    <path d="M400 180 Q450 150 520 120 Q560 108 600 115" fill="#888" fill-opacity="0.04"/>
+    <path d="M400 180 Q440 160 500 140 Q550 128 590 130"/>
+    <!-- Frond 1 leaflets -->
+    <path d="M450 155 L470 135 L480 150"/>
+    <path d="M500 138 L525 115 L530 135"/>
+    <path d="M550 125 L575 105 L575 125"/>
+    <!-- Frond 2 - right drooping -->
+    <path d="M400 180 Q460 190 530 220 Q580 245 620 280" fill="#888" fill-opacity="0.03"/>
+    <path d="M400 185 Q450 195 510 225 Q560 250 600 275"/>
+    <!-- Frond 2 leaflets -->
+    <path d="M460 200 L480 190 L478 210"/>
+    <path d="M520 225 L545 218 L538 238"/>
+    <path d="M570 255 L590 250 L585 268"/>
+    <!-- Frond 3 - top left -->
+    <path d="M400 180 Q350 145 280 115 Q240 100 200 105" fill="#888" fill-opacity="0.04"/>
+    <path d="M400 180 Q360 155 300 130 Q250 115 210 120"/>
+    <!-- Frond 3 leaflets -->
+    <path d="M350 150 L330 130 L325 150"/>
+    <path d="M300 130 L275 110 L270 130"/>
+    <path d="M250 115 L225 100 L225 118"/>
+    <!-- Frond 4 - left drooping -->
+    <path d="M400 180 Q340 190 270 225 Q220 255 180 295" fill="#888" fill-opacity="0.03"/>
+    <path d="M400 185 Q350 200 290 230 Q240 260 200 290"/>
+    <!-- Frond 4 leaflets -->
+    <path d="M340 205 L320 195 L325 215"/>
+    <path d="M280 235 L258 228 L265 248"/>
+    <path d="M230 268 L210 262 L218 280"/>
+    <!-- Frond 5 - back center -->
+    <path d="M400 175 Q395 130 385 85 Q380 55 390 30" fill="#888" fill-opacity="0.03"/>
+    <path d="M405 175 Q405 130 400 85 Q398 55 405 30"/>
+    <!-- Frond 5 leaflets -->
+    <path d="M395 120 L378 110 L390 105"/>
+    <path d="M405 120 L420 108 L410 105"/>
+    <path d="M390 70 L375 60 L388 55"/>
+    <path d="M403 70 L418 58 L406 55"/>
+    <!-- Coconuts -->
+    <circle cx="390" cy="190" r="12" fill="#888" fill-opacity="0.06"/>
+    <circle cx="410" cy="195" r="11" fill="#888" fill-opacity="0.06"/>
+    <circle cx="398" cy="200" r="10" fill="#888" fill-opacity="0.06"/>
+    <!-- Ground/sand -->
+    <path d="M200 530 Q300 520 400 525 Q500 520 600 530" />
+    <path d="M150 550 Q300 540 400 545 Q500 540 650 550"/>
+    <!-- Ground shadow -->
+    <ellipse cx="400" cy="535" rx="120" ry="10" fill="#888" fill-opacity="0.04" stroke="none"/>
+  </g>
+</svg>

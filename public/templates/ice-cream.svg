@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Cone -->
+    <path d="M310 340 L400 570 L490 340" fill-opacity="0.06"/>
+    <!-- Cone cross-hatch -->
+    <line x1="330" y1="370" x2="470" y2="370" fill="none"/>
+    <line x1="345" y1="400" x2="455" y2="400" fill="none"/>
+    <line x1="360" y1="430" x2="440" y2="430" fill="none"/>
+    <line x1="375" y1="460" x2="425" y2="460" fill="none"/>
+    <line x1="390" y1="490" x2="410" y2="490" fill="none"/>
+    <line x1="340" y1="340" x2="430" y2="490" fill="none"/>
+    <line x1="380" y1="340" x2="420" y2="490" fill="none"/>
+    <line x1="420" y1="340" x2="410" y2="490" fill="none"/>
+    <line x1="460" y1="340" x2="395" y2="490" fill="none"/>
+    <!-- Bottom scoop -->
+    <circle cx="400" cy="280" r="75"/>
+    <!-- Middle scoop -->
+    <circle cx="370" cy="195" r="65"/>
+    <!-- Top scoop -->
+    <circle cx="420" cy="130" r="55"/>
+    <!-- Drips -->
+    <path d="M330 310 C328 330 335 345 340 340" fill="none"/>
+    <path d="M460 300 C465 325 462 340 455 335" fill="none"/>
+    <path d="M380 330 C378 350 382 355 386 348" fill="none"/>
+    <!-- Cherry on top -->
+    <circle cx="420" cy="75" r="15" fill-opacity="0.08"/>
+    <path d="M420 60 C425 40 435 35 440 30" fill="none"/>
+  </g>
+</svg>

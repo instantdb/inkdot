@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Branch -->
+    <path d="M80 120 C200 100 400 130 600 110 C680 105 750 115 780 108" fill="none" stroke-width="8" stroke-opacity="0.4"/>
+    <!-- Small branch -->
+    <path d="M600 110 C610 80 625 55 640 45" fill="none" stroke-width="4" stroke-opacity="0.3"/>
+    <!-- Leaves -->
+    <ellipse cx="645" cy="40" rx="10" ry="22" transform="rotate(-15 645 40)" fill-opacity="0.06"/>
+    <ellipse cx="660" cy="48" rx="10" ry="22" transform="rotate(20 660 48)" fill-opacity="0.06"/>
+    <!-- Left arm hanging up to branch -->
+    <path d="M300 200 C290 170 285 140 290 125" fill="none" stroke-width="3"/>
+    <!-- Left claws on branch - long curved hooks -->
+    <path d="M278 122 C270 104 280 96 290 106" fill="none" stroke-width="3"/>
+    <path d="M288 122 C282 102 292 94 302 104" fill="none" stroke-width="3"/>
+    <path d="M298 125 C294 105 304 98 314 108" fill="none" stroke-width="3"/>
+    <!-- Right arm hanging up to branch -->
+    <path d="M480 210 C490 180 495 150 490 130" fill="none" stroke-width="3"/>
+    <!-- Right claws on branch - long curved hooks -->
+    <path d="M478 127 C470 109 480 101 490 111" fill="none" stroke-width="3"/>
+    <path d="M488 127 C482 107 492 99 502 109" fill="none" stroke-width="3"/>
+    <path d="M498 130 C494 110 504 103 514 113" fill="none" stroke-width="3"/>
+    <!-- Body -->
+    <ellipse cx="390" cy="300" rx="120" ry="140"/>
+    <!-- Head -->
+    <circle cx="390" cy="190" r="65"/>
+    <!-- Face mask / eye patches -->
+    <ellipse cx="365" cy="185" rx="28" ry="22" fill-opacity="0.06"/>
+    <ellipse cx="415" cy="185" rx="28" ry="22" fill-opacity="0.06"/>
+    <!-- Eyes (sleepy/half-closed) -->
+    <path d="M355 185 C360 180 370 180 375 185" fill="none" stroke-width="2"/>
+    <path d="M405 185 C410 180 420 180 425 185" fill="none" stroke-width="2"/>
+    <!-- Nose -->
+    <ellipse cx="390" cy="205" rx="10" ry="7" fill-opacity="0.08"/>
+    <!-- Smile -->
+    <path d="M375 218 C382 228 398 228 405 218" fill="none"/>
+    <!-- Belly patch -->
+    <ellipse cx="390" cy="320" rx="70" ry="90" fill-opacity="0.03"/>
+    <!-- Left leg hanging -->
+    <path d="M320 410 C310 450 300 480 310 500" fill="none" stroke-width="3"/>
+    <!-- Left foot claws - long curved hooks -->
+    <path d="M298 496 C290 512 300 520 310 512" fill="none" stroke-width="3"/>
+    <path d="M308 498 C302 516 312 524 322 514" fill="none" stroke-width="3"/>
+    <path d="M318 496 C314 514 324 520 334 510" fill="none" stroke-width="3"/>
+    <!-- Right leg hanging -->
+    <path d="M460 405 C470 445 480 475 470 498" fill="none" stroke-width="3"/>
+    <!-- Right foot claws - long curved hooks -->
+    <path d="M458 494 C450 512 460 520 470 510" fill="none" stroke-width="3"/>
+    <path d="M468 496 C462 516 472 524 482 512" fill="none" stroke-width="3"/>
+    <path d="M478 494 C474 514 484 520 494 508" fill="none" stroke-width="3"/>
+    <!-- Fur texture - short v-marks -->
+    <g fill="none" stroke-opacity="0.25" stroke-width="1.5">
+      <path d="M310 260 C315 255 320 260"/>
+      <path d="M460 270 C465 265 470 270"/>
+      <path d="M350 380 C355 375 360 380"/>
+      <path d="M420 370 C425 365 430 370"/>
+      <path d="M300 300 C305 295 310 300"/>
+      <path d="M470 310 C475 305 480 310"/>
+      <path d="M340 340 C345 335 350 340"/>
+      <path d="M430 400 C435 395 440 400"/>
+      <path d="M370 260 C375 255 380 260"/>
+      <path d="M400 420 C405 415 410 420"/>
+      <path d="M320 360 C325 355 330 360"/>
+      <path d="M450 350 C455 345 460 350"/>
+    </g>
+    <!-- Longer shaggy fur strokes -->
+    <g fill="none" stroke-opacity="0.15" stroke-width="1.8">
+      <!-- Arms -->
+      <path d="M288 155 Q282 165 286 175"/>
+      <path d="M296 170 Q290 182 294 192"/>
+      <path d="M492 160 Q498 170 494 180"/>
+      <path d="M484 175 Q490 187 486 197"/>
+      <!-- Body sides -->
+      <path d="M278 280 Q272 295 278 310"/>
+      <path d="M282 320 Q276 335 282 348"/>
+      <path d="M500 290 Q506 305 500 318"/>
+      <path d="M496 330 Q502 345 496 358"/>
+      <!-- Bottom -->
+      <path d="M330 420 Q325 432 330 442"/>
+      <path d="M450 415 Q455 428 450 438"/>
+    </g>
+  </g>
+</svg>

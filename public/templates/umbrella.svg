@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Umbrella canopy - main dome -->
+    <path d="M150 280 Q150 120 400 100 Q650 120 650 280" fill="#888" fill-opacity="0.04"/>
+    <!-- Canopy scalloped edge -->
+    <path d="M150 280 Q185 250 220 280 Q255 250 290 280 Q325 250 360 280 Q380 250 400 280 Q420 250 440 280 Q475 250 510 280 Q545 250 580 280 Q615 250 650 280"/>
+    <!-- Canopy ribs -->
+    <path d="M400 100 L150 280"/>
+    <path d="M400 100 L220 280"/>
+    <path d="M400 100 L290 280"/>
+    <path d="M400 100 L360 280"/>
+    <path d="M400 100 L440 280"/>
+    <path d="M400 100 L510 280"/>
+    <path d="M400 100 L580 280"/>
+    <path d="M400 100 L650 280"/>
+    <!-- Canopy panel shading -->
+    <path d="M400 100 Q310 180 290 280 Q325 250 360 280 Q380 180 400 100" fill="#888" fill-opacity="0.03"/>
+    <path d="M400 100 Q470 180 510 280 Q545 250 580 280 Q500 180 400 100" fill="#888" fill-opacity="0.03"/>
+    <!-- Top tip/finial -->
+    <circle cx="400" cy="97" r="5" fill="#888" fill-opacity="0.07"/>
+    <!-- Shaft/pole -->
+    <line x1="400" y1="105" x2="400" y2="500"/>
+    <!-- Handle - J-curve -->
+    <path d="M400 500 Q400 540 380 550 Q350 558 340 540 Q335 520 350 515" fill="#888" fill-opacity="0.04"/>
+    <!-- Handle thickness -->
+    <path d="M395 500 Q395 535 378 543 Q355 548 348 535 Q345 522 355 518"/>
+    <!-- Ferrule (tip at top of shaft) -->
+    <line x1="395" y1="100" x2="405" y2="100"/>
+    <!-- Runner (sliding piece on shaft) -->
+    <rect x="394" y="270" width="12" height="10" rx="2" fill="#888" fill-opacity="0.05"/>
+    <!-- Rain drops -->
+    <path d="M200 50 L195 65" opacity="0.4"/>
+    <path d="M300 30 L295 45" opacity="0.4"/>
+    <path d="M500 40 L495 55" opacity="0.4"/>
+    <path d="M600 55 L595 70" opacity="0.4"/>
+    <path d="M160 70 L155 85" opacity="0.4"/>
+    <path d="M650 35 L645 50" opacity="0.4"/>
+    <path d="M250 55 L245 70" opacity="0.4"/>
+    <path d="M550 25 L545 40" opacity="0.4"/>
+    <!-- Splashing drops below canopy -->
+    <path d="M220 300 L215 320" opacity="0.3"/>
+    <path d="M350 295 L345 315" opacity="0.3"/>
+    <path d="M510 298 L505 318" opacity="0.3"/>
+    <path d="M580 300 L575 320" opacity="0.3"/>
+    <path d="M440 295 L435 315" opacity="0.3"/>
+    <!-- Puddle on ground -->
+    <ellipse cx="400" cy="565" rx="180" ry="12" fill="#888" fill-opacity="0.04"/>
+    <path d="M220 565 Q400 555 580 565" opacity="0.4"/>
+    <path d="M260 575 Q400 568 540 575" opacity="0.3"/>
+  </g>
+</svg>

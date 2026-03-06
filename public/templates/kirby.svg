@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Kirby -->
+
+  <!-- Body (big round ball) -->
+  <circle cx="400" cy="300" r="160" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Eyes -->
+  <ellipse cx="360" cy="260" rx="20" ry="30" fill="#888" fill-opacity="0.08"/>
+  <ellipse cx="440" cy="260" rx="20" ry="30" fill="#888" fill-opacity="0.08"/>
+  <!-- Pupils (tall ovals) -->
+  <ellipse cx="365" cy="265" rx="10" ry="18" fill="#888" fill-opacity="0.12"/>
+  <ellipse cx="445" cy="265" rx="10" ry="18" fill="#888" fill-opacity="0.12"/>
+  <!-- Blue highlights -->
+  <ellipse cx="368" cy="255" rx="5" ry="8" fill="white" stroke="none"/>
+  <ellipse cx="448" cy="255" rx="5" ry="8" fill="white" stroke="none"/>
+
+  <!-- Mouth (open, happy) -->
+  <path d="M375 320 Q400 350 425 320" fill="#888" fill-opacity="0.04" stroke-width="2"/>
+
+  <!-- Blush -->
+  <ellipse cx="325" cy="310" rx="20" ry="12" fill="#888" fill-opacity="0.04" stroke="none"/>
+  <ellipse cx="475" cy="310" rx="20" ry="12" fill="#888" fill-opacity="0.04" stroke="none"/>
+
+  <!-- Left arm (stubby, waving) -->
+  <path d="M255 250 Q210 220 190 235 Q175 250 190 270 Q210 285 250 275" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Right arm (stubby) -->
+  <path d="M545 280 Q590 275 600 295 Q605 315 585 325 Q560 330 545 315" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Feet (oval, at bottom) -->
+  <ellipse cx="340" cy="450" rx="55" ry="25" fill="#888" fill-opacity="0.06" transform="rotate(-10 340 450)"/>
+  <ellipse cx="460" cy="450" rx="55" ry="25" fill="#888" fill-opacity="0.06" transform="rotate(10 460 450)"/>
+
+  <!-- Feet sole line -->
+  <path d="M300 455 Q340 465 375 455" stroke-width="1.5" opacity="0.15"/>
+  <path d="M425 455 Q460 465 500 455" stroke-width="1.5" opacity="0.15"/>
+</svg>

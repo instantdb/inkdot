@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main envelope/body -->
+    <ellipse cx="400" cy="230" rx="300" ry="110" fill="#888" fill-opacity="0.04"/>
+    <!-- Horizontal stripe details -->
+    <path d="M110,210 Q400,200 690,210" fill="none" stroke-opacity="0.5"/>
+    <path d="M110,250 Q400,260 690,250" fill="none" stroke-opacity="0.5"/>
+    <!-- Nose cone detail -->
+    <path d="M105,230 Q100,210 110,195" fill="none"/>
+    <path d="M105,230 Q100,250 110,265" fill="none"/>
+    <!-- Top fin -->
+    <path d="M620,140 L700,120 L700,175" fill="#888" fill-opacity="0.05"/>
+    <!-- Bottom fin -->
+    <path d="M620,320 L700,340 L700,285" fill="#888" fill-opacity="0.05"/>
+    <!-- Side fin -->
+    <path d="M650,230 L710,210 L710,250 Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Gondola/cabin -->
+    <path d="M300,340 L320,360 L480,360 L500,340" fill="none"/>
+    <rect x="320" y="360" width="160" height="45" rx="5" fill="#888" fill-opacity="0.06"/>
+    <!-- Gondola windows -->
+    <rect x="340" y="370" width="15" height="15" rx="2" fill="#888" fill-opacity="0.04"/>
+    <rect x="365" y="370" width="15" height="15" rx="2" fill="#888" fill-opacity="0.04"/>
+    <rect x="390" y="370" width="15" height="15" rx="2" fill="#888" fill-opacity="0.04"/>
+    <rect x="415" y="370" width="15" height="15" rx="2" fill="#888" fill-opacity="0.04"/>
+    <rect x="440" y="370" width="15" height="15" rx="2" fill="#888" fill-opacity="0.04"/>
+    <!-- Cables connecting gondola to envelope -->
+    <line x1="330" y1="340" x2="300" y2="360"/>
+    <line x1="470" y1="340" x2="500" y2="360"/>
+    <line x1="370" y1="340" x2="370" y2="360"/>
+    <line x1="430" y1="340" x2="430" y2="360"/>
+    <!-- Propellers at rear -->
+    <ellipse cx="695" cy="310" rx="8" ry="25" fill="#888" fill-opacity="0.04"/>
+    <ellipse cx="695" cy="150" rx="8" ry="25" fill="#888" fill-opacity="0.04"/>
+    <!-- Panel lines on envelope -->
+    <path d="M200,140 L200,320" fill="none" stroke-opacity="0.3"/>
+    <path d="M350,125 L350,335" fill="none" stroke-opacity="0.3"/>
+    <path d="M500,130 L500,330" fill="none" stroke-opacity="0.3"/>
+    <path d="M600,150 L600,310" fill="none" stroke-opacity="0.3"/>
+  </g>
+</svg>

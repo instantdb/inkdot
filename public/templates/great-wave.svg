@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Great wave -->
+  <path d="M50 350 Q100 300 150 280 Q200 260 250 240 Q300 220 350 200 Q380 190 400 180 Q430 170 450 175 Q470 180 480 200 Q490 220 485 250 Q480 270 460 280"
+    fill="#888" fill-opacity="0.06" stroke-width="3"/>
+
+  <!-- Wave curl/crest -->
+  <path d="M460 280 Q440 290 430 280 Q420 260 430 240 Q445 220 460 230 Q470 240 465 260"
+    fill="#888" fill-opacity="0.04" stroke-width="2"/>
+
+  <!-- Spray/foam fingers -->
+  <g stroke-width="1.5" opacity="0.4">
+    <path d="M460 200 Q465 185 458 175"/>
+    <path d="M450 195 Q452 178 445 168"/>
+    <path d="M440 192 Q440 175 433 165"/>
+    <path d="M470 210 Q478 195 472 182"/>
+    <path d="M475 225 Q485 210 480 195"/>
+  </g>
+
+  <!-- Wave body -->
+  <path d="M50 350 Q80 360 120 370 Q200 390 300 380 Q380 370 430 340 Q460 320 460 280"
+    fill="#888" fill-opacity="0.04" stroke-width="2"/>
+
+  <!-- Smaller wave behind -->
+  <path d="M500 320 Q530 290 560 280 Q590 275 620 285 Q640 295 650 310 Q655 325 640 335"
+    fill="#888" fill-opacity="0.04" stroke-width="2"/>
+  <!-- Small wave curl -->
+  <g stroke-width="1.5" opacity="0.3">
+    <path d="M640 310 Q645 298 638 290"/>
+    <path d="M635 305 Q638 292 630 285"/>
+  </g>
+
+  <!-- Third wave -->
+  <path d="M620 360 Q660 340 690 335 Q720 332 740 340 Q755 350 750 365"
+    fill="#888" fill-opacity="0.03" stroke-width="1.5"/>
+
+  <!-- Water texture -->
+  <g stroke-width="1" opacity="0.15">
+    <path d="M100 400 Q150 390 200 400 Q250 410 300 400"/>
+    <path d="M300 420 Q380 410 450 420 Q520 430 580 415"/>
+    <path d="M50 440 Q120 430 200 440 Q280 450 350 440"/>
+    <path d="M400 450 Q480 440 560 450 Q640 460 720 445"/>
+    <path d="M100 470 Q200 460 300 470 Q400 480 500 465"/>
+    <path d="M500 480 Q580 470 660 480 Q720 488 780 475"/>
+  </g>
+
+  <!-- Boats (small, in trough) -->
+  <g opacity="0.3" stroke-width="1.5">
+    <path d="M300 350 Q310 360 320 350"/>
+    <line x1="310" y1="340" x2="310" y2="350"/>
+    <path d="M530 355 Q540 365 550 355"/>
+    <line x1="540" y1="345" x2="540" y2="355"/>
+  </g>
+
+  <!-- Mt. Fuji in background -->
+  <path d="M560 320 L620 180 L680 320" fill="#888" fill-opacity="0.03" stroke-width="1.5" opacity="0.4"/>
+  <!-- Snow cap -->
+  <path d="M598 220 L620 180 L642 220 Q620 230 598 220" fill="#888" fill-opacity="0.02" stroke-width="1" opacity="0.4"/>
+
+</svg>

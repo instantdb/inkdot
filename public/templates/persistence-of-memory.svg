@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sky gradient lines -->
+  <g stroke-width="1" opacity="0.08">
+    <line x1="0" y1="40" x2="800" y2="40"/>
+    <line x1="0" y1="80" x2="800" y2="80"/>
+    <line x1="0" y1="120" x2="800" y2="120"/>
+    <line x1="0" y1="160" x2="800" y2="160"/>
+  </g>
+
+  <!-- Distant cliffs/mesa -->
+  <path d="M520 200 L550 120 L590 140 L640 100 L700 130 L760 90 L800 120 L800 280 L520 280Z" fill="#888" fill-opacity="0.04" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Horizon line -->
+  <line x1="0" y1="280" x2="800" y2="280" stroke-width="1" opacity="0.15"/>
+
+  <!-- Water/bay -->
+  <path d="M520 280 L800 280 L800 450 L520 400Z" fill="#888" fill-opacity="0.02"/>
+  <g stroke-width="0.8" opacity="0.08">
+    <path d="M540 300 Q600 295 700 305"/>
+    <path d="M550 330 Q620 325 720 335"/>
+    <path d="M560 360 Q630 355 740 365"/>
+  </g>
+
+  <!-- Ground/platform ledge -->
+  <path d="M0 280 L520 280 L520 400 L0 450Z" fill="#888" fill-opacity="0.03" stroke-width="1.5"/>
+
+  <!-- Rectangular block/platform on left -->
+  <path d="M40 280 L200 280 L200 380 L40 400Z" fill="#888" fill-opacity="0.04" stroke-width="1.5"/>
+
+  <!-- Dead tree -->
+  <line x1="280" y1="280" x2="280" y2="140" stroke-width="4" opacity="0.35"/>
+  <path d="M280 170 Q310 155 340 165" stroke-width="2.5" opacity="0.3"/>
+  <path d="M280 200 Q250 185 235 195" stroke-width="2" opacity="0.25"/>
+  <path d="M280 145 Q295 130 305 140" stroke-width="2" opacity="0.25"/>
+
+  <!-- CLOCK 1: Melting clock draped over tree branch -->
+  <path d="M300 155 Q340 140 370 155 Q385 165 380 185 Q375 210 360 225 Q345 235 330 230 Q310 220 305 195 Q302 175 300 155Z" fill="#888" fill-opacity="0.05"/>
+  <!-- Melting drip from clock -->
+  <path d="M370 180 Q385 195 380 220 Q375 245 365 260" fill="none" stroke-width="1.5"/>
+  <!-- Clock face details -->
+  <circle cx="340" cy="185" r="4" fill="#888" stroke="none" opacity="0.3"/>
+  <line x1="340" y1="185" x2="340" y2="170" stroke-width="1.5" opacity="0.4"/>
+  <line x1="340" y1="185" x2="352" y2="180" stroke-width="1" opacity="0.3"/>
+  <!-- Clock edge ticks -->
+  <g stroke-width="1" opacity="0.2">
+    <line x1="340" y1="160" x2="340" y2="164"/>
+    <line x1="340" y1="206" x2="340" y2="202"/>
+    <line x1="318" y1="185" x2="322" y2="185"/>
+    <line x1="362" y1="185" x2="358" y2="185"/>
+  </g>
+
+  <!-- CLOCK 2: Melting clock draped over ledge edge -->
+  <path d="M460 265 Q500 255 530 265 Q545 275 540 295 Q535 315 520 330 Q505 340 485 335 Q465 325 460 300 Q458 280 460 265Z" fill="#888" fill-opacity="0.05"/>
+  <!-- Dripping over edge -->
+  <path d="M530 290 Q545 310 540 340 Q535 365 525 380" fill="none" stroke-width="1.5"/>
+  <!-- Clock face -->
+  <circle cx="498" cy="295" r="4" fill="#888" stroke="none" opacity="0.3"/>
+  <line x1="498" y1="295" x2="498" y2="278" stroke-width="1.5" opacity="0.4"/>
+  <line x1="498" y1="295" x2="512" y2="290" stroke-width="1" opacity="0.3"/>
+  <g stroke-width="1" opacity="0.2">
+    <line x1="498" y1="270" x2="498" y2="274"/>
+    <line x1="498" y1="316" x2="498" y2="312"/>
+    <line x1="475" y1="295" x2="479" y2="295"/>
+    <line x1="521" y1="295" x2="517" y2="295"/>
+  </g>
+
+  <!-- CLOCK 3: Closed pocket watch on block (with ants) -->
+  <ellipse cx="120" cy="290" rx="45" ry="20" fill="#888" fill-opacity="0.05"/>
+  <path d="M78 290 Q75 305 82 315" fill="none" stroke-width="1.5"/>
+  <!-- Watch ring -->
+  <path d="M120 270 Q125 262 130 270" stroke-width="1.5" opacity="0.3"/>
+  <!-- Ants on watch -->
+  <g fill="#888" stroke="none" opacity="0.35">
+    <circle cx="105" cy="285" r="1.8"/>
+    <circle cx="112" cy="292" r="1.8"/>
+    <circle cx="118" cy="283" r="1.8"/>
+    <circle cx="130" cy="288" r="1.8"/>
+    <circle cx="138" cy="295" r="1.8"/>
+    <circle cx="100" cy="293" r="1.5"/>
+  </g>
+
+  <!-- Strange melting creature/face on ground -->
+  <path d="M320 350 Q350 330 390 340 Q420 355 430 380 Q435 410 415 435 Q390 450 355 445 Q330 435 320 410 Q315 385 320 350Z" fill="#888" fill-opacity="0.04"/>
+  <!-- Eyelash/closed eye on creature -->
+  <path d="M360 390 Q370 382 385 388" stroke-width="2" opacity="0.3"/>
+  <path d="M365 395 Q368 388 375 385" stroke-width="1" opacity="0.2"/>
+  <!-- Tongue/lip shape -->
+  <path d="M375 410 Q385 420 395 415" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- CLOCK 4: Draped over the creature -->
+  <path d="M340 375 Q370 365 400 375 Q415 382 412 395 Q408 408 395 415" fill="none" stroke-width="1.5"/>
+  <path d="M412 395 Q420 405 418 420" fill="none" stroke-width="1.5"/>
+  <!-- Mini clock face -->
+  <circle cx="375" cy="382" r="3" fill="#888" stroke="none" opacity="0.3"/>
+  <line x1="375" y1="382" x2="375" y2="374" stroke-width="1" opacity="0.3"/>
+  <line x1="375" y1="382" x2="382" y2="380" stroke-width="0.8" opacity="0.25"/>
+</svg>

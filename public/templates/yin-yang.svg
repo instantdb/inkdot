@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer circle -->
+    <circle cx="400" cy="300" r="230" fill="#888" fill-opacity="0.03"/>
+    <!-- S-curve dividing line -->
+    <path d="M400,70 A115,115 0 0,1 400,300 A115,115 0 0,0 400,530" fill="#888" fill-opacity="0.06"/>
+    <!-- Right half (implicit from outer circle minus left path) -->
+    <path d="M400,70 A230,230 0 0,1 400,530 A115,115 0 0,1 400,300 A115,115 0 0,0 400,70" fill="#888" fill-opacity="0.03"/>
+    <!-- Small dark dot (in light area) -->
+    <circle cx="400" cy="185" r="28" fill="#888" fill-opacity="0.07"/>
+    <!-- Small light dot (in dark area) -->
+    <circle cx="400" cy="415" r="28" fill="#888" fill-opacity="0.03" stroke="#888"/>
+    <!-- Decorative outer ring -->
+    <circle cx="400" cy="300" r="248" fill="none"/>
+    <!-- Inner decorative ring -->
+    <circle cx="400" cy="300" r="235" fill="none" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+</svg>

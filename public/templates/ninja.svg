@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Head -->
+    <circle cx="400" cy="140" r="55" fill="#888" fill-opacity="0.04"/>
+    <!-- Headband/mask wrapping -->
+    <path d="M345 130 Q400 120 455 130"/>
+    <path d="M345 150 Q400 140 455 150"/>
+    <!-- Mask covering lower face -->
+    <path d="M355 150 Q400 145 445 150 Q450 170 445 185 Q420 200 400 200 Q380 200 355 185 Q350 170 355 150Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Eyes (narrow slits) -->
+    <path d="M370 138 L385 136 L370 140" fill="#888" fill-opacity="0.07"/>
+    <path d="M415 136 L430 138 L430 140 L415 140" fill="#888" fill-opacity="0.07"/>
+    <!-- Headband tails flowing back -->
+    <path d="M455 135 Q480 130 510 145 Q530 155 540 140"/>
+    <path d="M455 140 Q485 138 515 155 Q535 165 550 150"/>
+    <!-- Neck -->
+    <path d="M385 200 L385 220"/>
+    <path d="M415 200 L415 220"/>
+    <!-- Torso -->
+    <path d="M350 230 Q400 215 450 230 L460 350 Q400 365 340 350Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Belt/sash -->
+    <path d="M345 330 Q400 320 455 330"/>
+    <path d="M343 340 Q400 330 457 340"/>
+    <!-- Belt knot -->
+    <path d="M420 335 Q440 345 435 365 Q430 380 420 375"/>
+    <!-- Left arm raised with sword -->
+    <path d="M350 240 L300 200 L280 170"/>
+    <!-- Sword in left hand -->
+    <path d="M280 170 L260 60" stroke-width="2"/>
+    <path d="M270 175 L290 165" />
+    <!-- Sword blade detail -->
+    <path d="M262 80 L258 60"/>
+    <!-- Right arm -->
+    <path d="M450 240 L510 280 L530 320"/>
+    <!-- Right hand -->
+    <path d="M530 320 Q535 330 525 335 Q520 330 530 320" fill="#888" fill-opacity="0.05"/>
+    <!-- Throwing star in right hand -->
+    <path d="M540 310 L555 305 L550 320 L560 330 L545 325 L535 335 L540 320 L530 310Z" fill="#888" fill-opacity="0.06"/>
+    <!-- Left leg -->
+    <path d="M370 350 L340 420 L320 500"/>
+    <path d="M360 350 L330 420 L310 500"/>
+    <!-- Left foot -->
+    <path d="M310 500 Q300 510 290 505 Q285 500 310 500" fill="#888" fill-opacity="0.05"/>
+    <!-- Right leg (in action pose) -->
+    <path d="M430 350 L470 400 L520 450"/>
+    <path d="M440 350 L480 400 L530 445"/>
+    <!-- Right foot -->
+    <path d="M520 450 Q535 455 540 448 L530 445" fill="#888" fill-opacity="0.05"/>
+    <!-- Leg wrappings -->
+    <path d="M335 450 Q325 455 330 460"/>
+    <path d="M330 470 Q320 475 325 480"/>
+    <path d="M490 420 Q500 415 495 425"/>
+    <path d="M505 435 Q515 430 510 440"/>
+    <!-- Chest cross-strap -->
+    <line x1="370" y1="230" x2="440" y2="330"/>
+    <line x1="430" y1="230" x2="360" y2="330"/>
+    <!-- Smoke/shadow effect at feet -->
+    <path d="M260 520 Q300 510 340 520 Q370 525 400 515 Q430 510 460 520 Q490 530 520 515 Q550 510 560 520" opacity="0.5"/>
+  </g>
+</svg>

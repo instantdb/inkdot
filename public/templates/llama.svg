@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Body -->
+    <ellipse cx="400" cy="320" rx="160" ry="100"/>
+    <!-- Neck -->
+    <path d="M320 260 C310 200 300 140 310 80 C315 60 350 50 360 60 C370 70 365 140 360 200 L370 260" fill-opacity="0.04"/>
+    <!-- Head -->
+    <ellipse cx="330" cy="65" rx="45" ry="30"/>
+    <!-- Left ear -->
+    <path d="M305 45 C295 15 300 5 310 10 C318 15 315 35 312 42" fill-opacity="0.06"/>
+    <!-- Right ear -->
+    <path d="M345 40 C340 10 348 2 358 8 C365 14 358 32 352 38" fill-opacity="0.06"/>
+    <!-- Eye -->
+    <circle cx="315" cy="60" r="5" fill-opacity="0.08"/>
+    <!-- Nostril -->
+    <circle cx="290" cy="70" r="3" fill-opacity="0.08"/>
+    <!-- Mouth -->
+    <path d="M285 78 C290 82 295 80" fill="none"/>
+    <!-- Tail -->
+    <path d="M555 280 C575 265 580 250 570 240 C565 235 555 240 558 255" fill-opacity="0.06"/>
+    <!-- Front left leg -->
+    <path d="M310 400 L305 510 L295 520 L320 520 L315 510 L330 400" fill-opacity="0.04"/>
+    <!-- Front right leg -->
+    <path d="M360 405 L355 510 L345 520 L370 520 L365 510 L380 405" fill-opacity="0.04"/>
+    <!-- Back left leg -->
+    <path d="M450 400 L445 510 L435 520 L460 520 L455 510 L470 400" fill-opacity="0.04"/>
+    <!-- Back right leg -->
+    <path d="M500 395 L495 510 L485 520 L510 520 L505 510 L520 395" fill-opacity="0.04"/>
+    <!-- Fluffy wool texture on body -->
+    <path d="M280 280 C290 270 310 275 300 290" fill="none"/>
+    <path d="M340 250 C350 240 370 245 360 260" fill="none"/>
+    <path d="M420 250 C430 240 450 245 440 260" fill="none"/>
+    <path d="M480 270 C490 260 510 265 500 280" fill="none"/>
+    <path d="M300 340 C310 330 330 335 320 350" fill="none"/>
+    <path d="M440 340 C450 330 470 335 460 350" fill="none"/>
+    <path d="M500 310 C510 300 530 305 520 320" fill="none"/>
+    <!-- Ground line -->
+    <path d="M200 522 L600 522" fill="none" stroke-opacity="0.3"/>
+  </g>
+</svg>

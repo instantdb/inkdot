@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Main body -->
+  <path d="M360 130 Q360 120 380 115 Q400 112 420 115 Q440 120 440 130 L440 460 Q440 480 420 480 L380 480 Q360 480 360 460Z" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Right arm -->
+  <path d="M440 220 L500 220 Q520 220 520 240 L520 310 Q520 330 500 330 L490 330 Q475 330 475 310 L475 280 Q475 265 460 265" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Left arm -->
+  <path d="M360 300 L310 300 Q290 300 290 320 L290 360 Q290 380 310 380 L320 380 Q335 380 335 360 L335 345 Q335 330 350 330" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Vertical ribs -->
+  <g stroke-width="1" opacity="0.15">
+    <line x1="380" y1="130" x2="380" y2="475"/>
+    <line x1="400" y1="118" x2="400" y2="475"/>
+    <line x1="420" y1="130" x2="420" y2="475"/>
+    <!-- Right arm ribs -->
+    <line x1="495" y1="225" x2="495" y2="325"/>
+    <!-- Left arm ribs -->
+    <line x1="310" y1="305" x2="310" y2="375"/>
+  </g>
+
+  <!-- Face -->
+  <!-- Eyes -->
+  <circle cx="385" cy="200" r="5" fill="#888" stroke="none" opacity="0.5"/>
+  <circle cx="415" cy="200" r="5" fill="#888" stroke="none" opacity="0.5"/>
+  <circle cx="387" cy="198" r="2" fill="white" stroke="none"/>
+  <circle cx="417" cy="198" r="2" fill="white" stroke="none"/>
+
+  <!-- Smile -->
+  <path d="M390 220 Q400 230 410 220" fill="none" stroke-width="2" opacity="0.4"/>
+
+  <!-- Flower on top -->
+  <circle cx="400" cy="100" r="12" fill="#888" fill-opacity="0.06"/>
+  <circle cx="388" cy="95" r="8" fill="#888" fill-opacity="0.04"/>
+  <circle cx="412" cy="95" r="8" fill="#888" fill-opacity="0.04"/>
+  <circle cx="393" cy="108" r="8" fill="#888" fill-opacity="0.04"/>
+  <circle cx="407" cy="108" r="8" fill="#888" fill-opacity="0.04"/>
+  <circle cx="400" cy="100" r="5" fill="#888" fill-opacity="0.08" stroke="none"/>
+
+  <!-- Ground / pot -->
+  <path d="M330 480 L340 540 Q360 555 400 555 Q440 555 460 540 L470 480" fill="#888" fill-opacity="0.05"/>
+  <line x1="325" y1="480" x2="475" y2="480" stroke-width="2" opacity="0.3"/>
+</svg>

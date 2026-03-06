@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Microphone head/grille -->
+    <path d="M370 120 Q370 70 400 55 Q430 70 430 120" fill="#888" fill-opacity="0.04"/>
+    <path d="M360 180 Q360 100 400 80 Q440 100 440 180" fill="#888" fill-opacity="0.04"/>
+    <!-- Grille mesh lines -->
+    <path d="M365 130 Q400 120 435 130"/>
+    <path d="M363 145 Q400 135 437 145"/>
+    <path d="M362 160 Q400 150 438 160"/>
+    <path d="M365 115 Q400 105 435 115"/>
+    <path d="M370 100 Q400 92 430 100"/>
+    <!-- Grille outer shape -->
+    <path d="M360 180 Q360 90 400 70 Q440 90 440 180"/>
+    <!-- Ring/band at base of grille -->
+    <ellipse cx="400" cy="185" rx="42" ry="10" fill="#888" fill-opacity="0.06"/>
+    <ellipse cx="400" cy="190" rx="38" ry="8" fill="#888" fill-opacity="0.05"/>
+    <!-- Body/handle upper -->
+    <path d="M382 195 L380 280" />
+    <path d="M418 195 L420 280" />
+    <!-- Handle grip ring -->
+    <ellipse cx="400" cy="280" rx="22" ry="6" fill="#888" fill-opacity="0.05"/>
+    <!-- Handle body -->
+    <path d="M383 286 L385 420"/>
+    <path d="M417 286 L415 420"/>
+    <!-- Handle grip texture -->
+    <line x1="385" y1="310" x2="415" y2="310"/>
+    <line x1="385" y1="330" x2="415" y2="330"/>
+    <line x1="385" y1="350" x2="415" y2="350"/>
+    <line x1="385" y1="370" x2="415" y2="370"/>
+    <line x1="385" y1="390" x2="415" y2="390"/>
+    <!-- Handle bottom -->
+    <path d="M385 420 Q400 435 415 420" fill="#888" fill-opacity="0.04"/>
+    <!-- Cable coming out bottom -->
+    <path d="M400 432 Q400 460 420 480 Q450 510 440 540 Q430 560 410 570 Q380 580 360 560 Q340 540 350 520"/>
+    <!-- Stand base -->
+    <path d="M300 530 L400 550 L500 530" />
+    <path d="M340 530 L400 555 L460 530"/>
+    <!-- Stand pole -->
+    <line x1="400" y1="550" x2="400" y2="440"/>
+    <!-- Stand clip/holder -->
+    <path d="M380 440 Q400 430 420 440"/>
+    <path d="M375 445 Q400 435 425 445"/>
+    <!-- Microphone tilted in stand -->
+    <line x1="400" y1="440" x2="400" y2="195"/>
+  </g>
+</svg>

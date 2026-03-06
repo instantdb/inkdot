@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- UFO / Flying saucer -->
+
+  <!-- Dome -->
+  <path d="M330 180 Q330 110 400 90 Q470 110 470 180" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Dome window -->
+  <path d="M350 175 Q350 130 400 118 Q450 130 450 175" fill="#888" fill-opacity="0.03"/>
+  <!-- Window shine -->
+  <path d="M370 145 Q390 135 410 145" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Saucer body -->
+  <ellipse cx="400" cy="210" rx="200" ry="45" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Saucer bottom rim -->
+  <ellipse cx="400" cy="230" rx="160" ry="30" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Lights on rim -->
+  <g fill="#888" fill-opacity="0.1" stroke="none">
+    <circle cx="260" cy="210" r="8"/>
+    <circle cx="310" cy="218" r="8"/>
+    <circle cx="360" cy="222" r="8"/>
+    <circle cx="400" cy="224" r="8"/>
+    <circle cx="440" cy="222" r="8"/>
+    <circle cx="490" cy="218" r="8"/>
+    <circle cx="540" cy="210" r="8"/>
+  </g>
+
+  <!-- Tractor beam -->
+  <path d="M350 250 L300 520 L500 520 L450 250" fill="#888" fill-opacity="0.03" stroke-width="1.5" opacity="0.25"/>
+
+  <!-- Beam lines -->
+  <g stroke-width="1" opacity="0.1">
+    <line x1="365" y1="260" x2="325" y2="520"/>
+    <line x1="400" y1="255" x2="400" y2="520"/>
+    <line x1="435" y1="260" x2="475" y2="520"/>
+  </g>
+
+  <!-- Cow being abducted -->
+  <g opacity="0.35" stroke-width="2">
+    <!-- Cow body -->
+    <ellipse cx="400" cy="440" rx="45" ry="25" fill="#888" fill-opacity="0.05"/>
+    <!-- Cow head -->
+    <ellipse cx="360" cy="425" rx="18" ry="15" fill="#888" fill-opacity="0.05"/>
+    <!-- Cow legs (dangling) -->
+    <line x1="375" y1="462" x2="372" y2="485"/>
+    <line x1="390" y1="464" x2="388" y2="488"/>
+    <line x1="415" y1="464" x2="417" y2="488"/>
+    <line x1="430" y1="462" x2="433" y2="485"/>
+    <!-- Cow spots -->
+    <circle cx="395" cy="435" r="8" fill="#888" fill-opacity="0.04"/>
+    <circle cx="415" cy="445" r="6" fill="#888" fill-opacity="0.04"/>
+  </g>
+
+  <!-- Stars -->
+  <g fill="#888" stroke="none" opacity="0.12">
+    <circle cx="100" cy="80" r="2.5"/>
+    <circle cx="700" cy="100" r="2.5"/>
+    <circle cx="150" cy="180" r="2"/>
+    <circle cx="650" cy="60" r="2"/>
+    <circle cx="80" cy="300" r="2"/>
+    <circle cx="720" cy="250" r="2.5"/>
+    <circle cx="180" cy="400" r="2"/>
+    <circle cx="620" cy="380" r="2"/>
+  </g>
+</svg>

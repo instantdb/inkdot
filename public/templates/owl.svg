@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Body -->
+  <ellipse cx="400" cy="370" rx="120" ry="150" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Head -->
+  <ellipse cx="400" cy="200" rx="95" ry="85" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Ear tufts -->
+  <path d="M320 140 Q310 100 325 80 Q335 95 340 130" fill="#888" fill-opacity="0.05"/>
+  <path d="M480 140 Q490 100 475 80 Q465 95 460 130" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Eye circles (large) -->
+  <circle cx="360" cy="200" r="40" fill="#888" fill-opacity="0.05"/>
+  <circle cx="440" cy="200" r="40" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Inner eye circles -->
+  <circle cx="360" cy="200" r="25" fill="#888" fill-opacity="0.04"/>
+  <circle cx="440" cy="200" r="25" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Pupils -->
+  <circle cx="360" cy="200" r="12" fill="#888" stroke="none"/>
+  <circle cx="440" cy="200" r="12" fill="#888" stroke="none"/>
+
+  <!-- Eye highlights -->
+  <circle cx="365" cy="193" r="4" fill="white" stroke="none"/>
+  <circle cx="445" cy="193" r="4" fill="white" stroke="none"/>
+
+  <!-- Beak -->
+  <path d="M390 225 L400 250 L410 225" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Facial disc pattern -->
+  <path d="M340 160 Q400 145 460 160" fill="none" stroke-width="1.5" opacity="0.3"/>
+  <path d="M330 240 Q400 270 470 240" fill="none" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Chest feather pattern -->
+  <g stroke-width="1" opacity="0.2">
+    <path d="M360 300 Q400 310 440 300"/>
+    <path d="M350 330 Q400 342 450 330"/>
+    <path d="M355 360 Q400 374 445 360"/>
+    <path d="M365 390 Q400 402 435 390"/>
+    <path d="M375 420 Q400 430 425 420"/>
+  </g>
+
+  <!-- Wings - with feather detail lines -->
+  <path d="M280 280 Q260 320 265 380 Q270 430 290 470 Q300 485 310 490" fill="#888" fill-opacity="0.04" stroke-width="2"/>
+  <path d="M520 280 Q540 320 535 380 Q530 430 510 470 Q500 485 490 490" fill="#888" fill-opacity="0.04" stroke-width="2"/>
+
+  <!-- Wing feather details - MORE detail -->
+  <g stroke-width="1" opacity="0.2">
+    <!-- Left wing feather lines -->
+    <path d="M280 300 Q290 305 300 298"/>
+    <path d="M275 325 Q287 332 300 324"/>
+    <path d="M272 350 Q285 358 300 350"/>
+    <path d="M270 375 Q284 384 300 375"/>
+    <path d="M272 400 Q286 410 302 400"/>
+    <path d="M278 425 Q290 434 305 425"/>
+    <path d="M285 448 Q295 455 308 448"/>
+    <!-- Right wing feather lines -->
+    <path d="M520 300 Q510 305 500 298"/>
+    <path d="M525 325 Q513 332 500 324"/>
+    <path d="M528 350 Q515 358 500 350"/>
+    <path d="M530 375 Q516 384 500 375"/>
+    <path d="M528 400 Q514 410 498 400"/>
+    <path d="M522 425 Q510 434 495 425"/>
+    <path d="M515 448 Q505 455 492 448"/>
+  </g>
+
+  <!-- Outer wing edge feathers (scalloped) -->
+  <g stroke-width="1.5" opacity="0.15">
+    <path d="M265 360 Q258 370 262 380"/>
+    <path d="M262 380 Q255 390 260 400"/>
+    <path d="M260 400 Q254 412 258 422"/>
+    <path d="M258 422 Q255 435 262 445"/>
+    <path d="M535 360 Q542 370 538 380"/>
+    <path d="M538 380 Q545 390 540 400"/>
+    <path d="M540 400 Q546 412 542 422"/>
+    <path d="M542 422 Q545 435 538 445"/>
+  </g>
+
+  <!-- Feet -->
+  <g stroke-width="2">
+    <path d="M360 510 L340 540 M360 510 L355 542 M360 510 L370 540"/>
+    <path d="M440 510 L430 540 M440 510 L445 542 M440 510 L460 540"/>
+  </g>
+
+  <!-- Branch -->
+  <path d="M250 530 Q350 520 450 525 Q550 530 650 518" stroke-width="4" opacity="0.3"/>
+  <path d="M600 518 Q630 510 660 520 Q670 530 660 535" stroke-width="2" opacity="0.2"/>
+
+</svg>

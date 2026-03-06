@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main body / fuselage -->
+    <path d="M200 280 Q180 260 200 240 L420 230 Q460 230 480 250 Q500 270 480 300 L420 320 Q400 330 350 330 L200 320 Q170 310 200 280 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Cockpit window -->
+    <path d="M210 260 Q200 250 210 240 L280 235 Q290 240 285 255 L270 270 Q260 275 240 275 Z" fill="#888" fill-opacity="0.06"/>
+    <!-- Tail boom -->
+    <path d="M420 270 L640 240 Q660 238 665 245 L665 265 Q660 272 640 270 L420 290" fill="#888" fill-opacity="0.04"/>
+    <!-- Tail fin (vertical) -->
+    <path d="M640 240 L650 180 Q655 170 665 175 L665 245" fill="#888" fill-opacity="0.05"/>
+    <!-- Tail rotor -->
+    <line x1="655" y1="175" x2="655" y2="140"/>
+    <line x1="655" y1="175" x2="655" y2="210"/>
+    <circle cx="655" cy="175" r="4" fill="#888" fill-opacity="0.06"/>
+    <!-- Main rotor mast -->
+    <line x1="340" y1="230" x2="340" y2="190"/>
+    <!-- Main rotor hub -->
+    <ellipse cx="340" cy="188" rx="8" ry="5" fill="#888" fill-opacity="0.06"/>
+    <!-- Main rotor blades -->
+    <line x1="100" y1="185" x2="580" y2="180"/>
+    <ellipse cx="100" cy="185" rx="15" ry="4"/>
+    <ellipse cx="580" cy="180" rx="15" ry="4"/>
+    <!-- Landing skid - left -->
+    <path d="M240 330 L240 380"/>
+    <path d="M360 330 L360 380"/>
+    <path d="M200 380 L400 380" stroke-width="3"/>
+    <!-- Landing skid - right cross bars -->
+    <path d="M280 330 L280 380"/>
+    <!-- Door line -->
+    <line x1="300" y1="245" x2="300" y2="325"/>
+    <!-- Engine exhaust -->
+    <path d="M380 230 Q385 220 400 222"/>
+    <!-- Window details -->
+    <line x1="320" y1="248" x2="320" y2="290"/>
+    <line x1="340" y1="246" x2="340" y2="295"/>
+    <!-- Antenna -->
+    <line x1="250" y1="240" x2="245" y2="215"/>
+  </g>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Frame -->
+  <rect x="220" y="30" width="360" height="520" rx="4" stroke-width="6" fill="#888" fill-opacity="0.03"/>
+  <rect x="230" y="40" width="340" height="500" rx="2" fill="#888" fill-opacity="0.02"/>
+
+  <!-- Hair -->
+  <path d="M320 130 Q310 160 305 200 Q300 260 310 320 Q315 350 320 370" fill="#888" fill-opacity="0.06"/>
+  <path d="M480 130 Q490 160 495 200 Q500 260 490 320 Q485 350 480 370" fill="#888" fill-opacity="0.06"/>
+  <path d="M320 130 Q340 100 400 90 Q460 100 480 130" fill="#888" fill-opacity="0.05"/>
+  <!-- Veil/hair drape -->
+  <path d="M330 140 Q325 180 320 220" stroke-width="1.5"/>
+  <path d="M470 140 Q475 180 480 220" stroke-width="1.5"/>
+
+  <!-- Face outline -->
+  <ellipse cx="400" cy="220" rx="65" ry="80" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Eyes -->
+  <ellipse cx="375" cy="200" rx="14" ry="7" fill="#888" fill-opacity="0.05"/>
+  <ellipse cx="425" cy="200" rx="14" ry="7" fill="#888" fill-opacity="0.05"/>
+  <circle cx="375" cy="200" r="4" fill="#888" stroke="none"/>
+  <circle cx="425" cy="200" r="4" fill="#888" stroke="none"/>
+
+  <!-- Eyebrows -->
+  <path d="M358 188 Q375 182 392 187" fill="none" stroke-width="1.5"/>
+  <path d="M408 187 Q425 182 442 188" fill="none" stroke-width="1.5"/>
+
+  <!-- Nose -->
+  <path d="M400 210 L397 235 Q400 240 403 235 L400 210" fill="none" stroke-width="1.5"/>
+
+  <!-- Famous smile -->
+  <path d="M382 252 Q392 258 400 257 Q408 258 418 252" fill="none" stroke-width="2"/>
+
+  <!-- Neck -->
+  <path d="M380 290 L378 340" stroke-width="1.5"/>
+  <path d="M420 290 L422 340" stroke-width="1.5"/>
+
+  <!-- Shoulders/dress -->
+  <path d="M378 340 Q350 345 290 380 Q270 395 260 430 L260 540" fill="#888" fill-opacity="0.04"/>
+  <path d="M422 340 Q450 345 510 380 Q530 395 540 430 L540 540" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Hands crossed -->
+  <path d="M340 420 Q360 410 380 415 Q395 420 400 430 Q405 420 420 415 Q440 410 460 420" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Balustrade/ledge -->
+  <line x1="240" y1="400" x2="280" y2="400" stroke-width="1.5" opacity="0.5"/>
+  <line x1="520" y1="400" x2="560" y2="400" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Background landscape hints -->
+  <path d="M240 300 Q260 280 280 290 Q300 260 320 280" stroke-width="1" opacity="0.3"/>
+  <path d="M480 300 Q500 270 520 285 Q540 260 560 275" stroke-width="1" opacity="0.3"/>
+  <path d="M240 350 Q280 340 300 350" stroke-width="1" opacity="0.2"/>
+  <path d="M500 350 Q520 340 560 350" stroke-width="1" opacity="0.2"/>
+
+</svg>

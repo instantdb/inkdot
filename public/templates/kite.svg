@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Kite diamond shape -->
+    <polygon points="400,60 540,230 400,380 260,230" fill="#888" fill-opacity="0.04"/>
+    <!-- Horizontal spar -->
+    <line x1="260" y1="230" x2="540" y2="230"/>
+    <!-- Vertical spar -->
+    <line x1="400" y1="60" x2="400" y2="380"/>
+    <!-- Top left panel detail -->
+    <line x1="400" y1="60" x2="260" y2="230"/>
+    <line x1="400" y1="60" x2="540" y2="230"/>
+    <line x1="260" y1="230" x2="400" y2="380"/>
+    <line x1="540" y1="230" x2="400" y2="380"/>
+    <!-- Inner diamond accent -->
+    <polygon points="400,120 480,230 400,320 320,230" fill="#888" fill-opacity="0.03"/>
+    <!-- Bridle strings -->
+    <line x1="400" y1="230" x2="420" y2="400"/>
+    <!-- Tail string -->
+    <path d="M400 380 Q420 400 420 420 Q410 440 430 460 Q440 480 420 500 Q400 520 420 540 Q430 555 415 570"/>
+    <!-- Tail bows -->
+    <path d="M405 420 Q420 415 435 425 Q420 435 405 425" fill="#888" fill-opacity="0.06"/>
+    <path d="M425 460 Q440 455 455 465 Q440 475 425 465" fill="#888" fill-opacity="0.06"/>
+    <path d="M405 500 Q420 495 435 505 Q420 515 405 505" fill="#888" fill-opacity="0.06"/>
+    <path d="M415 540 Q430 535 445 545 Q430 555 415 545" fill="#888" fill-opacity="0.06"/>
+    <!-- Panel decoration - top left -->
+    <path d="M340 160 Q370 170 380 190" fill="#888" fill-opacity="0.03"/>
+    <!-- Panel decoration - top right -->
+    <path d="M460 160 Q430 170 420 190" fill="#888" fill-opacity="0.03"/>
+    <!-- Panel decoration - bottom left -->
+    <path d="M340 290 Q370 280 380 260" fill="#888" fill-opacity="0.03"/>
+    <!-- Panel decoration - bottom right -->
+    <path d="M460 290 Q430 280 420 260" fill="#888" fill-opacity="0.03"/>
+    <!-- Flying line going down -->
+    <path d="M420 400 Q440 430 460 470 Q480 510 490 560"/>
+    <!-- Small cross at line end -->
+    <line x1="485" y1="560" x2="495" y2="560"/>
+  </g>
+</svg>

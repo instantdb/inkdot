@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.04" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Center circle -->
+    <circle cx="400" cy="300" r="20" fill-opacity="0.08"/>
+    <!-- Ring 1 -->
+    <circle cx="400" cy="300" r="50" fill="none"/>
+    <!-- Petals ring 1 (8 petals) -->
+    <ellipse cx="400" cy="250" rx="15" ry="30" fill-opacity="0.06"/>
+    <ellipse cx="435" cy="265" rx="15" ry="30" transform="rotate(45 435 265)" fill-opacity="0.06"/>
+    <ellipse cx="450" cy="300" rx="15" ry="30" transform="rotate(90 450 300)" fill-opacity="0.06"/>
+    <ellipse cx="435" cy="335" rx="15" ry="30" transform="rotate(135 435 335)" fill-opacity="0.06"/>
+    <ellipse cx="400" cy="350" rx="15" ry="30" transform="rotate(180 400 350)" fill-opacity="0.06"/>
+    <ellipse cx="365" cy="335" rx="15" ry="30" transform="rotate(225 365 335)" fill-opacity="0.06"/>
+    <ellipse cx="350" cy="300" rx="15" ry="30" transform="rotate(270 350 300)" fill-opacity="0.06"/>
+    <ellipse cx="365" cy="265" rx="15" ry="30" transform="rotate(315 365 265)" fill-opacity="0.06"/>
+    <!-- Ring 2 -->
+    <circle cx="400" cy="300" r="100" fill="none"/>
+    <!-- Petals ring 2 (12 petals) -->
+    <ellipse cx="400" cy="200" rx="18" ry="40" fill-opacity="0.05"/>
+    <ellipse cx="450" cy="213" rx="18" ry="40" transform="rotate(30 450 213)" fill-opacity="0.05"/>
+    <ellipse cx="487" cy="250" rx="18" ry="40" transform="rotate(60 487 250)" fill-opacity="0.05"/>
+    <ellipse cx="500" cy="300" rx="18" ry="40" transform="rotate(90 500 300)" fill-opacity="0.05"/>
+    <ellipse cx="487" cy="350" rx="18" ry="40" transform="rotate(120 487 350)" fill-opacity="0.05"/>
+    <ellipse cx="450" cy="387" rx="18" ry="40" transform="rotate(150 450 387)" fill-opacity="0.05"/>
+    <ellipse cx="400" cy="400" rx="18" ry="40" transform="rotate(180 400 400)" fill-opacity="0.05"/>
+    <ellipse cx="350" cy="387" rx="18" ry="40" transform="rotate(210 350 387)" fill-opacity="0.05"/>
+    <ellipse cx="313" cy="350" rx="18" ry="40" transform="rotate(240 313 350)" fill-opacity="0.05"/>
+    <ellipse cx="300" cy="300" rx="18" ry="40" transform="rotate(270 300 300)" fill-opacity="0.05"/>
+    <ellipse cx="313" cy="250" rx="18" ry="40" transform="rotate(300 313 250)" fill-opacity="0.05"/>
+    <ellipse cx="350" cy="213" rx="18" ry="40" transform="rotate(330 350 213)" fill-opacity="0.05"/>
+    <!-- Ring 3 -->
+    <circle cx="400" cy="300" r="160" fill="none"/>
+    <!-- Scalloped edge ring 3 -->
+    <circle cx="400" cy="140" r="22" fill-opacity="0.04"/>
+    <circle cx="480" cy="155" r="22" fill-opacity="0.04"/>
+    <circle cx="540" cy="205" r="22" fill-opacity="0.04"/>
+    <circle cx="560" cy="280" r="22" fill-opacity="0.04"/>
+    <circle cx="540" cy="360" r="22" fill-opacity="0.04"/>
+    <circle cx="490" cy="420" r="22" fill-opacity="0.04"/>
+    <circle cx="420" cy="458" r="22" fill-opacity="0.04"/>
+    <circle cx="340" cy="450" r="22" fill-opacity="0.04"/>
+    <circle cx="275" cy="405" r="22" fill-opacity="0.04"/>
+    <circle cx="243" cy="340" r="22" fill-opacity="0.04"/>
+    <circle cx="243" cy="260" r="22" fill-opacity="0.04"/>
+    <circle cx="280" cy="195" r="22" fill-opacity="0.04"/>
+    <circle cx="340" cy="150" r="22" fill-opacity="0.04"/>
+    <!-- Ring 4 - outer -->
+    <circle cx="400" cy="300" r="220" fill="none"/>
+    <!-- Diamond accents on outer ring (16) -->
+    <path d="M400 80 L410 95 L400 110 L390 95Z" fill-opacity="0.06"/>
+    <path d="M490 100 L500 115 L490 130 L480 115Z" fill-opacity="0.06" transform="rotate(22.5 400 300)"/>
+    <path d="M560 160 L570 175 L560 190 L550 175Z" fill-opacity="0.06" transform="rotate(45 400 300)"/>
+    <path d="M600 250 L610 265 L600 280 L590 265Z" fill-opacity="0.06" transform="rotate(67.5 400 300)"/>
+    <path d="M620 300 L610 315 L620 330 L630 315Z" fill-opacity="0.06"/>
+    <!-- Radiating lines -->
+    <line x1="400" y1="250" x2="400" y2="140" fill="none" stroke-opacity="0.4"/>
+    <line x1="400" y1="350" x2="400" y2="460" fill="none" stroke-opacity="0.4"/>
+    <line x1="350" y1="300" x2="240" y2="300" fill="none" stroke-opacity="0.4"/>
+    <line x1="450" y1="300" x2="560" y2="300" fill="none" stroke-opacity="0.4"/>
+    <line x1="365" y1="265" x2="286" y2="186" fill="none" stroke-opacity="0.4"/>
+    <line x1="435" y1="335" x2="514" y2="414" fill="none" stroke-opacity="0.4"/>
+    <line x1="435" y1="265" x2="514" y2="186" fill="none" stroke-opacity="0.4"/>
+    <line x1="365" y1="335" x2="286" y2="414" fill="none" stroke-opacity="0.4"/>
+    <!-- Outermost ring -->
+    <circle cx="400" cy="300" r="270" fill="none" stroke-opacity="0.5"/>
+  </g>
+</svg>

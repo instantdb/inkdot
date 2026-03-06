@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bell / dome -->
+    <path d="M220 280 Q220 120 400 100 Q580 120 580 280" fill="#888" fill-opacity="0.05"/>
+    <!-- Bell scalloped bottom edge -->
+    <path d="M220 280 Q240 300 270 280 Q300 260 330 280 Q360 300 400 280 Q440 260 470 280 Q500 300 530 280 Q560 260 580 280"/>
+    <!-- Inner bell detail -->
+    <path d="M280 250 Q280 170 400 155 Q520 170 520 250" fill="#888" fill-opacity="0.03"/>
+    <!-- Bell surface details -->
+    <path d="M300 200 Q400 180 500 200"/>
+    <path d="M260 240 Q400 210 540 240"/>
+    <!-- Center oral arms -->
+    <path d="M370 280 Q360 340 350 380 Q340 420 360 440 Q370 460 355 490 Q340 520 350 540"/>
+    <path d="M400 280 Q400 340 405 380 Q410 420 395 450 Q385 480 400 510 Q410 530 400 560"/>
+    <path d="M430 280 Q440 340 450 380 Q460 420 440 440 Q430 460 445 490 Q460 520 450 540"/>
+    <!-- Left tentacles -->
+    <path d="M260 280 Q250 330 240 370 Q230 420 250 460 Q260 490 245 530"/>
+    <path d="M300 275 Q290 330 285 380 Q275 430 290 470 Q300 500 285 540"/>
+    <!-- Right tentacles -->
+    <path d="M500 275 Q510 330 515 380 Q525 430 510 470 Q500 500 515 540"/>
+    <path d="M540 280 Q550 330 560 370 Q570 420 550 460 Q540 490 555 530"/>
+    <!-- Thin trailing tentacles -->
+    <path d="M240 280 Q220 350 215 400 Q210 450 225 500 Q230 530 220 570" stroke-width="1.5"/>
+    <path d="M560 280 Q580 350 585 400 Q590 450 575 500 Q570 530 580 570" stroke-width="1.5"/>
+    <!-- Spots on bell -->
+    <circle cx="340" cy="200" r="8" fill="#888" fill-opacity="0.06"/>
+    <circle cx="400" cy="180" r="10" fill="#888" fill-opacity="0.06"/>
+    <circle cx="460" cy="200" r="8" fill="#888" fill-opacity="0.06"/>
+    <circle cx="370" cy="240" r="6" fill="#888" fill-opacity="0.05"/>
+    <circle cx="430" cy="240" r="6" fill="#888" fill-opacity="0.05"/>
+  </g>
+</svg>

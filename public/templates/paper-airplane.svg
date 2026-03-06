@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main body of paper airplane -->
+    <path d="M120 280 L680 200 L350 380 Z" fill-opacity="0.06"/>
+    <!-- Bottom fold -->
+    <path d="M120 280 L680 200 L400 420 Z" fill-opacity="0.04"/>
+    <!-- Center fold line -->
+    <line x1="120" y1="280" x2="680" y2="200" stroke-width="2"/>
+    <!-- Wing fold detail -->
+    <path d="M350 380 L400 420" fill="none"/>
+    <!-- Inner fold line -->
+    <line x1="350" y1="380" x2="500" y2="280" fill="none" stroke-opacity="0.5"/>
+    <line x1="400" y1="420" x2="500" y2="300" fill="none" stroke-opacity="0.5"/>
+    <!-- Motion lines -->
+    <line x1="100" y1="320" x2="60" y2="330" fill="none" stroke-opacity="0.3"/>
+    <line x1="110" y1="350" x2="50" y2="365" fill="none" stroke-opacity="0.25"/>
+    <line x1="130" y1="380" x2="70" y2="400" fill="none" stroke-opacity="0.2"/>
+    <!-- Trail dashes -->
+    <line x1="90" y1="260" x2="70" y2="265" fill="none" stroke-opacity="0.3"/>
+    <line x1="55" y1="270" x2="35" y2="275" fill="none" stroke-opacity="0.2"/>
+    <!-- Dotted trail path -->
+    <circle cx="80" cy="295" r="2" fill-opacity="0.3" stroke="none" fill="#888"/>
+    <circle cx="60" cy="300" r="2" fill-opacity="0.25" stroke="none" fill="#888"/>
+    <circle cx="40" cy="305" r="2" fill-opacity="0.2" stroke="none" fill="#888"/>
+    <!-- Shadow/ground reflection -->
+    <ellipse cx="400" cy="520" rx="180" ry="15" fill-opacity="0.03" stroke-opacity="0.2"/>
+  </g>
+</svg>

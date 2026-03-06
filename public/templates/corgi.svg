@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Body -->
+    <ellipse cx="400" cy="340" rx="180" ry="80" fill="#888" fill-opacity="0.05"/>
+    <!-- Chest/front body -->
+    <path d="M260,300 Q240,280 250,260 Q260,340 270,360" fill="#888" fill-opacity="0.04"/>
+    <!-- Head -->
+    <path d="M200,250 Q180,200 210,170 Q240,145 280,150 Q310,155 320,180 Q330,210 310,250 Q280,270 240,265 Q210,260 200,250 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Left ear -->
+    <path d="M210,170 Q190,110 210,100 Q230,95 245,140" fill="#888" fill-opacity="0.06"/>
+    <!-- Right ear -->
+    <path d="M280,150 Q290,90 310,85 Q330,90 320,145" fill="#888" fill-opacity="0.06"/>
+    <!-- Eye -->
+    <circle cx="240" cy="195" r="8" fill="#888" fill-opacity="0.07"/>
+    <circle cx="240" cy="193" r="3" fill="#888" fill-opacity="0.08"/>
+    <!-- Nose -->
+    <ellipse cx="200" cy="230" rx="12" ry="8" fill="#888" fill-opacity="0.07"/>
+    <!-- Mouth -->
+    <path d="M200,238 Q210,250 220,245" fill="none"/>
+    <path d="M200,238 Q195,250 188,245" fill="none"/>
+    <!-- Tongue (slightly out) -->
+    <path d="M205,245 Q210,260 205,265 Q200,260 205,245" fill="#888" fill-opacity="0.04"/>
+    <!-- White face marking -->
+    <path d="M220,170 Q255,165 260,190 Q255,230 230,245 Q210,230 210,200 Q215,180 220,170" fill="#888" fill-opacity="0.03"/>
+    <!-- Back line -->
+    <path d="M310,260 Q380,270 450,280 Q520,290 560,310" fill="none"/>
+    <!-- Belly line -->
+    <path d="M270,380 Q350,420 450,410 Q520,400 560,380" fill="none"/>
+    <!-- Butt/rear -->
+    <path d="M560,310 Q590,330 590,360 Q585,385 560,380" fill="#888" fill-opacity="0.04"/>
+    <!-- Tail (stubby corgi tail, up) -->
+    <path d="M575,310 Q600,280 610,270 Q615,265 610,275 Q605,290 580,315" fill="#888" fill-opacity="0.05"/>
+    <!-- Front left leg -->
+    <path d="M280,380 L275,450 Q275,470 285,470 L300,470 Q310,470 308,455 L300,400" fill="#888" fill-opacity="0.04"/>
+    <!-- Front right leg -->
+    <path d="M330,385 L325,450 Q325,470 335,470 L350,470 Q360,470 358,455 L350,400" fill="#888" fill-opacity="0.04"/>
+    <!-- Back left leg -->
+    <path d="M490,395 L485,450 Q485,470 495,470 L510,470 Q520,470 518,455 L510,400" fill="#888" fill-opacity="0.04"/>
+    <!-- Back right leg -->
+    <path d="M540,385 L535,450 Q535,470 545,470 L560,470 Q570,470 568,455 L560,390" fill="#888" fill-opacity="0.04"/>
+    <!-- Paw details -->
+    <path d="M280,468 Q290,472 305,468" fill="none" stroke-width="1.5"/>
+    <path d="M330,468 Q340,472 355,468" fill="none" stroke-width="1.5"/>
+    <path d="M490,468 Q500,472 515,468" fill="none" stroke-width="1.5"/>
+    <path d="M540,468 Q550,472 565,468" fill="none" stroke-width="1.5"/>
+    <!-- Ground shadow -->
+    <ellipse cx="400" cy="475" rx="200" ry="8" fill="#888" fill-opacity="0.03"/>
+  </g>
+</svg>

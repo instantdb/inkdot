@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Rainbow trails -->
+  <g stroke-width="18" opacity="0.15">
+    <line x1="80" y1="175" x2="320" y2="175" stroke="#ef4444"/>
+    <line x1="80" y1="205" x2="310" y2="205" stroke="#f97316"/>
+    <line x1="80" y1="235" x2="300" y2="235" stroke="#eab308"/>
+    <line x1="80" y1="265" x2="300" y2="265" stroke="#22c55e"/>
+    <line x1="80" y1="295" x2="310" y2="295" stroke="#3b82f6"/>
+    <line x1="80" y1="325" x2="320" y2="325" stroke="#8b5cf6"/>
+  </g>
+
+  <!-- Pop-tart body -->
+  <rect x="310" y="170" width="200" height="160" rx="16" fill="#888" fill-opacity="0.08"/>
+  <!-- Frosting -->
+  <rect x="325" y="185" width="170" height="130" rx="10" fill="#888" fill-opacity="0.06"/>
+  <!-- Sprinkles -->
+  <g stroke="none" fill="#888" fill-opacity="0.3">
+    <rect x="345" y="210" width="8" height="4" rx="2" transform="rotate(-20 349 212)"/>
+    <rect x="390" y="200" width="8" height="4" rx="2" transform="rotate(15 394 202)"/>
+    <rect x="440" y="215" width="8" height="4" rx="2" transform="rotate(-10 444 217)"/>
+    <rect x="360" y="250" width="8" height="4" rx="2" transform="rotate(25 364 252)"/>
+    <rect x="420" y="245" width="8" height="4" rx="2" transform="rotate(-30 424 247)"/>
+    <rect x="470" y="260" width="8" height="4" rx="2" transform="rotate(10 474 262)"/>
+    <rect x="380" y="285" width="8" height="4" rx="2" transform="rotate(-15 384 287)"/>
+    <rect x="440" y="280" width="8" height="4" rx="2" transform="rotate(20 444 282)"/>
+  </g>
+
+  <!-- Cat head (poking out right side) -->
+  <ellipse cx="520" cy="250" rx="55" ry="48" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Cat ears -->
+  <path d="M485 210 L475 170 L505 200" fill="#888" fill-opacity="0.06"/>
+  <path d="M545 210 L555 170 L535 200" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Cat face -->
+  <!-- Eyes -->
+  <circle cx="505" cy="242" r="5" fill="#888" stroke="none"/>
+  <circle cx="538" cy="242" r="5" fill="#888" stroke="none"/>
+  <!-- Nose -->
+  <ellipse cx="522" cy="255" rx="3" ry="2.5" fill="#888" stroke="none"/>
+  <!-- Mouth -->
+  <path d="M522 257 Q515 265 508 260" fill="none"/>
+  <path d="M522 257 Q529 265 536 260" fill="none"/>
+  <!-- Whiskers -->
+  <line x1="480" y1="248" x2="502" y2="252"/>
+  <line x1="478" y1="260" x2="502" y2="258"/>
+  <line x1="542" y1="252" x2="565" y2="248"/>
+  <line x1="542" y1="258" x2="567" y2="260"/>
+  <!-- Cheeks -->
+  <circle cx="500" cy="258" r="6" fill="#888" fill-opacity="0.08" stroke="none"/>
+  <circle cx="544" cy="258" r="6" fill="#888" fill-opacity="0.08" stroke="none"/>
+
+  <!-- Cat legs (stubby, below pop-tart) -->
+  <rect x="330" y="325" width="20" height="30" rx="6" fill="#888" fill-opacity="0.08"/>
+  <rect x="370" y="325" width="20" height="30" rx="6" fill="#888" fill-opacity="0.08"/>
+  <rect x="440" y="325" width="20" height="30" rx="6" fill="#888" fill-opacity="0.08"/>
+  <rect x="480" y="325" width="20" height="30" rx="6" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Tail -->
+  <path d="M310 270 Q280 270 275 240 Q270 220 285 215" fill="none"/>
+
+  <!-- Stars around -->
+  <g stroke="none" fill="#888" fill-opacity="0.2">
+    <circle cx="608" cy="170" r="4"/><circle cx="608" cy="170" r="8" fill-opacity="0.08"/>
+    <circle cx="168" cy="130" r="4"/><circle cx="168" cy="130" r="8" fill-opacity="0.08"/>
+    <circle cx="648" cy="340" r="4"/><circle cx="648" cy="340" r="8" fill-opacity="0.08"/>
+    <circle cx="128" cy="390" r="4"/><circle cx="128" cy="390" r="8" fill-opacity="0.08"/>
+    <circle cx="688" cy="220" r="4"/><circle cx="688" cy="220" r="8" fill-opacity="0.08"/>
+    <circle cx="628" cy="410" r="4"/><circle cx="628" cy="410" r="8" fill-opacity="0.08"/>
+  </g>
+</svg>

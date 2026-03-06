@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Ghost body -->
+  <path d="M280 250 Q280 100 400 80 Q520 100 520 250 L520 460 Q505 440 490 460 Q475 480 460 460 Q445 440 430 460 Q415 480 400 460 Q385 480 370 460 Q355 440 340 460 Q325 480 310 460 Q295 440 280 460Z" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Eyes -->
+  <ellipse cx="355" cy="230" rx="30" ry="35" fill="#888" fill-opacity="0.06"/>
+  <ellipse cx="445" cy="230" rx="30" ry="35" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Pupils (looking to the side) -->
+  <circle cx="365" cy="235" r="14" fill="#888" fill-opacity="0.1"/>
+  <circle cx="455" cy="235" r="14" fill="#888" fill-opacity="0.1"/>
+  <!-- Highlights -->
+  <circle cx="370" cy="228" r="5" fill="white" stroke="none"/>
+  <circle cx="460" cy="228" r="5" fill="white" stroke="none"/>
+
+  <!-- Mouth (surprised O) -->
+  <ellipse cx="400" cy="320" rx="20" ry="28" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Blush -->
+  <circle cx="330" cy="280" r="15" fill="#888" fill-opacity="0.04" stroke="none"/>
+  <circle cx="470" cy="280" r="15" fill="#888" fill-opacity="0.04" stroke="none"/>
+
+  <!-- Arms reaching out -->
+  <path d="M280 300 Q240 290 220 310 Q210 325 225 335" fill="none" stroke-width="2" opacity="0.3"/>
+  <path d="M520 300 Q560 290 580 310 Q590 325 575 335" fill="none" stroke-width="2" opacity="0.3"/>
+</svg>

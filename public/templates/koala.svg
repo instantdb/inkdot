@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- === EUCALYPTUS BRANCH - horizontal across bottom === -->
+    <path d="M60 440 C180 430 320 425 450 428 C580 432 700 438 760 435" fill="none" stroke-width="16" stroke-opacity="0.22"/>
+    <!-- Bark texture on branch -->
+    <g fill="none" stroke-width="1.5" stroke-opacity="0.1">
+      <path d="M120 432 Q240 426 360 428"/>
+      <path d="M400 430 Q520 434 640 436"/>
+    </g>
+    <!-- Small twig + leaves left -->
+    <path d="M140 430 C130 400 115 370 95 345" fill="none" stroke-width="4" stroke-opacity="0.15"/>
+    <g fill-opacity="0.04" stroke-opacity="0.16" stroke-width="1.5">
+      <ellipse cx="90" cy="340" rx="7" ry="20" transform="rotate(-15 90 340)"/>
+      <ellipse cx="78" cy="348" rx="6" ry="17" transform="rotate(25 78 348)"/>
+      <ellipse cx="102" cy="355" rx="6" ry="16" transform="rotate(-40 102 355)"/>
+    </g>
+    <!-- Small twig + leaves right -->
+    <path d="M660 434 C670 405 680 375 695 350" fill="none" stroke-width="4" stroke-opacity="0.15"/>
+    <g fill-opacity="0.04" stroke-opacity="0.16" stroke-width="1.5">
+      <ellipse cx="700" cy="344" rx="7" ry="20" transform="rotate(10 700 344)"/>
+      <ellipse cx="712" cy="340" rx="6" ry="17" transform="rotate(-20 712 340)"/>
+      <ellipse cx="690" cy="356" rx="6" ry="16" transform="rotate(35 690 356)"/>
+    </g>
+
+    <!-- ============================================= -->
+    <!-- === KOALA - front view sitting on branch === -->
+    <!-- ============================================= -->
+
+    <!-- === BODY - round, sitting on branch === -->
+    <ellipse cx="400" cy="400" rx="120" ry="95"/>
+    <!-- Belly lighter patch -->
+    <ellipse cx="400" cy="410" rx="75" ry="65" fill-opacity="0.03" stroke="none"/>
+
+    <!-- === HEAD - large, slightly wider than tall === -->
+    <ellipse cx="400" cy="235" rx="120" ry="110"/>
+
+    <!-- === LEFT EAR - MASSIVE and very fluffy === -->
+    <ellipse cx="245" cy="145" rx="95" ry="98"/>
+    <ellipse cx="260" cy="148" rx="65" ry="68" fill-opacity="0.07"/>
+    <!-- Fluffy outer rim - heavy tufts -->
+    <g fill="none" stroke-width="2.8" opacity="0.35">
+      <path d="M168 85 Q155 108 160 132"/>
+      <path d="M158 125 Q146 150 152 175"/>
+      <path d="M160 168 Q150 192 158 215"/>
+      <path d="M168 210 Q162 230 170 242"/>
+      <path d="M175 65 Q164 88 168 112"/>
+      <path d="M192 52 Q180 76 185 100"/>
+      <path d="M212 42 Q200 65 204 90"/>
+    </g>
+    <!-- Inner ear fur -->
+    <g fill="none" stroke-width="1.6" opacity="0.24">
+      <path d="M235 100 Q244 128 235 158"/>
+      <path d="M255 94 Q264 124 255 154"/>
+      <path d="M275 96 Q284 124 275 154"/>
+      <path d="M292 102 Q300 128 292 154"/>
+      <path d="M240 154 Q250 182 240 210"/>
+      <path d="M262 152 Q272 180 262 206"/>
+      <path d="M282 152 Q292 178 282 204"/>
+    </g>
+
+    <!-- === RIGHT EAR - MASSIVE and very fluffy === -->
+    <ellipse cx="555" cy="145" rx="95" ry="98"/>
+    <ellipse cx="540" cy="148" rx="65" ry="68" fill-opacity="0.07"/>
+    <!-- Fluffy outer rim -->
+    <g fill="none" stroke-width="2.8" opacity="0.35">
+      <path d="M632 85 Q645 108 640 132"/>
+      <path d="M642 125 Q654 150 648 175"/>
+      <path d="M640 168 Q650 192 642 215"/>
+      <path d="M632 210 Q638 230 630 242"/>
+      <path d="M625 65 Q636 88 632 112"/>
+      <path d="M608 52 Q620 76 615 100"/>
+      <path d="M588 42 Q600 65 596 90"/>
+    </g>
+    <!-- Inner ear fur -->
+    <g fill="none" stroke-width="1.6" opacity="0.24">
+      <path d="M565 100 Q556 128 565 158"/>
+      <path d="M545 94 Q536 124 545 154"/>
+      <path d="M525 96 Q516 124 525 154"/>
+      <path d="M508 102 Q500 128 508 154"/>
+      <path d="M560 154 Q550 182 560 210"/>
+      <path d="M538 152 Q528 180 538 206"/>
+      <path d="M518 152 Q508 178 518 204"/>
+    </g>
+
+    <!-- === FACE === -->
+
+    <!-- BIG koala nose - the most defining feature -->
+    <ellipse cx="400" cy="275" rx="35" ry="25" fill-opacity="0.18"/>
+    <ellipse cx="392" cy="268" rx="12" ry="8" fill="white" fill-opacity="0.18" stroke="none"/>
+
+    <!-- Left eye - small and beady -->
+    <circle cx="345" cy="235" r="16" fill-opacity="0.08"/>
+    <circle cx="349" cy="235" r="9" fill="#888" fill-opacity="0.45" stroke="none"/>
+    <circle cx="352" cy="232" r="3.5" fill="white" stroke="none"/>
+
+    <!-- Right eye - small and beady -->
+    <circle cx="455" cy="235" r="16" fill-opacity="0.08"/>
+    <circle cx="451" cy="235" r="9" fill="#888" fill-opacity="0.45" stroke="none"/>
+    <circle cx="448" cy="232" r="3.5" fill="white" stroke="none"/>
+
+    <!-- Mouth - small W -->
+    <path d="M385 304 Q392 316 400 306 Q408 316 415 304" fill="none" stroke-width="2"/>
+
+    <!-- White chin/chest -->
+    <ellipse cx="400" cy="330" rx="65" ry="35" fill-opacity="0.03" stroke="none"/>
+
+    <!-- Cheek fluff - left -->
+    <g fill="none" stroke-width="1.8" opacity="0.16">
+      <path d="M298 248 Q292 264 298 280"/>
+      <path d="M310 254 Q305 270 310 286"/>
+      <path d="M288 232 Q282 248 288 264"/>
+    </g>
+    <!-- Cheek fluff - right -->
+    <g fill="none" stroke-width="1.8" opacity="0.16">
+      <path d="M502 248 Q508 264 502 280"/>
+      <path d="M490 254 Q495 270 490 286"/>
+      <path d="M512 232 Q518 248 512 264"/>
+    </g>
+
+    <!-- === ARMS/PAWS resting on branch === -->
+    <!-- Left arm - thick and stubby -->
+    <path d="M305 335 C282 368 265 400 258 425" fill="none" stroke-width="10" stroke-opacity="0.4"/>
+    <!-- Left paw on branch - big and rounded -->
+    <path d="M258 425 Q240 415 230 425 Q222 440 232 455 Q248 464 268 458 Q280 448 272 432 Q266 424 258 425" fill-opacity="0.07" stroke-width="2.5"/>
+    <!-- Left claws -->
+    <g stroke-width="2.5" opacity="0.45">
+      <path d="M235 430 L222 420"/>
+      <path d="M230 440 L218 436"/>
+      <path d="M232 452 L220 454"/>
+      <path d="M242 460 L234 468"/>
+    </g>
+
+    <!-- Right arm - thick and stubby -->
+    <path d="M495 335 C518 368 535 400 542 425" fill="none" stroke-width="10" stroke-opacity="0.4"/>
+    <!-- Right paw on branch - big and rounded -->
+    <path d="M542 425 Q560 415 570 425 Q578 440 568 455 Q552 464 532 458 Q520 448 528 432 Q534 424 542 425" fill-opacity="0.07" stroke-width="2.5"/>
+    <!-- Right claws -->
+    <g stroke-width="2.5" opacity="0.45">
+      <path d="M565 430 L578 420"/>
+      <path d="M570 440 L582 436"/>
+      <path d="M568 452 L580 454"/>
+      <path d="M558 460 L566 468"/>
+    </g>
+
+    <!-- === FEET dangling below branch === -->
+    <!-- Left foot -->
+    <path d="M340 480 C328 498 322 516 328 528" fill="none" stroke-width="5" stroke-opacity="0.32"/>
+    <ellipse cx="335" cy="538" rx="26" ry="14" fill-opacity="0.05" stroke-opacity="0.32"/>
+    <g stroke-width="2.2" opacity="0.3">
+      <path d="M316 540 L306 552"/>
+      <path d="M330 544 L324 556"/>
+      <path d="M344 544 L346 556"/>
+      <path d="M356 540 L362 550"/>
+    </g>
+
+    <!-- Right foot -->
+    <path d="M460 480 C472 498 478 516 472 528" fill="none" stroke-width="5" stroke-opacity="0.32"/>
+    <ellipse cx="465" cy="538" rx="26" ry="14" fill-opacity="0.05" stroke-opacity="0.32"/>
+    <g stroke-width="2.2" opacity="0.3">
+      <path d="M484 540 L494 552"/>
+      <path d="M470 544 L476 556"/>
+      <path d="M456 544 L454 556"/>
+      <path d="M444 540 L438 550"/>
+    </g>
+
+    <!-- === FUR TEXTURE === -->
+    <g fill="none" stroke-opacity="0.14" stroke-width="1.5">
+      <path d="M355 365 Q360 360 365 365"/>
+      <path d="M435 370 Q440 365 445 370"/>
+      <path d="M370 410 Q375 405 380 410"/>
+      <path d="M420 415 Q425 410 430 415"/>
+      <path d="M340 400 Q345 395 350 400"/>
+      <path d="M450 405 Q455 400 460 405"/>
+    </g>
+    <!-- Head fur -->
+    <g fill="none" stroke-opacity="0.1" stroke-width="1.3">
+      <path d="M365 185 Q370 180 375 185"/>
+      <path d="M425 188 Q430 183 435 188"/>
+      <path d="M395 175 Q400 170 405 175"/>
+    </g>
+  </g>
+</svg>

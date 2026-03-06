@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Doge - Iconic shiba inu meme face -->
+
+  <!-- Body (loaf shape, small relative to head) -->
+  <path d="M270 385 Q250 420 240 470 Q235 510 245 545 Q280 570 400 575 Q520 570 555 545 Q565 510 560 470 Q550 420 530 385" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Head (wide, slightly flat on top - bread loaf shape) -->
+  <path d="M240 260 Q240 155 300 120 Q350 98 400 95 Q450 98 500 120 Q560 155 560 260 Q560 330 520 365 Q470 395 400 400 Q330 395 280 365 Q240 330 240 260Z" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Left ear (wide, short triangle, angled out) -->
+  <path d="M275 155 Q250 90 235 62 Q245 48 270 52 Q300 60 330 110" fill="#888" fill-opacity="0.06" stroke-width="2.5"/>
+  <path d="M270 130 Q258 85 250 65" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Right ear (mirror) -->
+  <path d="M525 155 Q550 90 565 62 Q555 48 530 52 Q500 60 470 110" fill="#888" fill-opacity="0.06" stroke-width="2.5"/>
+  <path d="M530 130 Q542 85 550 65" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Face markings - lighter muzzle/cheek area -->
+  <path d="M310 220 Q320 195 370 180 Q400 175 430 180 Q480 195 490 220 Q500 270 490 310 Q470 355 400 365 Q330 355 310 310 Q300 270 310 220" fill="white" fill-opacity="0.15" stroke="none"/>
+
+  <!-- Eyebrow patches (dark fur marks above eyes) -->
+  <path d="M295 190 Q320 172 355 185" stroke-width="6" opacity="0.35" fill="none"/>
+  <path d="M445 190 Q480 175 505 192" stroke-width="6" opacity="0.35" fill="none"/>
+
+  <!-- Left eye (BIG - this is THE feature) -->
+  <circle cx="340" cy="235" r="30" fill="white" stroke="#888" stroke-width="2.5"/>
+  <!-- Iris shifted right = the iconic side-eye -->
+  <circle cx="354" cy="237" r="18" fill="#555" stroke="none"/>
+  <circle cx="358" cy="236" r="9" fill="#222" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="365" cy="226" r="7" fill="white" stroke="none"/>
+  <circle cx="350" cy="245" r="3.5" fill="white" stroke="none"/>
+
+  <!-- Right eye (slightly smaller - perspective) -->
+  <circle cx="460" cy="240" r="28" fill="white" stroke="#888" stroke-width="2.5"/>
+  <!-- Iris shifted left = matching side-eye -->
+  <circle cx="448" cy="242" r="17" fill="#555" stroke="none"/>
+  <circle cx="444" cy="241" r="8.5" fill="#222" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="437" cy="232" r="6.5" fill="white" stroke="none"/>
+  <circle cx="452" cy="250" r="3" fill="white" stroke="none"/>
+
+  <!-- Muzzle outline -->
+  <ellipse cx="400" cy="310" rx="62" ry="45" stroke-width="2" fill="white" fill-opacity="0.1"/>
+
+  <!-- Nose -->
+  <path d="M385 290 Q400 280 415 290 Q420 300 400 308 Q380 300 385 290Z" fill="#555" stroke="none"/>
+
+  <!-- Mouth -->
+  <line x1="400" y1="308" x2="400" y2="325" stroke-width="2" opacity="0.5"/>
+  <!-- The smug smile -->
+  <path d="M358 330 Q380 345 400 348 Q420 345 442 330" stroke-width="3" opacity="0.6" fill="none"/>
+
+  <!-- Whisker dots -->
+  <g fill="#888" fill-opacity="0.2" stroke="none">
+    <circle cx="335" cy="310" r="2"/>
+    <circle cx="325" cy="320" r="2"/>
+    <circle cx="335" cy="330" r="2"/>
+    <circle cx="465" cy="315" r="2"/>
+    <circle cx="475" cy="325" r="2"/>
+    <circle cx="465" cy="335" r="2"/>
+  </g>
+
+  <!-- Neck fluff -->
+  <path d="M310 390 Q355 408 400 412 Q445 408 490 390" stroke-width="2" opacity="0.25" fill="none"/>
+
+  <!-- Front paws -->
+  <!-- Left paw -->
+  <path d="M295 530 Q320 515 355 518 Q385 525 395 540" stroke-width="2.5" fill="#888" fill-opacity="0.03"/>
+  <line x1="325" y1="517" x2="323" y2="538" stroke-width="1.5" opacity="0.3"/>
+  <line x1="350" y1="518" x2="348" y2="538" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Right paw (crossed over) -->
+  <path d="M400 510 Q435 495 470 498 Q500 505 512 522 Q508 542 485 550 Q450 555 420 548 Q402 535 400 510Z" fill="#888" fill-opacity="0.04" stroke-width="2.5"/>
+  <line x1="445" y1="498" x2="443" y2="522" stroke-width="1.5" opacity="0.3"/>
+  <line x1="472" y1="500" x2="470" y2="522" stroke-width="1.5" opacity="0.3"/>
+</svg>

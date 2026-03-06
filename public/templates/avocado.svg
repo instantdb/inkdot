@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Avocado half -->
+
+  <!-- Outer shape (pear-shaped) -->
+  <path d="M400 60 Q300 80 250 160 Q200 260 210 360 Q220 440 280 500 Q340 550 400 560 Q460 550 520 500 Q580 440 590 360 Q600 260 550 160 Q500 80 400 60" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Inner flesh boundary -->
+  <path d="M400 90 Q320 105 275 175 Q235 260 245 350 Q255 425 305 480 Q350 520 400 530 Q450 520 495 480 Q545 425 555 350 Q565 260 525 175 Q480 105 400 90" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Pit -->
+  <circle cx="400" cy="320" r="85" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Pit shadow/dimension -->
+  <ellipse cx="400" cy="330" rx="75" ry="70" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Pit highlight -->
+  <path d="M365 280 Q385 260 415 270" stroke-width="2" opacity="0.2"/>
+
+  <!-- Skin texture (outer edge) -->
+  <g stroke-width="1" opacity="0.1">
+    <path d="M270 200 Q260 220 258 240"/>
+    <path d="M530 200 Q540 220 542 240"/>
+    <path d="M240 320 Q235 340 238 360"/>
+    <path d="M560 320 Q565 340 562 360"/>
+  </g>
+
+  <!-- Flesh texture (subtle radial lines) -->
+  <g stroke-width="0.8" opacity="0.08">
+    <path d="M400 100 L400 235"/>
+    <path d="M350 110 L360 240"/>
+    <path d="M450 110 L440 240"/>
+    <path d="M300 150 L330 250"/>
+    <path d="M500 150 L470 250"/>
+    <path d="M260 230 L315 290"/>
+    <path d="M540 230 L485 290"/>
+    <path d="M250 340 L315 340"/>
+    <path d="M550 340 L485 340"/>
+    <path d="M270 430 L330 395"/>
+    <path d="M530 430 L470 395"/>
+    <path d="M330 500 L365 410"/>
+    <path d="M470 500 L435 410"/>
+    <path d="M400 540 L400 405"/>
+  </g>
+</svg>

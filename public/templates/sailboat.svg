@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hull -->
+    <path d="M220 420 L260 480 Q400 500 540 480 L580 420Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Hull waterline -->
+    <path d="M240 450 Q400 470 560 450"/>
+    <!-- Hull keel line -->
+    <path d="M280 470 Q400 485 520 470"/>
+    <!-- Deck -->
+    <line x1="230" y1="420" x2="570" y2="420"/>
+    <!-- Cabin -->
+    <path d="M340 420 L345 390 L455 390 L460 420" fill="#888" fill-opacity="0.04"/>
+    <!-- Cabin window -->
+    <rect x="370" y="395" width="20" height="15" rx="2" fill="#888" fill-opacity="0.05"/>
+    <rect x="410" y="395" width="20" height="15" rx="2" fill="#888" fill-opacity="0.05"/>
+    <!-- Mast -->
+    <line x1="400" y1="390" x2="400" y2="80"/>
+    <!-- Mast top -->
+    <circle cx="400" cy="78" r="4" fill="#888" fill-opacity="0.06"/>
+    <!-- Main sail -->
+    <path d="M405 100 L405 370 L560 370Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Main sail curve (wind) -->
+    <path d="M405 100 Q520 200 560 370"/>
+    <!-- Sail battens -->
+    <path d="M405 160 Q460 180 500 220"/>
+    <path d="M405 220 Q480 240 530 290"/>
+    <path d="M405 280 Q490 300 545 340"/>
+    <!-- Jib sail (front triangle) -->
+    <path d="M395 100 L395 350 L240 380Z" fill="#888" fill-opacity="0.03"/>
+    <!-- Jib curve -->
+    <path d="M395 100 Q300 200 240 380"/>
+    <!-- Jib sheet line -->
+    <path d="M240 380 Q280 395 340 390"/>
+    <!-- Boom -->
+    <line x1="400" y1="375" x2="565" y2="375"/>
+    <!-- Flag at top -->
+    <path d="M400 80 L380 70 L400 60" fill="#888" fill-opacity="0.06"/>
+    <!-- Rigging lines -->
+    <line x1="400" y1="100" x2="250" y2="420" opacity="0.5"/>
+    <line x1="400" y1="100" x2="550" y2="420" opacity="0.5"/>
+    <!-- Bow detail -->
+    <path d="M220 420 L200 415 L225 410"/>
+    <!-- Stern detail -->
+    <path d="M580 420 L595 418 L585 425"/>
+    <!-- Water surface -->
+    <path d="M100 480 Q150 470 200 480 Q250 490 300 480 Q350 470 400 480 Q450 490 500 480 Q550 470 600 480 Q650 490 700 480"/>
+    <!-- Water reflections -->
+    <path d="M280 510 Q350 505 420 510 Q490 515 520 510" opacity="0.4"/>
+    <path d="M300 530 Q370 525 440 530 Q500 535 530 530" opacity="0.3"/>
+    <!-- Distant waves -->
+    <path d="M80 500 Q130 490 180 500 Q230 510 280 500 Q330 490 380 500 Q430 510 480 500 Q530 490 580 500 Q630 510 680 500 Q730 490 750 500" opacity="0.5"/>
+    <path d="M60 540 Q120 530 180 540 Q240 550 300 540 Q360 530 420 540 Q480 550 540 540 Q600 530 660 540 Q720 550 760 540" opacity="0.3"/>
+  </g>
+</svg>

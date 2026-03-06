@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Elephant facing right -->
+  <!-- Single continuous outline. Short body, tall head. -->
+
+  <!-- Combined body+head silhouette fill -->
+  <path d="
+    M88 275
+    Q82 218 108 188
+    Q145 162 235 155
+    Q325 148 395 155
+    C 415 158 430 168 445 172
+    C 468 178 488 155 510 128
+    C 530 104 555 85 585 80
+    C 618 75 642 92 652 125
+    C 660 155 658 200 654 240
+    C 650 278 644 310 638 338
+    C 634 355 632 368 635 380
+    Q645 405 638 430
+    Q628 458 614 475
+    Q596 495 578 505
+    Q560 512 550 506
+    Q542 498 548 486
+    Q558 476 565 465
+    Q575 448 578 430
+    Q580 412 580 394
+    Q580 380 574 370
+    Q560 375 544 388
+    Q520 408 495 422
+    Q450 442 380 446
+    Q275 454 195 446
+    Q130 438 106 418
+    Q84 398 80 368
+    Q76 332 82 295
+    Z
+  " fill="#888" fill-opacity="0.05"/>
+
+  <!-- Top outline: rear -> back -> saddle -> forehead -> face -->
+  <path d="
+    M88 275
+    Q82 218 108 188
+    Q145 162 235 155
+    Q325 148 395 155
+    C 415 158 430 168 445 172
+    C 468 178 488 155 510 128
+    C 530 104 555 85 585 80
+    C 618 75 642 92 652 125
+    C 660 155 658 200 654 240
+    C 650 278 644 310 638 338
+    C 634 355 632 368 635 380
+  " fill="none"/>
+
+  <!-- Trunk -->
+  <path d="
+    M635 380
+    Q645 405 638 430
+    Q628 458 614 475
+    Q596 495 578 505
+    Q560 512 550 506
+    Q542 498 548 486
+    Q558 476 565 465
+  " fill="none" stroke-width="3"/>
+
+  <!-- Trunk underside back to jaw -->
+  <path d="
+    M565 465
+    Q575 448 578 430
+    Q580 412 580 394
+    Q580 380 574 370
+  " fill="none" stroke-width="2.5" opacity="0.35"/>
+
+  <!-- Lower jaw + belly back to rear -->
+  <path d="
+    M574 370
+    Q560 375 544 388
+    Q520 408 495 422
+    Q450 442 380 446
+    Q275 454 195 446
+    Q130 438 106 418
+    Q84 398 80 368
+    Q76 332 82 295
+    L88 275
+  " fill="none"/>
+
+  <!-- Ear - large flap hanging from top of head -->
+  <path d="
+    M535 105
+    Q495 118 465 165
+    Q435 228 432 310
+    Q430 380 448 412
+    Q465 438 488 420
+    Q505 398 508 355
+    Q512 290 508 225
+    Q504 162 540 115
+  " fill="#888" fill-opacity="0.04" stroke-width="2.5"/>
+  <!-- Inner ear line -->
+  <path d="M522 132 Q488 158 472 218 Q455 290 458 365 Q464 410 480 420" fill="none" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- Head tint (subtle shading on face area) -->
+  <path d="
+    M460 170
+    C 475 158 492 142 510 128
+    C 530 104 555 85 585 80
+    C 618 75 642 92 652 125
+    C 660 155 658 200 654 240
+    C 650 278 644 310 638 338
+    C 634 355 632 368 635 380
+    Q620 370 600 378
+    Q575 388 560 378
+    Q540 395 520 405
+    Q498 398 485 378
+    Q465 340 462 290
+    Q458 230 460 170
+    Z
+  " fill="#888" fill-opacity="0.02" stroke="none"/>
+
+  <!-- Trunk wrinkles -->
+  <g stroke-width="1.5" opacity="0.22">
+    <path d="M642 412 Q647 417 650 410"/>
+    <path d="M634 440 Q639 445 642 438"/>
+    <path d="M620 465 Q625 470 628 463"/>
+    <path d="M600 490 Q605 495 608 488"/>
+  </g>
+
+  <!-- Tusk -->
+  <path d="M632 376 Q655 418 648 465 Q642 488 628 494" fill="none" stroke-width="3" opacity="0.4"/>
+
+  <!-- Eye -->
+  <circle cx="640" cy="228" r="10" fill="#888" fill-opacity="0.08"/>
+  <circle cx="642" cy="227" r="5.5" fill="#888" stroke="none"/>
+  <circle cx="644" cy="224" r="2" fill="white" stroke="none"/>
+
+  <!-- Forehead ridge -->
+  <path d="M555 88 Q580 80 605 86" fill="none" stroke-width="1.5" opacity="0.15"/>
+
+  <!-- === LEGS === -->
+  <path d="M130 422 Q124 448 122 475 Q120 502 126 518 Q134 528 152 528 L174 528 Q184 528 181 518 Q178 502 181 475 Q184 450 190 425" fill="#888" fill-opacity="0.04"/>
+  <path d="M198 424 Q194 448 192 472 Q190 498 194 512 Q200 520 216 520 L234 520 Q242 520 240 512 Q238 498 240 472 Q242 450 246 426" fill="#888" fill-opacity="0.03" stroke-width="2" opacity="0.5"/>
+  <path d="M348 434 Q342 458 340 482 Q338 508 342 524 Q350 534 368 534 L390 534 Q400 534 396 524 Q394 508 396 482 Q398 460 404 436" fill="#888" fill-opacity="0.04"/>
+  <path d="M410 432 Q406 456 404 478 Q402 504 406 518 Q410 526 426 526 L444 526 Q452 526 450 518 Q448 504 450 478 Q452 458 456 434" fill="#888" fill-opacity="0.03" stroke-width="2" opacity="0.5"/>
+
+  <!-- Toenails -->
+  <g stroke-width="1.5" opacity="0.3">
+    <path d="M138 526 L136 536"/>
+    <path d="M156 527 L155 537"/>
+    <path d="M168 526 L168 536"/>
+    <path d="M354 532 L352 542"/>
+    <path d="M372 533 L371 543"/>
+    <path d="M384 532 L384 542"/>
+  </g>
+
+  <!-- Tail -->
+  <path d="M86 280 Q60 272 46 290 Q40 312 44 340" fill="none" stroke-width="2" opacity="0.35"/>
+  <path d="M40 340 Q34 352 42 356 Q52 350 46 340" fill="#888" fill-opacity="0.06" stroke-width="1.5" opacity="0.35"/>
+</svg>

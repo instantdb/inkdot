@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Petals (two rings) -->
+  <g fill="#888" fill-opacity="0.04">
+    <!-- Outer petals -->
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(0 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(30 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(60 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(90 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(120 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(150 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(180 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(210 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(240 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(270 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(300 400 200)"/>
+    <ellipse cx="400" cy="130" rx="22" ry="50" transform="rotate(330 400 200)"/>
+  </g>
+
+  <!-- Inner petals -->
+  <g fill="#888" fill-opacity="0.03" stroke-width="2">
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(15 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(45 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(75 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(105 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(135 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(165 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(195 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(225 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(255 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(285 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(315 400 200)"/>
+    <ellipse cx="400" cy="148" rx="18" ry="38" transform="rotate(345 400 200)"/>
+  </g>
+
+  <!-- Center -->
+  <circle cx="400" cy="200" r="45" fill="#888" fill-opacity="0.08"/>
+  <!-- Seed pattern -->
+  <g fill="#888" stroke="none" opacity="0.15">
+    <circle cx="390" cy="190" r="3"/>
+    <circle cx="410" cy="190" r="3"/>
+    <circle cx="400" cy="205" r="3"/>
+    <circle cx="385" cy="205" r="3"/>
+    <circle cx="415" cy="205" r="3"/>
+    <circle cx="395" cy="175" r="2.5"/>
+    <circle cx="405" cy="175" r="2.5"/>
+    <circle cx="380" cy="195" r="2.5"/>
+    <circle cx="420" cy="195" r="2.5"/>
+    <circle cx="400" cy="218" r="2.5"/>
+  </g>
+
+  <!-- Stem -->
+  <path d="M400 250 Q398 350 395 450 Q393 500 390 550" stroke-width="3" opacity="0.4"/>
+
+  <!-- Leaves -->
+  <path d="M396 350 Q340 330 310 350 Q300 360 315 370 Q340 375 396 360" fill="#888" fill-opacity="0.04"/>
+  <path d="M394 430 Q450 410 480 425 Q492 435 478 445 Q455 450 394 440" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Leaf veins -->
+  <path d="M396 355 Q355 348 320 360" stroke-width="1" opacity="0.15"/>
+  <path d="M394 435 Q440 428 472 435" stroke-width="1" opacity="0.15"/>
+</svg>

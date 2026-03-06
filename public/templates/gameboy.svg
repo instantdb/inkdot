@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Main body -->
+    <rect x="235" y="28" width="330" height="545" rx="18" fill="#888" fill-opacity="0.04"/>
+
+    <!-- Slight step at top for cartridge slot -->
+    <rect x="310" y="20" width="180" height="18" rx="4" fill="#888" fill-opacity="0.03"/>
+
+    <!-- Screen bezel - slightly recessed look, angled bottom-left corner -->
+    <path d="M275,72 L535,72 Q543,72 543,80 L543,268 Q543,276 535,276
+             L290,276 L275,260 L275,80 Q275,72 283,72 Z"
+          fill="#888" fill-opacity="0.06"/>
+
+    <!-- Actual screen (green-ish area on real GB) -->
+    <rect x="305" y="95" width="190" height="160" rx="3" fill="#888" fill-opacity="0.04"/>
+    <!-- Screen inner border -->
+    <rect x="309" y="99" width="182" height="152" rx="1" fill="none" stroke-width="1" stroke-opacity="0.35"/>
+
+    <!-- Power LED indicator dot -->
+    <circle cx="286" cy="270" r="4" fill="#888" fill-opacity="0.1"/>
+
+    <!-- "Nintendo GAME BOY" branding area hint (lines suggesting text) -->
+    <g stroke-width="1.8" stroke-opacity="0.2">
+      <!-- "Nintendo" small text hint -->
+      <line x1="365" y1="82" x2="435" y2="82"/>
+      <!-- "GAME BOY" larger text hint -->
+      <line x1="340" y1="290" x2="460" y2="290"/>
+      <line x1="345" y1="297" x2="455" y2="297" stroke-width="1" stroke-opacity="0.12"/>
+    </g>
+
+    <!-- Horizontal line dividing upper and lower sections -->
+    <line x1="235" y1="310" x2="565" y2="310" stroke-opacity="0.25"/>
+
+    <!-- === D-PAD === -->
+    <!-- Vertical bar of cross -->
+    <rect x="302" y="345" width="44" height="115" rx="6" fill="#888" fill-opacity="0.05"/>
+    <!-- Horizontal bar of cross -->
+    <rect x="288" y="380" width="72" height="44" rx="6" fill="#888" fill-opacity="0.05"/>
+    <!-- Indented circle at center -->
+    <circle cx="324" cy="402" r="10" fill="#888" fill-opacity="0.03" stroke-width="1.5"/>
+
+    <!-- === A AND B BUTTONS === -->
+    <!-- B button (lower-left) -->
+    <circle cx="440" cy="410" r="22" fill="#888" fill-opacity="0.06"/>
+    <circle cx="440" cy="410" r="18" fill="#888" fill-opacity="0.03"/>
+    <!-- B label hint -->
+    <line x1="436" y1="416" x2="436" y2="404" stroke-width="1.5" stroke-opacity="0.15"/>
+    <path d="M436,404 Q443,404 443,408 Q443,412 436,412" fill="none" stroke-width="1.5" stroke-opacity="0.15"/>
+    <path d="M436,412 Q443,412 443,416 Q443,420 436,420" fill="none" stroke-width="1.5" stroke-opacity="0.15"/>
+
+    <!-- A button (upper-right) -->
+    <circle cx="492" cy="374" r="22" fill="#888" fill-opacity="0.06"/>
+    <circle cx="492" cy="374" r="18" fill="#888" fill-opacity="0.03"/>
+    <!-- A label hint -->
+    <path d="M489,382 L492,368 L495,382" fill="none" stroke-width="1.5" stroke-opacity="0.15"/>
+    <line x1="490" y1="377" x2="494" y2="377" stroke-width="1.5" stroke-opacity="0.15"/>
+
+    <!-- === START / SELECT === -->
+    <!-- Select button (left) -->
+    <rect x="355" y="478" width="42" height="11" rx="5.5"
+          transform="rotate(-25 376 483)" fill="#888" fill-opacity="0.06"/>
+    <!-- "SELECT" hint -->
+    <line x1="359" y1="494" x2="393" y2="481" stroke-width="1" stroke-opacity="0.12"/>
+
+    <!-- Start button (right) -->
+    <rect x="408" y="466" width="42" height="11" rx="5.5"
+          transform="rotate(-25 429 471)" fill="#888" fill-opacity="0.06"/>
+    <!-- "START" hint -->
+    <line x1="413" y1="482" x2="444" y2="470" stroke-width="1" stroke-opacity="0.12"/>
+
+    <!-- === SPEAKER GRILL (bottom-right) === -->
+    <g stroke-width="2" stroke-opacity="0.2">
+      <line x1="488" y1="480" x2="520" y2="505"/>
+      <line x1="498" y1="474" x2="530" y2="499"/>
+      <line x1="508" y1="468" x2="540" y2="493"/>
+      <line x1="518" y1="462" x2="548" y2="486"/>
+      <line x1="528" y1="456" x2="553" y2="478"/>
+      <line x1="536" y1="452" x2="556" y2="470"/>
+    </g>
+
+    <!-- Volume notch on right side -->
+    <path d="M565,185 L572,185 L572,220 L565,220" fill="none" stroke-width="2" stroke-opacity="0.3"/>
+
+    <!-- Power switch on top -->
+    <rect x="498" y="22" width="35" height="12" rx="3" fill="#888" fill-opacity="0.05" stroke-opacity="0.3"/>
+
+    <!-- Screen pixel hint (very subtle dot-matrix feel) -->
+    <g stroke-width="0.5" stroke-opacity="0.1">
+      <line x1="350" y1="95" x2="350" y2="255"/>
+      <line x1="400" y1="95" x2="400" y2="255"/>
+      <line x1="450" y1="95" x2="450" y2="255"/>
+      <line x1="305" y1="145" x2="495" y2="145"/>
+      <line x1="305" y1="195" x2="495" y2="195"/>
+    </g>
+
+  </g>
+</svg>

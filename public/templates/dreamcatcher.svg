@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer hoop -->
+    <circle cx="400" cy="220" r="150" fill="#888" fill-opacity="0.03"/>
+    <!-- Inner decorative ring -->
+    <circle cx="400" cy="220" r="142" fill="none" stroke-width="1.5" stroke-opacity="0.4"/>
+    <!-- Web - outer ring points connected -->
+    <polygon points="400,78 527,145 527,295 400,362 273,295 273,145" fill="#888" fill-opacity="0.03" stroke-width="1.5"/>
+    <!-- Web - middle ring -->
+    <polygon points="400,115 490,158 490,282 400,325 310,282 310,158" fill="#888" fill-opacity="0.03" stroke-width="1"/>
+    <!-- Web - inner ring -->
+    <polygon points="400,155 450,178 450,262 400,285 350,262 350,178" fill="#888" fill-opacity="0.04" stroke-width="1"/>
+    <!-- Web - innermost ring -->
+    <polygon points="400,185 425,198 425,242 400,255 375,242 375,198" fill="#888" fill-opacity="0.05" stroke-width="1"/>
+    <!-- Center circle -->
+    <circle cx="400" cy="220" r="15" fill="#888" fill-opacity="0.06"/>
+    <!-- Web connecting lines -->
+    <line x1="400" y1="78" x2="400" y2="115" stroke-width="1"/>
+    <line x1="527" y1="145" x2="490" y2="158" stroke-width="1"/>
+    <line x1="527" y1="295" x2="490" y2="282" stroke-width="1"/>
+    <line x1="400" y1="362" x2="400" y2="325" stroke-width="1"/>
+    <line x1="273" y1="295" x2="310" y2="282" stroke-width="1"/>
+    <line x1="273" y1="145" x2="310" y2="158" stroke-width="1"/>
+    <line x1="400" y1="115" x2="400" y2="155" stroke-width="1"/>
+    <line x1="490" y1="158" x2="450" y2="178" stroke-width="1"/>
+    <line x1="490" y1="282" x2="450" y2="262" stroke-width="1"/>
+    <line x1="400" y1="325" x2="400" y2="285" stroke-width="1"/>
+    <line x1="310" y1="282" x2="350" y2="262" stroke-width="1"/>
+    <line x1="310" y1="158" x2="350" y2="178" stroke-width="1"/>
+    <!-- Small beads on web -->
+    <circle cx="400" cy="115" r="4" fill="#888" fill-opacity="0.08"/>
+    <circle cx="490" cy="158" r="4" fill="#888" fill-opacity="0.08"/>
+    <circle cx="310" cy="158" r="4" fill="#888" fill-opacity="0.08"/>
+    <circle cx="490" cy="282" r="4" fill="#888" fill-opacity="0.08"/>
+    <circle cx="310" cy="282" r="4" fill="#888" fill-opacity="0.08"/>
+    <circle cx="400" cy="325" r="4" fill="#888" fill-opacity="0.08"/>
+    <!-- Hanging strings -->
+    <line x1="340" y1="362" x2="330" y2="440"/>
+    <line x1="400" y1="370" x2="400" y2="450"/>
+    <line x1="460" y1="362" x2="470" y2="440"/>
+    <!-- Beads on strings -->
+    <circle cx="335" cy="400" r="5" fill="#888" fill-opacity="0.07"/>
+    <circle cx="400" cy="410" r="5" fill="#888" fill-opacity="0.07"/>
+    <circle cx="465" cy="400" r="5" fill="#888" fill-opacity="0.07"/>
+    <!-- Left feather -->
+    <path d="M330,440 L325,460 Q310,470 305,490 Q300,510 310,520 Q315,510 320,490 Q325,475 330,465" fill="#888" fill-opacity="0.05"/>
+    <line x1="320" y1="445" x2="310" y2="520" stroke-width="1.5"/>
+    <path d="M310,470 L300,465" stroke-width="1"/>
+    <path d="M312,485 L302,482" stroke-width="1"/>
+    <path d="M314,500 L305,498" stroke-width="1"/>
+    <!-- Center feather -->
+    <path d="M400,450 L395,475 Q380,485 375,510 Q372,535 382,545 Q388,530 392,510 Q396,490 400,478" fill="#888" fill-opacity="0.05"/>
+    <line x1="392" y1="455" x2="382" y2="545" stroke-width="1.5"/>
+    <path d="M384,480 L374,477" stroke-width="1"/>
+    <path d="M383,500 L373,498" stroke-width="1"/>
+    <path d="M382,520 L373,518" stroke-width="1"/>
+    <!-- Right feather -->
+    <path d="M470,440 L475,460 Q490,470 495,490 Q500,510 490,520 Q485,510 480,490 Q475,475 470,465" fill="#888" fill-opacity="0.05"/>
+    <line x1="480" y1="445" x2="490" y2="520" stroke-width="1.5"/>
+    <path d="M490,470 L500,465" stroke-width="1"/>
+    <path d="M492,485 L502,482" stroke-width="1"/>
+    <path d="M491,500 L500,498" stroke-width="1"/>
+    <!-- Hanging loop at top -->
+    <path d="M390,70 Q400,55 410,70" fill="none"/>
+    <line x1="390" y1="70" x2="395" y2="78"/>
+    <line x1="410" y1="70" x2="405" y2="78"/>
+  </g>
+</svg>

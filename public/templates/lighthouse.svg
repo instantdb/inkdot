@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Base rocks -->
+    <path d="M250 520 Q300 540 400 530 Q500 540 550 520 Q580 510 600 520 L600 560 Q500 580 400 570 Q300 580 200 560 L200 520 Q220 530 250 520Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Lighthouse body -->
+    <path d="M350 520 L360 280 L440 280 L450 520Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Lighthouse stripes -->
+    <line x1="353" y1="460" x2="447" y2="460"/>
+    <line x1="355" y1="400" x2="445" y2="400"/>
+    <line x1="358" y1="340" x2="442" y2="340"/>
+    <!-- Door -->
+    <path d="M385 520 L385 480 Q400 465 415 480 L415 520" fill="#888" fill-opacity="0.06"/>
+    <!-- Window -->
+    <circle cx="400" cy="370" r="12" fill="#888" fill-opacity="0.05"/>
+    <!-- Lantern room base -->
+    <path d="M345 280 L340 265 L460 265 L455 280Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Lantern room glass -->
+    <path d="M350 265 L355 220 L445 220 L450 265Z" fill="#888" fill-opacity="0.03"/>
+    <!-- Lantern room glass panes -->
+    <line x1="375" y1="265" x2="378" y2="220"/>
+    <line x1="400" y1="265" x2="400" y2="220"/>
+    <line x1="425" y1="265" x2="422" y2="220"/>
+    <!-- Gallery/walkway -->
+    <line x1="335" y1="265" x2="465" y2="265"/>
+    <line x1="338" y1="270" x2="462" y2="270"/>
+    <!-- Railing posts -->
+    <line x1="340" y1="265" x2="340" y2="255"/>
+    <line x1="355" y1="265" x2="355" y2="255"/>
+    <line x1="445" y1="265" x2="445" y2="255"/>
+    <line x1="460" y1="265" x2="460" y2="255"/>
+    <!-- Railing top -->
+    <line x1="338" y1="255" x2="462" y2="255"/>
+    <!-- Roof -->
+    <path d="M350 220 L400 185 L450 220" fill="#888" fill-opacity="0.04"/>
+    <!-- Roof cap -->
+    <circle cx="400" cy="185" r="6" fill="#888" fill-opacity="0.06"/>
+    <!-- Light beams - left -->
+    <path d="M340 240 L120 160 L100 200 L335 255" fill="#888" fill-opacity="0.03"/>
+    <path d="M340 245 L140 310 L120 280 L335 250" fill="#888" fill-opacity="0.03"/>
+    <!-- Light beams - right -->
+    <path d="M460 240 L680 160 L700 200 L465 255" fill="#888" fill-opacity="0.03"/>
+    <path d="M460 245 L660 310 L680 280 L465 250" fill="#888" fill-opacity="0.03"/>
+    <!-- Light glow -->
+    <circle cx="400" cy="242" r="15" fill="#888" fill-opacity="0.06"/>
+    <!-- Water waves -->
+    <path d="M100 560 Q150 550 200 560 Q250 570 300 560 Q350 550 400 560 Q450 570 500 560 Q550 550 600 560 Q650 570 700 560"/>
+    <path d="M80 580 Q130 570 180 580 Q230 590 280 580 Q330 570 380 580 Q430 590 480 580 Q530 570 580 580 Q630 590 680 580 Q730 570 750 580"/>
+  </g>
+</svg>

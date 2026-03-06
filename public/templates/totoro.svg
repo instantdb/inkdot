@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- My Neighbor Totoro -->
+
+  <!-- Body (round, chunky) -->
+  <path d="M260 200 Q240 300 250 400 Q260 480 320 520 Q380 550 400 550 Q420 550 480 520 Q540 480 550 400 Q560 300 540 200 Q520 130 400 110 Q280 130 260 200" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Belly patch (lighter) -->
+  <path d="M310 280 Q310 250 400 240 Q490 250 490 280 Q490 420 460 470 Q430 490 400 490 Q370 490 340 470 Q310 420 310 280" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Belly chevrons -->
+  <g stroke-width="2" opacity="0.2">
+    <path d="M340 300 L400 330 L460 300"/>
+    <path d="M345 340 L400 370 L455 340"/>
+    <path d="M350 380 L400 410 L450 380"/>
+    <path d="M355 420 L400 445 L445 420"/>
+  </g>
+
+  <!-- Ears (long, pointed, on top) -->
+  <path d="M330 130 L310 30 L355 110" fill="#888" fill-opacity="0.06"/>
+  <path d="M470 130 L490 30 L445 110" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Eyes (wide, round, iconic) -->
+  <circle cx="360" cy="210" r="22" fill="#888" fill-opacity="0.06"/>
+  <circle cx="440" cy="210" r="22" fill="#888" fill-opacity="0.06"/>
+  <!-- Pupils -->
+  <circle cx="365" cy="212" r="10" fill="#888" fill-opacity="0.1"/>
+  <circle cx="445" cy="212" r="10" fill="#888" fill-opacity="0.1"/>
+  <!-- Highlights -->
+  <circle cx="370" cy="207" r="4" fill="white" stroke="none"/>
+  <circle cx="450" cy="207" r="4" fill="white" stroke="none"/>
+
+  <!-- Nose -->
+  <ellipse cx="400" cy="240" rx="12" ry="8" fill="#888" fill-opacity="0.1"/>
+
+  <!-- Wide grin -->
+  <path d="M330 260 Q365 290 400 290 Q435 290 470 260" fill="none" stroke-width="2.5"/>
+
+  <!-- Whiskers -->
+  <g stroke-width="1.5" opacity="0.25">
+    <line x1="280" y1="230" x2="335" y2="245"/>
+    <line x1="275" y1="255" x2="330" y2="258"/>
+    <line x1="280" y1="280" x2="335" y2="270"/>
+    <line x1="465" y1="245" x2="520" y2="230"/>
+    <line x1="470" y1="258" x2="525" y2="255"/>
+    <line x1="465" y1="270" x2="520" y2="280"/>
+  </g>
+
+  <!-- Arms/paws (at sides) -->
+  <path d="M260 320 Q235 340 230 370 Q230 390 250 395" fill="#888" fill-opacity="0.04"/>
+  <path d="M540 320 Q565 340 570 370 Q570 390 550 395" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Claws -->
+  <g stroke-width="2" opacity="0.3">
+    <path d="M248 390 L240 405"/>
+    <path d="M258 393 L253 408"/>
+    <path d="M268 390 L266 405"/>
+    <path d="M532 390 L534 405"/>
+    <path d="M542 393 L547 408"/>
+    <path d="M552 390 L560 405"/>
+  </g>
+
+  <!-- Feet -->
+  <path d="M320 530 Q330 550 355 555 L375 555 Q385 555 380 540 L370 520" fill="#888" fill-opacity="0.04"/>
+  <path d="M480 530 Q470 550 445 555 L425 555 Q415 555 420 540 L430 520" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Toe claws -->
+  <g stroke-width="2" opacity="0.25">
+    <path d="M338 552 L332 565"/>
+    <path d="M352 555 L350 568"/>
+    <path d="M366 554 L368 567"/>
+    <path d="M434 554 L432 567"/>
+    <path d="M448 555 L450 568"/>
+    <path d="M462 552 L468 565"/>
+  </g>
+</svg>

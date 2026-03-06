@@ -1,169 +1,151 @@
-"use client";
+'use client';
 
-import { db } from "@/lib/db";
-import { type AppSchema } from "@/instant.schema";
-import { id, InstaQLEntity } from "@instantdb/react";
+import { db } from '@/lib/db';
+import Link from 'next/link';
+import {
+  AuthHeader,
+  LoginModal,
+  SketchCard,
+  DEFAULT_BG,
+} from './components';
+import { useState } from 'react';
 
-type Todo = InstaQLEntity<AppSchema, "todos">;
+const PAGE_SIZE = 50;
 
-const room = db.room("todos");
+const createSketchClass =
+  'rounded-lg bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base';
 
-function App() {
-  // Read Data
-  const { isLoading, error, data } = db.useQuery({ todos: {} });
-  const { peers } = db.rooms.usePresence(room);
-  const numUsers = 1 + Object.keys(peers).length;
-  if (isLoading) {
-    return;
-  }
-  if (error) {
-    return <div className="text-red-500 p-4">Error: {error.message}</div>;
-  }
-  const { todos } = data;
+function CreateSketchButton() {
+  const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="font-mono min-h-screen flex justify-center items-center flex-col space-y-4">
-      <div className="text-xs text-gray-500">
-        Number of users online: {numUsers}
-      </div>
-      <h2 className="tracking-wide text-5xl text-gray-300">todos</h2>
-      <div className="border border-gray-300 max-w-xs w-full">
-        <TodoForm todos={todos} />
-        <TodoList todos={todos} />
-        <ActionBar todos={todos} />
-      </div>
-      <div className="text-xs text-center">
-        Open another tab to see todos update in realtime!
-      </div>
-    </div>
-  );
-}
-
-// Write Data
-// ---------
-function addTodo(text: string) {
-  db.transact(
-    db.tx.todos[id()].update({
-      text,
-      done: false,
-      createdAt: Date.now(),
-    }),
-  );
-}
-
-function deleteTodo(todo: Todo) {
-  db.transact(db.tx.todos[todo.id].delete());
-}
-
-function toggleDone(todo: Todo) {
-  db.transact(db.tx.todos[todo.id].update({ done: !todo.done }));
-}
-
-function deleteCompleted(todos: Todo[]) {
-  const completed = todos.filter((todo) => todo.done);
-  const txs = completed.map((todo) => db.tx.todos[todo.id].delete());
-  db.transact(txs);
-}
-
-function toggleAll(todos: Todo[]) {
-  const newVal = !todos.every((todo) => todo.done);
-  db.transact(
-    todos.map((todo) => db.tx.todos[todo.id].update({ done: newVal })),
-  );
-}
-
-// Components
-// ----------
-function ChevronDownIcon() {
-  return (
-    <svg viewBox="0 0 20 20">
-      <path
-        d="M5 8 L10 13 L15 8"
-        stroke="currentColor"
-        fill="none"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function TodoForm({ todos }: { todos: Todo[] }) {
-  return (
-    <div className="flex items-center h-10 border-b border-gray-300">
-      <button
-        className="h-full px-2 border-r border-gray-300 flex items-center justify-center"
-        onClick={() => toggleAll(todos)}
-      >
-        <div className="w-5 h-5">
-          <ChevronDownIcon />
-        </div>
+    <>
+      {showLogin && (
+        <LoginModal onClose={() => setShowLogin(false)} redirectTo="/new" />
+      )}
+      <button onClick={() => setShowLogin(true)} className={createSketchClass}>
+        Create sketch
       </button>
-      <form
-        className="flex-1 h-full"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const input = e.currentTarget.input as HTMLInputElement;
-          addTodo(input.value);
-          input.value = "";
-        }}
-      >
-        <input
-          className="w-full h-full px-2 outline-none bg-transparent"
-          autoFocus
-          placeholder="What needs to be done?"
-          type="text"
-          name="input"
-        />
-      </form>
-    </div>
+    </>
   );
 }
 
-function TodoList({ todos }: { todos: Todo[] }) {
+function SignedInGallery() {
+  const user = db.useUser();
+  return <GalleryContent userId={user.id} isAdmin={!!user.email?.endsWith('@instantdb.com')} />;
+}
+
+function GalleryContent({ userId, isAdmin }: { userId?: string; isAdmin?: boolean }) {
+  type Cursor = [string, string, unknown, number];
+  const [cursors, setCursors] = useState<{
+    first?: number;
+    after?: Cursor;
+    last?: number;
+    before?: Cursor;
+  }>({ first: PAGE_SIZE });
+
+  const { data, pageInfo } = db.useSuspenseQuery({
+    sketches: {
+      stream: {},
+      thumbnail: {},
+      author: {},
+      remixOf: { author: {} },
+      $: {
+        order: { createdAt: 'desc' as const },
+        ...cursors,
+      },
+    },
+  });
+
+  const sketches = (data.sketches ?? []).filter(
+    (s) => !s.flagged || s.author?.id === userId,
+  );
+
+  const endCursor = pageInfo?.sketches?.endCursor as Cursor | undefined;
+  const startCursor = pageInfo?.sketches?.startCursor as Cursor | undefined;
+  const hasNext = pageInfo?.sketches?.hasNextPage ?? false;
+  const hasPrev = pageInfo?.sketches?.hasPreviousPage ?? false;
+
   return (
-    <div className="divide-y divide-gray-300">
-      {todos.map((todo) => (
-        <div key={todo.id} className="flex items-center h-10">
-          <div className="h-full px-2 flex items-center justify-center">
-            <div className="w-5 h-5 flex items-center justify-center">
-              <input
-                type="checkbox"
-                className="cursor-pointer"
-                checked={todo.done}
-                onChange={() => toggleDone(todo)}
-              />
+    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+      <AuthHeader />
+      <div className="w-full max-w-4xl space-y-4 px-3 py-3 sm:space-y-8 sm:p-6">
+        <div className="flex items-center justify-between">
+          <div />
+          <db.SignedIn>
+            <Link href="/new" className={createSketchClass}>
+              Create sketch
+            </Link>
+          </db.SignedIn>
+          <db.SignedOut>
+            <CreateSketchButton />
+          </db.SignedOut>
+        </div>
+
+        {sketches.length === 0 && !hasPrev ? (
+          <div className="py-12 text-center text-gray-400 sm:py-20">
+            <p className="mb-4 text-5xl sm:text-6xl">🎨</p>
+            <p className="text-base font-medium text-gray-500 sm:text-lg">
+              No sketches yet
+            </p>
+            <p className="mt-2 text-sm">
+              Click &quot;Create sketch&quot; to create your first one!
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+              {sketches.map((sketch) => (
+                <SketchCard
+                  key={sketch.id}
+                  sketch={sketch}
+                  isAdmin={!!isAdmin}
+                />
+              ))}
             </div>
-          </div>
-          <div className="flex-1 px-2 overflow-hidden flex items-center">
-            {todo.done ? (
-              <span className="line-through">{todo.text}</span>
-            ) : (
-              <span>{todo.text}</span>
+            {(hasPrev || hasNext) && (
+              <div className="flex items-center justify-center gap-3 pb-4">
+                <button
+                  onClick={() => {
+                    if (startCursor) {
+                      setCursors({ before: startCursor, last: PAGE_SIZE });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  disabled={!hasPrev}
+                  className="cursor-pointer rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-medium text-slate-700 transition-all hover:bg-slate-50 active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+                >
+                  Previous
+                </button>
+                <button
+                  onClick={() => {
+                    if (endCursor) {
+                      setCursors({ after: endCursor, first: PAGE_SIZE });
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  disabled={!hasNext}
+                  className="cursor-pointer rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-medium text-slate-700 transition-all hover:bg-slate-50 active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+                >
+                  Next
+                </button>
+              </div>
             )}
-          </div>
-          <button
-            className="h-full px-2 flex items-center justify-center text-gray-300 hover:text-gray-500"
-            onClick={() => deleteTodo(todo)}
-          >
-            X
-          </button>
-        </div>
-      ))}
+          </>
+        )}
+      </div>
     </div>
   );
 }
 
-function ActionBar({ todos }: { todos: Todo[] }) {
+export default function GalleryPage() {
   return (
-    <div className="flex justify-between items-center h-10 px-2 text-xs border-t border-gray-300">
-      <div>Remaining todos: {todos.filter((todo) => !todo.done).length}</div>
-      <button
-        className=" text-gray-300 hover:text-gray-500"
-        onClick={() => deleteCompleted(todos)}
-      >
-        Delete Completed
-      </button>
-    </div>
+    <>
+      <db.SignedIn>
+        <SignedInGallery />
+      </db.SignedIn>
+      <db.SignedOut>
+        <GalleryContent />
+      </db.SignedOut>
+    </>
   );
 }
-
-export default App;

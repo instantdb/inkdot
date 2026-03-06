@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Body -->
+  <ellipse cx="400" cy="370" rx="110" ry="130" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Head -->
+  <ellipse cx="400" cy="210" rx="100" ry="90" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Ears (long, pointed) -->
+  <path d="M320 150 Q300 60 310 40 Q320 35 335 80 Q345 110 340 145" fill="#888" fill-opacity="0.05"/>
+  <!-- Black ear tip -->
+  <path d="M305 55 Q310 38 318 45 Q325 55 315 65" fill="#888" fill-opacity="0.15"/>
+
+  <path d="M480 150 Q500 60 490 40 Q480 35 465 80 Q455 110 460 145" fill="#888" fill-opacity="0.05"/>
+  <!-- Black ear tip -->
+  <path d="M495 55 Q490 38 482 45 Q475 55 485 65" fill="#888" fill-opacity="0.15"/>
+
+  <!-- Eyes (large, round) -->
+  <circle cx="365" cy="200" r="18" fill="#888" fill-opacity="0.08"/>
+  <circle cx="435" cy="200" r="18" fill="#888" fill-opacity="0.08"/>
+  <!-- Pupils -->
+  <circle cx="368" cy="198" r="10" fill="#888" stroke="none"/>
+  <circle cx="438" cy="198" r="10" fill="#888" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="373" cy="192" r="5" fill="white" stroke="none"/>
+  <circle cx="443" cy="192" r="5" fill="white" stroke="none"/>
+  <circle cx="363" cy="202" r="2.5" fill="white" stroke="none"/>
+  <circle cx="433" cy="202" r="2.5" fill="white" stroke="none"/>
+
+  <!-- Cheeks (red circles) -->
+  <circle cx="330" cy="235" r="20" fill="#888" fill-opacity="0.08" stroke="none"/>
+  <circle cx="470" cy="235" r="20" fill="#888" fill-opacity="0.08" stroke="none"/>
+
+  <!-- Nose -->
+  <ellipse cx="400" cy="222" rx="4" ry="3" fill="#888" stroke="none"/>
+
+  <!-- Mouth -->
+  <path d="M388 232 Q400 242 412 232" fill="none" stroke-width="2"/>
+
+  <!-- Arms -->
+  <path d="M300 310 Q270 330 260 350 Q255 360 265 365 Q275 365 285 355 Q295 340 310 330" fill="#888" fill-opacity="0.04"/>
+  <path d="M500 310 Q530 330 540 350 Q545 360 535 365 Q525 365 515 355 Q505 340 490 330" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Feet -->
+  <ellipse cx="350" cy="490" rx="40" ry="18" fill="#888" fill-opacity="0.05"/>
+  <ellipse cx="450" cy="490" rx="40" ry="18" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Tail (lightning bolt shape) -->
+  <path d="M510 350 L550 300 L530 300 L570 240 L540 240 L580 170 L550 250 L575 250 L540 310 L560 310 L510 370" fill="#888" fill-opacity="0.06" stroke-width="2"/>
+
+</svg>

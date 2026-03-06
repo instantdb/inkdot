@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sitting fox facing slightly right -->
+
+  <!-- Body -->
+  <ellipse cx="380" cy="380" rx="130" ry="120" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Head -->
+  <path d="M420 130 Q470 120 520 145 Q555 175 555 215 Q555 260 520 280 Q485 295 445 295 Q405 290 380 265 Q360 240 365 200 Q370 160 420 130" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Snout (pointed) -->
+  <path d="M520 230 Q560 235 585 255 Q590 265 580 272 Q560 278 530 270" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Nose -->
+  <circle cx="583" cy="262" r="6" fill="#888" fill-opacity="0.15"/>
+
+  <!-- Mouth -->
+  <path d="M578 270 Q565 280 550 275" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Eye -->
+  <ellipse cx="490" cy="200" rx="12" ry="14" fill="#888" fill-opacity="0.06"/>
+  <ellipse cx="492" cy="202" rx="6" ry="8" fill="#888" stroke="none"/>
+  <circle cx="494" cy="199" r="2.5" fill="white" stroke="none"/>
+
+  <!-- Ears (large, pointed) -->
+  <path d="M430 140 L405 50 L455 110" fill="#888" fill-opacity="0.06"/>
+  <path d="M510 125 L530 40 L545 105" fill="#888" fill-opacity="0.06"/>
+  <!-- Inner ears -->
+  <path d="M432 132 L415 65 L448 115" fill="#888" fill-opacity="0.03"/>
+  <path d="M515 120 L530 55 L540 108" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Cheek fur -->
+  <path d="M445 265 Q420 285 415 305" stroke-width="2" opacity="0.2"/>
+  <path d="M465 270 Q445 290 440 310" stroke-width="2" opacity="0.2"/>
+
+  <!-- White face marking -->
+  <path d="M480 220 Q500 240 520 250 Q540 260 530 270 Q510 275 490 265 Q470 260 465 240 Q462 225 480 220" fill="#888" fill-opacity="0.02" stroke-width="1" opacity="0.2"/>
+
+  <!-- Front legs -->
+  <path d="M350 430 L340 510 Q345 525 360 525 L375 525 L378 510 L370 430" fill="#888" fill-opacity="0.04"/>
+  <path d="M410 435 L405 510 Q410 525 425 525 L440 525 L440 510 L430 435" fill="#888" fill-opacity="0.03"/>
+
+  <!-- Paw details -->
+  <path d="M348 518 Q358 523 370 518" stroke-width="1.5" opacity="0.2"/>
+  <path d="M413 518 Q423 523 435 518" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Back haunch -->
+  <path d="M260 360 Q240 410 250 470 Q260 495 285 500 L315 500 Q330 495 325 475" fill="#888" fill-opacity="0.04"/>
+
+  <!-- Tail (big, bushy, curving around) -->
+  <path d="M250 340 Q200 310 180 270 Q165 230 185 210 Q210 195 235 215 Q255 240 250 280" fill="#888" fill-opacity="0.05" stroke-width="2.5"/>
+  <!-- White tail tip -->
+  <path d="M185 225 Q195 205 210 210 Q225 220 220 240" fill="#888" fill-opacity="0.02" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Fur texture -->
+  <path d="M330 340 Q360 330 390 340" stroke-width="1" opacity="0.1"/>
+  <path d="M320 370 Q360 358 400 370" stroke-width="1" opacity="0.1"/>
+</svg>

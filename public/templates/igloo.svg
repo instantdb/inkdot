@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main dome -->
+    <path d="M150 420 Q150 180 400 180 Q650 180 650 420" fill="#888" fill-opacity="0.04"/>
+    <!-- Ground line -->
+    <line x1="100" y1="420" x2="700" y2="420"/>
+    <!-- Entrance tunnel -->
+    <path d="M150 420 Q150 380 130 360 Q110 340 80 340 L60 340 Q30 340 20 370 Q15 400 20 420" fill="#888" fill-opacity="0.05"/>
+    <!-- Entrance opening -->
+    <path d="M60 340 Q50 350 50 370 Q50 390 60 420" fill="#888" fill-opacity="0.06"/>
+    <!-- Ice block lines - horizontal rows -->
+    <path d="M185 360 Q400 360 615 360"/>
+    <path d="M220 300 Q400 300 580 300"/>
+    <path d="M280 250 Q400 250 520 250"/>
+    <path d="M350 210 Q400 210 450 210"/>
+    <!-- Ice block lines - vertical (row 1, bottom) -->
+    <path d="M200 360 Q200 390 200 420"/>
+    <path d="M290 360 Q290 390 290 420"/>
+    <path d="M380 360 Q380 390 380 420"/>
+    <path d="M470 360 Q470 390 470 420"/>
+    <path d="M560 360 Q560 390 560 420"/>
+    <!-- Ice block lines - vertical (row 2) -->
+    <path d="M250 300 L250 360"/>
+    <path d="M340 300 L340 360"/>
+    <path d="M420 300 L420 360"/>
+    <path d="M510 300 L510 360"/>
+    <!-- Ice block lines - vertical (row 3) -->
+    <path d="M310 250 L310 300"/>
+    <path d="M400 250 L400 300"/>
+    <path d="M490 250 L490 300"/>
+    <!-- Ice block lines - vertical (row 4) -->
+    <path d="M370 210 L370 250"/>
+    <path d="M430 210 L430 250"/>
+    <!-- Tunnel block lines -->
+    <path d="M100 370 Q100 395 100 420"/>
+    <line x1="60" y1="370" x2="150" y2="370"/>
+    <!-- Snow drift left -->
+    <path d="M100 420 Q90 415 70 420"/>
+    <!-- Snow drift right -->
+    <path d="M650 420 Q680 410 700 420"/>
+    <!-- Snow on top -->
+    <path d="M380 178 Q400 172 420 178"/>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Eyebrow / upper lid arch -->
+    <path d="M140,240 Q300,120 520,200 Q600,230 660,260" fill="none" stroke-width="3"/>
+    <!-- Upper eyelid -->
+    <path d="M180,270 Q350,180 550,240 Q620,260 660,260" fill="#888" fill-opacity="0.04"/>
+    <!-- Lower eyelid -->
+    <path d="M180,270 Q350,340 550,280 Q620,265 660,260" fill="#888" fill-opacity="0.04"/>
+    <!-- Eye outline combined -->
+    <path d="M180,270 Q350,180 550,240 Q620,260 660,260 Q620,265 550,280 Q350,340 180,270 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Iris -->
+    <circle cx="400" cy="265" r="55" fill="#888" fill-opacity="0.06"/>
+    <!-- Pupil -->
+    <circle cx="400" cy="265" r="28" fill="#888" fill-opacity="0.08"/>
+    <!-- Inner pupil highlight -->
+    <circle cx="390" cy="255" r="10" fill="#888" fill-opacity="0.03"/>
+    <!-- Extended cosmetic line (right) -->
+    <path d="M660,260 L720,250 Q740,248 750,255" fill="none" stroke-width="3"/>
+    <!-- Tear drop / falcon cheek marking -->
+    <path d="M355,320 Q340,370 350,430 Q360,460 380,480" fill="none" stroke-width="3"/>
+    <!-- Spiral at bottom of tear -->
+    <path d="M380,480 Q400,490 410,475 Q415,460 400,455 Q385,455 380,465" fill="#888" fill-opacity="0.04"/>
+    <!-- Falcon cheek - lower decorative line -->
+    <path d="M290,310 Q280,350 260,390 Q240,420 230,440" fill="none" stroke-width="2"/>
+    <!-- Curved tail piece extending left from tear -->
+    <path d="M310,380 Q270,400 240,440 Q230,460 240,470 Q250,465 260,445" fill="none" stroke-width="2"/>
+    <!-- Eyebrow thickness detail -->
+    <path d="M160,230 Q310,115 530,195 Q605,225 660,252" fill="none" stroke-width="1.5" stroke-opacity="0.4"/>
+    <!-- Inner corner detail -->
+    <path d="M180,270 Q165,275 155,290 Q150,300 158,305" fill="none"/>
+    <!-- Decorative marks above eye -->
+    <path d="M250,180 Q260,165 275,170" fill="none" stroke-width="1.5" stroke-opacity="0.5"/>
+    <path d="M350,155 Q360,142 375,148" fill="none" stroke-width="1.5" stroke-opacity="0.5"/>
+  </g>
+</svg>

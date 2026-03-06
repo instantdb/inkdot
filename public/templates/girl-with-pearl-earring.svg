@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Dark background hint -->
+  <rect x="200" y="30" width="400" height="540" fill="#888" fill-opacity="0.02"/>
+
+  <!-- Turban -->
+  <path d="M340 100 Q350 60 400 50 Q460 45 490 70 Q510 90 510 120 Q510 140 500 155" fill="#888" fill-opacity="0.06"/>
+  <path d="M340 100 Q330 120 330 145" fill="#888" fill-opacity="0.04"/>
+  <!-- Turban wrap -->
+  <path d="M500 155 Q510 170 505 190 Q500 210 485 220" fill="#888" fill-opacity="0.05"/>
+  <!-- Turban fold line -->
+  <path d="M370 65 Q420 55 465 70" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Tail of turban (cloth hanging down) -->
+  <path d="M485 220 Q490 260 480 300 Q470 340 460 360" fill="#888" fill-opacity="0.04" stroke-width="2"/>
+
+  <!-- Face -->
+  <ellipse cx="410" cy="210" rx="70" ry="85" fill="#888" fill-opacity="0.05"/>
+
+  <!-- Forehead visible below turban -->
+  <path d="M345 145 Q380 130 420 128 Q460 130 490 145" fill="none" stroke-width="1" opacity="0.2"/>
+
+  <!-- Eyes (looking over shoulder) -->
+  <ellipse cx="385" cy="195" rx="15" ry="8" fill="#888" fill-opacity="0.05"/>
+  <ellipse cx="435" cy="195" rx="14" ry="8" fill="#888" fill-opacity="0.05"/>
+  <circle cx="388" cy="195" r="5" fill="#888" stroke="none"/>
+  <circle cx="438" cy="195" r="5" fill="#888" stroke="none"/>
+  <!-- Highlights -->
+  <circle cx="390" cy="192" r="2" fill="white" stroke="none"/>
+  <circle cx="440" cy="192" r="2" fill="white" stroke="none"/>
+
+  <!-- Eyebrows -->
+  <path d="M368 183 Q385 178 402 183" stroke-width="1.5" opacity="0.4"/>
+  <path d="M420 182 Q435 177 452 183" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Nose -->
+  <path d="M410 210 L407 235 Q410 240 414 235" stroke-width="1.5"/>
+
+  <!-- Lips (slightly parted) -->
+  <path d="M392 255 Q403 260 410 258 Q417 260 428 255" fill="none" stroke-width="2"/>
+  <path d="M397 258 Q410 264 423 258" fill="none" stroke-width="1" opacity="0.3"/>
+
+  <!-- Chin -->
+  <path d="M380 275 Q410 295 440 275" fill="none" stroke-width="1" opacity="0.3"/>
+
+  <!-- Neck -->
+  <path d="M390 290 Q385 320 380 350" stroke-width="1.5" opacity="0.4"/>
+  <path d="M430 285 Q435 310 440 340" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Shoulder/collar -->
+  <path d="M380 350 Q350 360 300 390 Q280 405 270 430" fill="#888" fill-opacity="0.03" stroke-width="2"/>
+  <path d="M440 340 Q470 350 510 370 Q530 385 540 410" fill="#888" fill-opacity="0.03" stroke-width="2"/>
+
+  <!-- Collar detail -->
+  <path d="M370 355 Q390 365 410 360 Q430 355 445 345" fill="none" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- THE PEARL EARRING -->
+  <circle cx="430" cy="280" r="14" fill="#888" fill-opacity="0.08" stroke-width="2"/>
+  <circle cx="433" cy="276" r="5" fill="white" stroke="none"/>
+  <!-- Earring highlight -->
+  <circle cx="428" cy="284" r="2" fill="white" stroke="none" opacity="0.5"/>
+
+</svg>

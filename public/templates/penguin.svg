@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Body - darker outer (tuxedo back) -->
+  <ellipse cx="400" cy="350" rx="120" ry="170" fill="#888" fill-opacity="0.09"/>
+
+  <!-- White belly - lighter for contrast -->
+  <ellipse cx="400" cy="380" rx="75" ry="130" fill="white" fill-opacity="0.5" stroke="none"/>
+  <ellipse cx="400" cy="380" rx="75" ry="130" fill="#888" fill-opacity="0.02"/>
+  <!-- Belly edge line for tuxedo contrast -->
+  <path d="M325 280 Q340 250 370 240 Q400 235 430 240 Q460 250 475 280" fill="none" stroke-width="1.8" opacity="0.25"/>
+  <path d="M325 280 Q330 350 335 430 Q340 480 355 510" fill="none" stroke-width="1.5" opacity="0.2"/>
+  <path d="M475 280 Q470 350 465 430 Q460 480 445 510" fill="none" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Head -->
+  <circle cx="400" cy="160" r="75" fill="#888" fill-opacity="0.07"/>
+
+  <!-- White face patch -->
+  <ellipse cx="400" cy="175" rx="50" ry="45" fill="#888" fill-opacity="0.02"/>
+
+  <!-- Eyes -->
+  <circle cx="375" cy="160" r="10" fill="#888" fill-opacity="0.06"/>
+  <circle cx="425" cy="160" r="10" fill="#888" fill-opacity="0.06"/>
+  <circle cx="377" cy="160" r="5" fill="#888" stroke="none"/>
+  <circle cx="427" cy="160" r="5" fill="#888" stroke="none"/>
+  <circle cx="379" cy="157" r="2" fill="white" stroke="none"/>
+  <circle cx="429" cy="157" r="2" fill="white" stroke="none"/>
+
+  <!-- Beak -->
+  <path d="M388 185 L400 210 L412 185" fill="#888" fill-opacity="0.08"/>
+
+  <!-- Wings -->
+  <path d="M280 260 Q260 320 265 390 Q270 430 290 460 Q300 470 310 465" fill="#888" fill-opacity="0.06" stroke-width="2.5"/>
+  <path d="M520 260 Q540 320 535 390 Q530 430 510 460 Q500 470 490 465" fill="#888" fill-opacity="0.06" stroke-width="2.5"/>
+
+  <!-- Feet -->
+  <path d="M340 500 L310 530 Q320 545 340 540 L360 530 Q370 540 380 535 L375 510" fill="#888" fill-opacity="0.06"/>
+  <path d="M425 510 L420 535 Q430 540 440 530 L460 540 Q480 545 490 530 L460 500" fill="#888" fill-opacity="0.06"/>
+
+  <!-- Belly detail -->
+  <path d="M355 320 Q400 310 445 320" stroke-width="1" opacity="0.1"/>
+  <path d="M350 360 Q400 348 450 360" stroke-width="1" opacity="0.1"/>
+
+  <!-- Ice/snow ground -->
+  <path d="M100 555 Q200 546 320 552 Q400 555 500 550 Q600 545 700 552 Q760 556 790 550" stroke-width="2" opacity="0.16"/>
+  <path d="M140 570 Q260 562 380 568 Q500 574 620 566 Q730 560 780 568" stroke-width="1.2" opacity="0.1"/>
+  <!-- Snow bumps -->
+  <path d="M200 555 Q225 543 250 555" stroke-width="1.2" opacity="0.12"/>
+  <path d="M480 550 Q505 538 530 550" stroke-width="1.2" opacity="0.12"/>
+  <path d="M340 553 Q355 545 370 553" stroke-width="1" opacity="0.09"/>
+  <path d="M650 552 Q668 543 685 552" stroke-width="1" opacity="0.09"/>
+</svg>

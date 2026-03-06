@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Pot -->
+    <path d="M290,480 L310,540 L490,540 L510,480 Z" fill="#888" fill-opacity="0.06"/>
+    <line x1="280" y1="480" x2="520" y2="480"/>
+    <line x1="285" y1="470" x2="515" y2="470"/>
+    <rect x="280" y="470" width="240" height="12" rx="3" fill="#888" fill-opacity="0.04"/>
+    <!-- Soil -->
+    <path d="M295,480 Q400,490 505,480" fill="#888" fill-opacity="0.03"/>
+    <!-- Main trunk -->
+    <path d="M400,480 Q395,440 390,400 Q385,360 380,340 Q370,300 360,280" fill="none" stroke-width="8" stroke-opacity="0.6"/>
+    <!-- Trunk taper -->
+    <path d="M400,480 Q405,450 395,420 Q388,380 378,350" fill="none" stroke-width="5" stroke-opacity="0.5"/>
+    <!-- Main branch right -->
+    <path d="M390,370 Q420,350 460,340 Q490,335 510,330" fill="none" stroke-width="4" stroke-opacity="0.5"/>
+    <!-- Branch right sub -->
+    <path d="M460,340 Q470,310 480,290" fill="none" stroke-width="2.5"/>
+    <path d="M510,330 Q530,310 540,300" fill="none" stroke-width="2"/>
+    <!-- Main branch left -->
+    <path d="M375,320 Q340,300 310,280 Q280,260 260,250" fill="none" stroke-width="4" stroke-opacity="0.5"/>
+    <!-- Branch left sub -->
+    <path d="M310,280 Q300,260 290,240" fill="none" stroke-width="2.5"/>
+    <!-- Top branches -->
+    <path d="M360,280 Q350,250 340,220 Q330,200 320,180" fill="none" stroke-width="3" stroke-opacity="0.5"/>
+    <path d="M345,230 Q370,210 390,200" fill="none" stroke-width="2"/>
+    <path d="M340,220 Q310,200 290,190" fill="none" stroke-width="2"/>
+    <!-- Foliage clusters - cloud-like shapes -->
+    <!-- Top cluster -->
+    <path d="M280,180 Q290,140 330,130 Q360,120 380,140 Q400,120 420,135 Q440,125 450,150 Q460,170 440,185 Q420,200 390,200 Q360,205 330,195 Q300,190 280,180 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Right cluster -->
+    <path d="M460,270 Q470,245 500,240 Q530,235 550,255 Q570,250 575,275 Q580,300 555,310 Q535,320 510,315 Q485,320 470,305 Q455,290 460,270 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Left cluster -->
+    <path d="M230,230 Q240,205 270,200 Q295,195 310,215 Q325,205 335,220 Q345,240 330,255 Q310,270 285,265 Q260,268 245,255 Q230,245 230,230 Z" fill="#888" fill-opacity="0.05"/>
+    <!-- Small right upper cluster -->
+    <path d="M470,260 Q480,240 500,240 Q510,250 505,265 Q495,275 480,270 Z" fill="#888" fill-opacity="0.04"/>
+    <!-- Exposed roots -->
+    <path d="M400,480 Q420,478 440,475 Q450,470 445,480" fill="none" stroke-width="3" stroke-opacity="0.4"/>
+    <path d="M400,480 Q380,475 360,478 Q350,475 355,480" fill="none" stroke-width="3" stroke-opacity="0.4"/>
+  </g>
+</svg>

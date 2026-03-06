@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- === CUPCAKE === -->
+
+    <!-- Wrapper (trapezoid: wider at top, narrower at bottom) -->
+    <path d="M265,360 L290,530 L510,530 L535,360"
+          fill="#888" fill-opacity="0.05" stroke="none"/>
+
+    <!-- Wrapper left edge -->
+    <path d="M265,360 L290,530"/>
+    <!-- Wrapper right edge -->
+    <path d="M535,360 L510,530"/>
+    <!-- Wrapper bottom -->
+    <path d="M290,530 L510,530"/>
+
+    <!-- Wrapper top edge (scalloped) -->
+    <path d="M265,360 Q283,350 300,360 Q318,370 335,360 Q353,350 370,360
+             Q388,370 400,360 Q418,350 435,360 Q453,370 465,360 Q483,350 500,360
+             Q518,370 535,360"/>
+
+    <!-- Wrapper vertical ridges -->
+    <g stroke-width="1.5" stroke-opacity="0.18">
+      <path d="M300,365 L308,525"/>
+      <path d="M335,360 L340,530"/>
+      <path d="M370,360 L373,530"/>
+      <path d="M400,360 L400,530"/>
+      <path d="M430,360 L427,530"/>
+      <path d="M465,360 L460,530"/>
+      <path d="M500,365 L492,525"/>
+    </g>
+
+    <!-- === FROSTING (big piped dome) === -->
+    <path d="M250,360
+             C250,268 330,178 400,178
+             C470,178 550,268 550,360"
+          fill="#888" fill-opacity="0.04"/>
+
+    <!-- Frosting swirl lines -->
+    <g stroke-width="2" stroke-opacity="0.18">
+      <path d="M275,330 Q340,308 400,318 Q460,328 525,305"/>
+      <path d="M290,290 Q350,270 400,278 Q450,286 510,265"/>
+      <path d="M315,250 Q358,234 400,240 Q442,246 485,230"/>
+      <path d="M348,215 Q374,206 400,210 Q426,214 452,204"/>
+    </g>
+
+    <!-- Frosting peak/tip -->
+    <path d="M390,183 Q400,162 410,183" stroke-width="2" stroke-opacity="0.25"/>
+
+    <!-- === CHERRY ON TOP === -->
+    <circle cx="400" cy="140" r="24" fill="#888" fill-opacity="0.08"/>
+    <!-- Cherry highlight -->
+    <circle cx="392" cy="132" r="7" fill="white" fill-opacity="0.25" stroke="none"/>
+    <!-- Cherry stem -->
+    <path d="M400,116 C406,96 418,83 432,76" stroke-width="2.5"/>
+    <!-- Small leaf on stem -->
+    <path d="M422,84 Q430,76 432,76 Q436,84 428,92"
+          fill="#888" fill-opacity="0.04" stroke-width="1.5"/>
+
+    <!-- Sprinkles on frosting -->
+    <g stroke-width="2.5" stroke-opacity="0.14">
+      <path d="M315,270 L324,264"/>
+      <path d="M350,240 L342,234"/>
+      <path d="M445,235 L452,228"/>
+      <path d="M478,265 L470,258"/>
+      <path d="M295,310 L304,304"/>
+      <path d="M500,300 L508,294"/>
+      <path d="M365,295 L372,288"/>
+      <path d="M435,290 L428,284"/>
+    </g>
+
+    <!-- Shadow -->
+    <ellipse cx="400" cy="558" rx="130" ry="12" fill="#888" fill-opacity="0.035" stroke="none"/>
+    <ellipse cx="400" cy="558" rx="130" ry="12" stroke-opacity="0.12" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <g stroke="#888" stroke-width="2.5" fill="#888" fill-opacity="0.05" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Inkwell base -->
+    <path d="M200 520 L250 520 C260 520 270 510 270 500 L270 420 C270 410 260 400 250 400 L150 400 C140 400 130 410 130 420 L130 500 C130 510 140 520 150 520 Z" fill-opacity="0.06"/>
+    <!-- Inkwell rim -->
+    <ellipse cx="200" cy="400" rx="72" ry="18" fill-opacity="0.08"/>
+    <!-- Ink level -->
+    <ellipse cx="200" cy="430" rx="55" ry="12" fill-opacity="0.06"/>
+    <!-- Inkwell reflection -->
+    <path d="M145 440 C155 435 175 438 160 445" fill="none" stroke-opacity="0.3"/>
+    <!-- Quill shaft -->
+    <line x1="220" y1="390" x2="620" y2="80" stroke-width="3"/>
+    <!-- Quill feather - right side -->
+    <path d="M620 80 C640 60 670 40 700 30 C680 50 660 70 650 90 C640 110 630 100 620 80" fill-opacity="0.06"/>
+    <!-- Quill feather - left side -->
+    <path d="M620 80 C610 55 600 35 590 20 C605 35 615 55 618 75" fill-opacity="0.06"/>
+    <!-- Feather barb details -->
+    <path d="M630 85 C645 70 660 55 675 40" fill="none" stroke-opacity="0.4"/>
+    <path d="M635 90 C650 78 665 65 680 50" fill="none" stroke-opacity="0.3"/>
+    <path d="M640 98 C655 85 670 72 685 60" fill="none" stroke-opacity="0.3"/>
+    <path d="M615 75 C608 60 602 45 598 30" fill="none" stroke-opacity="0.4"/>
+    <path d="M612 70 C605 55 599 42 595 28" fill="none" stroke-opacity="0.3"/>
+    <!-- Quill nib -->
+    <path d="M220 390 L210 410 L225 400 Z" fill-opacity="0.08"/>
+    <!-- Nib split -->
+    <line x1="218" y1="395" x2="215" y2="405" fill="none" stroke-width="1.5"/>
+    <!-- Ink drops -->
+    <circle cx="240" cy="440" r="4" fill-opacity="0.08"/>
+    <circle cx="255" cy="450" r="3" fill-opacity="0.06"/>
+    <circle cx="230" cy="455" r="2.5" fill-opacity="0.05"/>
+    <!-- Written flourish on paper suggestion -->
+    <path d="M350 500 C380 480 420 490 450 480 C470 475 490 485 510 478" fill="none" stroke-opacity="0.2"/>
+    <path d="M360 520 C390 500 430 510 460 500 C480 495 500 505 520 498" fill="none" stroke-opacity="0.15"/>
+    <!-- Paper edge -->
+    <path d="M320 470 L560 470 L560 560 L320 560 Z" fill="none" stroke-opacity="0.2"/>
+  </g>
+</svg>
