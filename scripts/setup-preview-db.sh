@@ -11,7 +11,7 @@ SHORT_SHA="${VERCEL_GIT_COMMIT_SHA:0:7}"
 APP_TITLE="inkdot-preview-${SHORT_SHA}"
 
 echo "Creating ephemeral Instant app: ${APP_TITLE}"
-INIT_OUTPUT=$(INSTANT_CLI_VERBOSE=1 npx instant-cli init-without-files --title "$APP_TITLE" --temp 2>&1)
+INIT_OUTPUT=$(INSTANT_CLI_VERBOSE=1 npx instant-cli init-without-files --title "$APP_TITLE" --temp)
 echo "Raw output:"
 echo "$INIT_OUTPUT"
 
