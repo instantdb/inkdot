@@ -16,8 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'InkDot',
-  description:
-    'Draw, stream, and replay tiny sketches. Powered by InstantDB.',
+  description: 'Draw, stream, and replay tiny sketches. Powered by InstantDB.',
   openGraph: {
     title: 'InkDot',
     description:

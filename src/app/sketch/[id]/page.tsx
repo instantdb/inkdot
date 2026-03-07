@@ -629,10 +629,16 @@ function ReplayCanvas({
             // Snapshot buffering: wait for snapshot-end, then render all at once
             if (evt.type === 'snapshot-start') {
               let endIdx = state.eventIdx + 1;
-              while (endIdx < events.length && events[endIdx].type !== 'snapshot-end') {
+              while (
+                endIdx < events.length &&
+                events[endIdx].type !== 'snapshot-end'
+              ) {
                 endIdx++;
               }
-              if (endIdx >= events.length || events[endIdx].type !== 'snapshot-end') {
+              if (
+                endIdx >= events.length ||
+                events[endIdx].type !== 'snapshot-end'
+              ) {
                 // snapshot-end hasn't arrived yet — stop processing, wait for more data
                 break;
               }
@@ -663,10 +669,7 @@ function ReplayCanvas({
 
             // Handle shape preview (cursor during shape drawing)
             if (result.shapePreview) {
-              renderEventsToCanvas(
-                ctx,
-                events.slice(0, state.eventIdx),
-              );
+              renderEventsToCanvas(ctx, events.slice(0, state.eventIdx));
               const sp = result.shapePreview;
               drawShapeOnCanvas(
                 ctx,
@@ -880,7 +883,14 @@ function ReplayCanvas({
               LIVE
             </span>
           )}
-          {canReport && <OverflowMenu onReport={() => { setPlaying(false); setShowReport(true); }} />}
+          {canReport && (
+            <OverflowMenu
+              onReport={() => {
+                setPlaying(false);
+                setShowReport(true);
+              }}
+            />
+          )}
         </div>
       </div>
 
@@ -1499,7 +1509,7 @@ function OverflowMenu({ onReport }: { onReport: () => void }) {
         </svg>
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-1 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+        <div className="absolute top-full right-0 z-50 mt-1 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
           <button
             onClick={() => {
               setOpen(false);
@@ -1827,14 +1837,15 @@ function ScrubBar({
   const barRange = Math.max(barEnd - barStart, 1);
 
   const clamp = (v: number) => Math.max(0, Math.min(100, v));
-  const playPct = computePlaybackProgress({
-    elapsed: scrubValue,
-    start: barStart,
-    end: barEnd,
-    stalledOnStream: false,
-    lastProcessedTime: scrubValue,
-    previousProgress: 0,
-  }) * 100;
+  const playPct =
+    computePlaybackProgress({
+      elapsed: scrubValue,
+      start: barStart,
+      end: barEnd,
+      stalledOnStream: false,
+      lastProcessedTime: scrubValue,
+      previousProgress: 0,
+    }) * 100;
 
   // For trim mode, percentages are relative to full maxTime
   const fullMax = maxTime || 1;

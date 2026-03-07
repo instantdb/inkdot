@@ -10,11 +10,15 @@ function SignedInUserGallery({ handle }: { handle: string }) {
   return <UserGalleryContent handle={handle} userId={user.id} />;
 }
 
-function UserGalleryContent({ handle, userId }: { handle: string; userId?: string }) {
+function UserGalleryContent({
+  handle,
+  userId,
+}: {
+  handle: string;
+  userId?: string;
+}) {
   const { data: settingsData } = db.useQuery(
-    userId
-      ? { userSettings: { $: { where: { 'owner.id': userId } } } }
-      : null,
+    userId ? { userSettings: { $: { where: { 'owner.id': userId } } } } : null,
   );
   const userSettings = settingsData?.userSettings?.[0];
   const playbackSpeed = userSettings?.playbackSpeed ?? 2;
@@ -63,7 +67,12 @@ function UserGalleryContent({ handle, userId }: { handle: string; userId?: strin
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
             {sketches.map((sketch) => (
-              <SketchCard key={sketch.id} sketch={sketch} playbackSpeed={playbackSpeed} showCursor={showCursor} />
+              <SketchCard
+                key={sketch.id}
+                sketch={sketch}
+                playbackSpeed={playbackSpeed}
+                showCursor={showCursor}
+              />
             ))}
           </div>
         )}

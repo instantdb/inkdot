@@ -2,12 +2,7 @@
 
 import { db } from '@/lib/db';
 import Link from 'next/link';
-import {
-  AuthHeader,
-  LoginModal,
-  SketchCard,
-  DEFAULT_BG,
-} from './components';
+import { AuthHeader, LoginModal, SketchCard, DEFAULT_BG } from './components';
 import { useState } from 'react';
 
 const PAGE_SIZE = 50;
@@ -31,10 +26,21 @@ function CreateSketchButton() {
 
 function SignedInGallery() {
   const user = db.useUser();
-  return <GalleryContent userId={user.id} isAdmin={!!user.email?.endsWith('@instantdb.com')} />;
+  return (
+    <GalleryContent
+      userId={user.id}
+      isAdmin={!!user.email?.endsWith('@instantdb.com')}
+    />
+  );
 }
 
-function GalleryContent({ userId, isAdmin }: { userId?: string; isAdmin?: boolean }) {
+function GalleryContent({
+  userId,
+  isAdmin,
+}: {
+  userId?: string;
+  isAdmin?: boolean;
+}) {
   type Cursor = [string, string, unknown, number];
   const [cursors, setCursors] = useState<{
     first?: number;
@@ -44,9 +50,7 @@ function GalleryContent({ userId, isAdmin }: { userId?: string; isAdmin?: boolea
   }>({ first: PAGE_SIZE });
 
   const { data: settingsData } = db.useQuery(
-    userId
-      ? { userSettings: { $: { where: { 'owner.id': userId } } } }
-      : null,
+    userId ? { userSettings: { $: { where: { 'owner.id': userId } } } } : null,
   );
   const userSettings = settingsData?.userSettings?.[0];
   const playbackSpeed = userSettings?.playbackSpeed ?? 2;

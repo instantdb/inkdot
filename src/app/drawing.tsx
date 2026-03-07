@@ -71,7 +71,9 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
   const customPenColors = userSettings?.penColors;
   const customBgColors = userSettings?.bgColors;
   const penPalette =
-    customPenColors && customPenColors.length > 0 ? customPenColors : PEN_COLORS;
+    customPenColors && customPenColors.length > 0
+      ? customPenColors
+      : PEN_COLORS;
   const bgPalette =
     customBgColors && customBgColors.length > 0 ? customBgColors : BG_COLORS;
   const penColor = userSettings?.lastPenColor || PEN_COLORS[0];
@@ -220,7 +222,11 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
             pts.push({ x: cx + Math.cos(a) * rx, y: cy + Math.sin(a) * ry });
           }
         }
-        const s: ShapeInfo = { id: evt.shapeId, points: pts, size: evt.size || 4 };
+        const s: ShapeInfo = {
+          id: evt.shapeId,
+          points: pts,
+          size: evt.size || 4,
+        };
         shapes.push(s);
       } else if (evt.type === 'fill') {
         const s: ShapeInfo = {

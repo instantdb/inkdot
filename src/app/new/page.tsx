@@ -128,9 +128,7 @@ function DrawCanvas({
     userSettings,
     getTimestamp: useCallback(
       () =>
-        streamActiveRef.current
-          ? performance.now() - startTimeRef.current
-          : 0,
+        streamActiveRef.current ? performance.now() - startTimeRef.current : 0,
       [],
     ),
     onEvent: useCallback((evt: StrokeEvent) => {
@@ -683,14 +681,10 @@ function DrawCanvas({
         onBgColorChange={drawing.changeBgColor}
         onPaletteChange={(type, index, newColor) => {
           const current =
-            type === 'pen'
-              ? [...drawing.penPalette]
-              : [...drawing.bgPalette];
+            type === 'pen' ? [...drawing.penPalette] : [...drawing.bgPalette];
           current[index] = newColor;
           drawing.saveSettings(
-            type === 'pen'
-              ? { penColors: current }
-              : { bgColors: current },
+            type === 'pen' ? { penColors: current } : { bgColors: current },
           );
         }}
       />

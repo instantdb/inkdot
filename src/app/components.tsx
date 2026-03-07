@@ -278,7 +278,10 @@ export function AuthHeader() {
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       <div className="flex w-full max-w-4xl items-center justify-between px-3 pt-2 sm:px-6 sm:pt-4">
         <div className="flex items-center gap-2 sm:gap-3">
-          <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
+          <Link
+            href="/"
+            className="text-lg font-bold tracking-tight sm:text-xl"
+          >
             <span className="text-slate-700">ink</span>
             <span className="text-stone-500">dot</span>
           </Link>
@@ -1170,8 +1173,7 @@ export function ReplayThumbnail({
     const frame = () => {
       if (cancelled) return;
 
-      const elapsed =
-        (performance.now() - replayStart) * playbackSpeed + ts;
+      const elapsed = (performance.now() - replayStart) * playbackSpeed + ts;
       const trimEndIdx = getTrimEndIdx();
 
       let needsRedraw = false;
@@ -1181,10 +1183,16 @@ export function ReplayThumbnail({
         // Snapshot buffering: wait for snapshot-end, then render all at once
         if (evt.type === 'snapshot-start') {
           let endIdx = eventIdx + 1;
-          while (endIdx < trimEndIdx && allEvents[endIdx].type !== 'snapshot-end') {
+          while (
+            endIdx < trimEndIdx &&
+            allEvents[endIdx].type !== 'snapshot-end'
+          ) {
             endIdx++;
           }
-          if (endIdx >= trimEndIdx || allEvents[endIdx].type !== 'snapshot-end') {
+          if (
+            endIdx >= trimEndIdx ||
+            allEvents[endIdx].type !== 'snapshot-end'
+          ) {
             // snapshot-end hasn't arrived yet — stop processing, wait for more data
             break;
           }
@@ -1626,8 +1634,10 @@ export function drawEvent(
     for (const cmd of commands) {
       if (cmd.startsWith('M')) {
         const [mx, my] = cmd.slice(1).split(',').map(Number);
-        cx = (mx + (evt.shapeId && offsets?.get(evt.shapeId)?.dx || 0)) * scale;
-        cy = (my + (evt.shapeId && offsets?.get(evt.shapeId)?.dy || 0)) * scale;
+        cx =
+          (mx + ((evt.shapeId && offsets?.get(evt.shapeId)?.dx) || 0)) * scale;
+        cy =
+          (my + ((evt.shapeId && offsets?.get(evt.shapeId)?.dy) || 0)) * scale;
         if (first) {
           // Draw initial dot like 'start' does
           ctx.beginPath();
@@ -1638,8 +1648,10 @@ export function drawEvent(
         }
       } else if (cmd.startsWith('L')) {
         const [lx, ly] = cmd.slice(1).split(',').map(Number);
-        const nx = (lx + (evt.shapeId && offsets?.get(evt.shapeId)?.dx || 0)) * scale;
-        const ny = (ly + (evt.shapeId && offsets?.get(evt.shapeId)?.dy || 0)) * scale;
+        const nx =
+          (lx + ((evt.shapeId && offsets?.get(evt.shapeId)?.dx) || 0)) * scale;
+        const ny =
+          (ly + ((evt.shapeId && offsets?.get(evt.shapeId)?.dy) || 0)) * scale;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.lineTo(nx, ny);
@@ -2300,7 +2312,11 @@ export function SketchCard({
         }}
       >
         {stream && (isLive || (everLive && !thumbPreloaded)) ? (
-          <LiveThumbnail streamId={stream.id} duration={sketch.duration} showCursor={showCursor ?? true} />
+          <LiveThumbnail
+            streamId={stream.id}
+            duration={sketch.duration}
+            showCursor={showCursor ?? true}
+          />
         ) : (
           <div
             className="relative aspect-[4/3] w-full select-none"

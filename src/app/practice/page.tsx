@@ -47,7 +47,10 @@ export default function PracticePage() {
       <db.SignedIn>
         <div className="flex min-h-[100dvh] flex-col bg-white font-sans text-gray-800">
           <div className="flex w-full items-center justify-between px-3 pt-2 sm:mx-auto sm:max-w-4xl sm:px-6 sm:pt-4">
-            <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
+            <Link
+              href="/"
+              className="text-lg font-bold tracking-tight sm:text-xl"
+            >
               <span className="text-slate-700">ink</span>
               <span className="text-stone-500">dot</span>
               <span className="ml-1.5 rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-600 sm:px-2 sm:text-xs">
@@ -230,9 +233,7 @@ function PracticeCanvas() {
           onBgColorChange={drawing.changeBgColor}
           onPaletteChange={(type, index, color) => {
             const current =
-              type === 'pen'
-                ? [...drawing.penPalette]
-                : [...drawing.bgPalette];
+              type === 'pen' ? [...drawing.penPalette] : [...drawing.bgPalette];
             current[index] = color;
             drawing.saveSettings(
               type === 'pen'
