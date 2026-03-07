@@ -2142,17 +2142,13 @@ export function SketchCard({
 
   // Track if this card has ever shown a live stream so we can preload the
   // thumbnail before swapping away from the canvas (avoids flash of "No preview").
-  const [everLive, setEverLive] = useState(false);
+  const isCurrentlyLive = !!stream?.id && !stream?.done;
+  const [everLive, setEverLive] = useState(isCurrentlyLive);
   const [thumbPreloaded, setThumbPreloaded] = useState(false);
 
-  const streamId = stream?.id;
-  const streamDone = stream?.done;
-
-  useEffect(() => {
-    if (streamId && !streamDone) {
-      setEverLive(true);
-    }
-  }, [streamId, streamDone]);
+  if (isCurrentlyLive && !everLive) {
+    setEverLive(true);
+  }
 
   useEffect(() => {
     if (!everLive || !thumbnailUrl) return;

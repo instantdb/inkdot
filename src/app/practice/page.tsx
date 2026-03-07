@@ -93,15 +93,16 @@ function PracticeCanvas() {
     userSettings,
     drawTraceOnCanvas: true,
   });
+  const { canvasRef, traceInputRef } = drawing;
 
   const saveImage = useCallback(() => {
-    const canvas = drawing.canvasRef.current;
+    const canvas = canvasRef.current;
     if (!canvas) return;
     const link = document.createElement('a');
     link.download = `inkdot-practice-${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
-  }, [drawing.canvasRef]);
+  }, [canvasRef]);
 
   return (
     <div className="flex w-full flex-1 flex-col sm:mx-auto sm:max-w-4xl sm:p-6">
@@ -115,7 +116,7 @@ function PracticeCanvas() {
         </Link>
         <div className="flex items-center gap-2 sm:gap-4">
           <input
-            ref={drawing.traceInputRef}
+            ref={traceInputRef}
             type="file"
             accept="image/*"
             className="hidden"
@@ -184,7 +185,7 @@ function PracticeCanvas() {
             traceUrl={drawing.traceUrl}
             onSelectTrace={drawing.selectTrace}
             onClose={() => drawing.setShowEasyMode(false)}
-            onUploadClick={() => drawing.traceInputRef.current?.click()}
+            onUploadClick={() => traceInputRef.current?.click()}
           />
         </div>
       )}
@@ -192,7 +193,7 @@ function PracticeCanvas() {
       {/* Canvas */}
       <div className="relative overflow-hidden border-y border-gray-200 bg-white sm:mx-0 sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
         <canvas
-          ref={drawing.canvasRef}
+          ref={canvasRef}
           width={CANVAS_W}
           height={CANVAS_H}
           className="w-full cursor-crosshair"
