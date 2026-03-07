@@ -42,25 +42,33 @@ function UserGalleryContent({
   );
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       <div className="w-full max-w-4xl space-y-4 px-3 py-3 sm:space-y-8 sm:p-6">
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/"
+              className="text-text-tertiary hover:text-text-secondary text-xs sm:text-sm"
+            >
+              &larr; All
+            </Link>
+            <h2 className="text-text-secondary text-sm sm:text-lg">
+              Sketches by{' '}
+              <span className="text-text-primary font-semibold">@{handle}</span>
+            </h2>
+          </div>
           <Link
-            href="/"
-            className="text-xs text-gray-400 hover:text-gray-600 sm:text-sm"
+            href="/new"
+            className="bg-accent text-accent-text shadow-border hover:bg-accent-hover rounded-lg px-3 py-1.5 text-sm font-semibold shadow-md transition-all hover:shadow-lg active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base"
           >
-            &larr; All
+            Create sketch
           </Link>
-          <h2 className="text-sm text-gray-500 sm:text-lg">
-            Sketches by{' '}
-            <span className="font-semibold text-gray-800">@{handle}</span>
-          </h2>
         </div>
 
         {sketches.length === 0 ? (
-          <div className="py-12 text-center text-gray-400 sm:py-20">
-            <p className="text-base font-medium text-gray-500 sm:text-lg">
+          <div className="text-text-tertiary py-12 text-center sm:py-20">
+            <p className="text-text-secondary text-base font-medium sm:text-lg">
               No sketches by @{handle}
             </p>
           </div>

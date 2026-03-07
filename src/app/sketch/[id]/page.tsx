@@ -176,13 +176,15 @@ function SketchPageContent({ user }: { user?: UserInfo }) {
 
   if (sketchMissing) {
     return (
-      <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+      <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
         <AuthHeader />
         <div className="flex flex-1 flex-col items-center justify-center gap-4">
-          <p className="text-base text-gray-500 sm:text-lg">Sketch not found</p>
+          <p className="text-text-secondary text-base sm:text-lg">
+            Sketch not found
+          </p>
           <Link
             href="/"
-            className="cursor-pointer rounded-xl bg-slate-700 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:text-base"
+            className="bg-accent text-accent-text shadow-border hover:bg-accent-hover cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold shadow-md transition-all hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:text-base"
           >
             Back to gallery
           </Link>
@@ -211,7 +213,7 @@ function SketchPageContent({ user }: { user?: UserInfo }) {
   const effectiveStreamIds = lineageStreamIds ?? [stream.id];
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       <ReplayCanvas
         key={effectiveStreamIds.join(',')}
@@ -839,14 +841,14 @@ function ReplayCanvas({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => router.push('/')}
-            className="text-sm font-medium text-gray-400 transition-colors hover:text-slate-700"
+            className="text-text-tertiary hover:text-text-secondary text-sm font-medium transition-colors"
           >
             Back
           </button>
           {(isAuthor || isAdmin) && (
             <button
               onClick={() => setConfirmDelete(true)}
-              className="text-xs font-medium text-gray-400 transition-colors hover:text-red-500 sm:text-sm"
+              className="text-text-tertiary text-xs font-medium transition-colors hover:text-red-500 sm:text-sm"
             >
               Delete
             </button>
@@ -854,7 +856,7 @@ function ReplayCanvas({
           {remixOf && (
             <Link
               href={`/sketch/${remixOf.id}`}
-              className="text-xs text-gray-400 transition-colors hover:text-slate-600"
+              className="text-text-tertiary hover:text-text-secondary text-xs transition-colors"
             >
               Remix of{' '}
               {remixOf.author?.handle ? (
@@ -868,18 +870,18 @@ function ReplayCanvas({
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button
             onClick={() => router.push(`/new?remix=${sketchId}`)}
-            className="cursor-pointer rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
+            className="border-border-strong text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-3 py-1 text-xs font-semibold transition-all active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
           >
             Remix
           </button>
           <button
             onClick={() => router.push('/new')}
-            className="cursor-pointer rounded-lg bg-slate-700 px-3 py-1 text-xs font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
+            className="bg-accent text-accent-text shadow-border hover:bg-accent-hover cursor-pointer rounded-lg px-3 py-1 text-xs font-semibold shadow-md transition-all active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
           >
             New sketch
           </button>
           {isLive && !done && (
-            <span className="animate-pulse rounded-full bg-slate-700 px-2 py-0.5 text-[10px] font-semibold text-white sm:px-2.5 sm:py-1 sm:text-xs">
+            <span className="bg-accent text-accent-text animate-pulse rounded-full px-2 py-0.5 text-[10px] font-semibold sm:px-2.5 sm:py-1 sm:text-xs">
               LIVE
             </span>
           )}
@@ -894,7 +896,7 @@ function ReplayCanvas({
         </div>
       </div>
 
-      <div className="relative border-y border-gray-200 bg-white sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
+      <div className="border-border bg-surface relative border-y sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
         <canvas
           ref={canvasRef}
           width={CANVAS_W}
@@ -904,7 +906,7 @@ function ReplayCanvas({
         />
         {showCursor && <CursorOverlay cursorRef={cursorRef} />}
         {isLive && !done && (
-          <span className="absolute top-3 left-3 animate-pulse rounded-full bg-slate-700 px-2.5 py-1 text-xs font-semibold text-white shadow-md">
+          <span className="bg-accent text-accent-text absolute top-3 left-3 animate-pulse rounded-full px-2.5 py-1 text-xs font-semibold shadow-md">
             LIVE
           </span>
         )}
@@ -914,11 +916,11 @@ function ReplayCanvas({
       <div className="flex items-center gap-2 sm:gap-3">
         <button
           onClick={togglePlay}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-200 transition-colors hover:border-slate-400 hover:bg-slate-50"
+          className="border-border hover:border-border-strong hover:bg-hover flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors"
         >
           {reachedEnd ? (
             <svg
-              className="h-4 w-4 text-slate-700"
+              className="text-accent h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -926,7 +928,7 @@ function ReplayCanvas({
             </svg>
           ) : playing ? (
             <svg
-              className="h-4 w-4 text-gray-600"
+              className="text-text-secondary h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -934,7 +936,7 @@ function ReplayCanvas({
             </svg>
           ) : (
             <svg
-              className="ml-0.5 h-4 w-4 text-gray-600"
+              className="text-text-secondary ml-0.5 h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -948,8 +950,8 @@ function ReplayCanvas({
             onClick={() => setShowSettings((s) => !s)}
             className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors ${
               showSettings
-                ? 'border-slate-400 bg-slate-50 text-slate-700'
-                : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-500'
+                ? 'border-border-strong bg-surface-secondary text-text-secondary'
+                : 'border-border text-text-tertiary hover:border-border-strong hover:text-text-secondary'
             }`}
             title="Settings"
           >
@@ -958,22 +960,22 @@ function ReplayCanvas({
             </svg>
           </button>
           {showSettings && (
-            <div className="absolute bottom-full left-0 mb-2 flex flex-col gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-lg">
-              <label className="flex cursor-pointer items-center gap-2 text-sm whitespace-nowrap text-gray-600 select-none">
+            <div className="border-border bg-surface absolute bottom-full left-0 mb-2 flex flex-col gap-2 rounded-xl border p-3 shadow-lg">
+              <label className="text-text-secondary flex cursor-pointer items-center gap-2 text-sm whitespace-nowrap select-none">
                 <input
                   type="checkbox"
                   checked={loop}
                   onChange={(e) => setLoop(e.target.checked)}
-                  className="accent-slate-700"
+                  className="accent-accent"
                 />
                 Loop
               </label>
-              <label className="flex cursor-pointer items-center gap-2 text-sm whitespace-nowrap text-gray-600 select-none">
+              <label className="text-text-secondary flex cursor-pointer items-center gap-2 text-sm whitespace-nowrap select-none">
                 <input
                   type="checkbox"
                   checked={showCursor}
                   onChange={(e) => setShowCursor(e.target.checked)}
-                  className="accent-slate-700"
+                  className="accent-accent"
                 />
                 Show cursor
               </label>
@@ -1004,7 +1006,7 @@ function ReplayCanvas({
             : maxTime;
           return (
             <>
-              <span className="w-10 text-right text-xs text-gray-400 tabular-nums">
+              <span className="text-text-tertiary w-10 text-right text-xs tabular-nums">
                 {formatTime(displayCurrent)}
               </span>
               <ScrubBar
@@ -1027,7 +1029,7 @@ function ReplayCanvas({
                   } as React.ChangeEvent<HTMLInputElement>);
                 }}
               />
-              <span className="w-10 text-xs text-gray-400 tabular-nums">
+              <span className="text-text-tertiary w-10 text-xs tabular-nums">
                 {formatTime(displayTotal)}
               </span>
             </>
@@ -1037,7 +1039,7 @@ function ReplayCanvas({
       {/* Trim actions */}
       {trimming && maxTime > 0 && (
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">
+          <span className="text-text-tertiary text-xs">
             {formatTime(trimStart)} – {formatTime(trimEnd || maxTime)}
           </span>
           <button
@@ -1085,7 +1087,7 @@ function ReplayCanvas({
               setTrimEnd(savedTrimEnd);
               setTrimming(false);
             }}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50"
+            className="border-border text-text-secondary hover:bg-hover rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors"
           >
             Skip
           </button>
@@ -1107,7 +1109,7 @@ function ReplayCanvas({
               setUndoTrim(null);
               setTrimming(true);
             }}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50"
+            className="border-border text-text-secondary hover:bg-hover rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors"
           >
             Undo trim
           </button>
@@ -1121,19 +1123,19 @@ function ReplayCanvas({
           onClick={() => setConfirmDelete(false)}
         >
           <div
-            className="mx-4 w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl"
+            className="bg-surface mx-4 w-full max-w-sm rounded-2xl p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-800">
+            <h3 className="text-text-primary text-lg font-semibold">
               Delete this sketch?
             </h3>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="text-text-secondary mt-2 text-sm">
               This can&apos;t be undone.
             </p>
             <div className="mt-5 flex justify-end gap-3">
               <button
                 onClick={() => setConfirmDelete(false)}
-                className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+                className="bg-surface-secondary text-text-secondary hover:bg-hover rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
@@ -1302,7 +1304,9 @@ function RemixHistory({
   return (
     <div className="w-full max-w-4xl px-2 pb-2 sm:px-6 sm:pb-4">
       <div className="mb-3 flex items-center gap-2">
-        <h3 className="text-sm font-semibold text-gray-500">Remix history</h3>
+        <h3 className="text-text-secondary text-sm font-semibold">
+          Remix history
+        </h3>
         <button
           onClick={() => {
             if (isPlaying) {
@@ -1313,8 +1317,8 @@ function RemixHistory({
           }}
           className={`flex items-center gap-1 rounded-lg border px-2 py-0.5 text-xs font-medium transition-colors ${
             isPlaying
-              ? 'border-slate-400 bg-slate-50 text-slate-700'
-              : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600'
+              ? 'border-border-strong bg-surface-secondary text-text-secondary'
+              : 'border-border text-text-tertiary hover:border-border-strong hover:text-text-secondary'
           }`}
         >
           {isPlaying ? (
@@ -1334,7 +1338,7 @@ function RemixHistory({
           <button
             onClick={loadOlder}
             disabled={loadingOlder}
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-dashed border-gray-300 text-xs text-gray-400 transition-colors hover:border-gray-400 hover:text-gray-500 sm:h-20 sm:w-20"
+            className="border-border-strong text-text-tertiary hover:border-border-strong hover:text-text-secondary flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-dashed text-xs transition-colors sm:h-20 sm:w-20"
           >
             {loadingOlder ? '...' : 'Older'}
           </button>
@@ -1343,7 +1347,7 @@ function RemixHistory({
           <div key={a.id} className="flex shrink-0 items-center">
             {(i > 0 || hasDeeper) && (
               <svg
-                className="mx-1 h-3 w-3 shrink-0 text-gray-300"
+                className="text-border-strong mx-1 h-3 w-3 shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -1356,7 +1360,7 @@ function RemixHistory({
             )}
             <Link
               href={`/sketch/${a.id}`}
-              className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-gray-200 transition-all hover:-translate-y-0.5 hover:shadow-md sm:h-20 sm:w-20"
+              className="group border-border relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border transition-all hover:-translate-y-0.5 hover:shadow-md sm:h-20 sm:w-20"
             >
               {a.thumbnail?.url ? (
                 <img
@@ -1369,7 +1373,7 @@ function RemixHistory({
                   className="flex h-full w-full items-center justify-center"
                   style={{ backgroundColor: DEFAULT_BG }}
                 >
-                  <span className="text-[8px] text-gray-400">?</span>
+                  <span className="text-text-tertiary text-[8px]">?</span>
                 </div>
               )}
               {a.author?.handle && (
@@ -1382,7 +1386,7 @@ function RemixHistory({
         ))}
         {/* Current sketch */}
         <svg
-          className="mx-1 h-3 w-3 shrink-0 text-gray-300"
+          className="text-border-strong mx-1 h-3 w-3 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -1392,7 +1396,7 @@ function RemixHistory({
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 border-slate-700 sm:h-20 sm:w-20">
+        <div className="border-accent relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 sm:h-20 sm:w-20">
           {currentThumbnailUrl ? (
             <img
               src={currentThumbnailUrl}
@@ -1441,9 +1445,9 @@ function RemixesSection({
   return (
     <div className="w-full max-w-4xl px-2 pb-4 sm:px-6 sm:pb-8">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-500">
+        <h3 className="text-text-secondary text-sm font-semibold">
           Remixes
-          <span className="ml-1.5 font-normal text-gray-400">
+          <span className="text-text-tertiary ml-1.5 font-normal">
             ({remixes.length})
           </span>
         </h3>
@@ -1453,7 +1457,7 @@ function RemixesSection({
           <Link
             key={remix.id}
             href={`/sketch/${remix.id}${autoplay ? `?autoplay=${autoplayParent || sketchId}` : ''}`}
-            className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-100 active:scale-[0.98]"
+            className="group border-border bg-surface relative overflow-hidden rounded-xl border transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-100 active:scale-[0.98]"
           >
             {remix.thumbnail?.url ? (
               <img
@@ -1466,7 +1470,7 @@ function RemixesSection({
                 className="flex aspect-[4/3] w-full items-center justify-center"
                 style={{ backgroundColor: DEFAULT_BG }}
               >
-                <span className="text-xs text-gray-400">No preview</span>
+                <span className="text-text-tertiary text-xs">No preview</span>
               </div>
             )}
             {remix.author?.handle && (
@@ -1500,7 +1504,7 @@ function OverflowMenu({ onReport }: { onReport: () => void }) {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 sm:h-8 sm:w-8"
+        className="text-text-tertiary hover:bg-hover hover:text-text-secondary flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg transition-colors sm:h-8 sm:w-8"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <circle cx="8" cy="3" r="1.5" />
@@ -1509,13 +1513,13 @@ function OverflowMenu({ onReport }: { onReport: () => void }) {
         </svg>
       </button>
       {open && (
-        <div className="absolute top-full right-0 z-50 mt-1 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+        <div className="border-border bg-surface absolute top-full right-0 z-50 mt-1 overflow-hidden rounded-lg border py-1 shadow-lg">
           <button
             onClick={() => {
               setOpen(false);
               onReport();
             }}
-            className="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-red-500"
+            className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:text-red-500"
           >
             Report
           </button>
@@ -1594,19 +1598,19 @@ function ReportModal({
         onClick={onClose}
       >
         <div
-          className="mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+          className="bg-surface mx-4 w-full max-w-md rounded-2xl p-6 shadow-xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="text-center text-lg font-semibold text-gray-800">
+          <p className="text-text-primary text-center text-lg font-semibold">
             Report submitted
           </p>
-          <p className="mt-2 text-center text-sm text-gray-500">
+          <p className="text-text-secondary mt-2 text-center text-sm">
             Thank you for helping keep the community safe.
           </p>
           <div className="mt-5 flex justify-center">
             <button
               onClick={onClose}
-              className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+              className="bg-surface-secondary text-text-secondary hover:bg-hover rounded-lg px-4 py-2 text-sm font-medium transition-colors"
             >
               Close
             </button>
@@ -1622,18 +1626,18 @@ function ReportModal({
       onClick={onClose}
     >
       <div
-        className="mx-4 w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+        className="bg-surface mx-4 w-full max-w-lg rounded-2xl p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-lg font-semibold text-gray-800">
+        <h3 className="text-text-primary text-lg font-semibold">
           Report this sketch
         </h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="text-text-secondary mt-1 text-sm">
           Scrub to the frame with objectionable content.
         </p>
 
         {/* Mini canvas preview */}
-        <div className="mt-4 overflow-hidden rounded-lg border border-gray-200">
+        <div className="border-border mt-4 overflow-hidden rounded-lg border">
           <canvas
             ref={miniCanvasRef}
             width={CANVAS_W}
@@ -1645,7 +1649,7 @@ function ReportModal({
 
         {/* Scrubber */}
         <div className="mt-2 flex items-center gap-3">
-          <span className="text-xs text-gray-400 tabular-nums">
+          <span className="text-text-tertiary text-xs tabular-nums">
             {formatTime(scrubTime)}
           </span>
           <input
@@ -1654,16 +1658,16 @@ function ReportModal({
             max={maxTime}
             value={scrubTime}
             onChange={(e) => setScrubTime(Number(e.target.value))}
-            className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-gray-200 accent-slate-700"
+            className="bg-surface-secondary accent-accent h-1.5 flex-1 cursor-pointer appearance-none rounded-full"
           />
-          <span className="text-xs text-gray-400 tabular-nums">
+          <span className="text-text-tertiary text-xs tabular-nums">
             {formatTime(maxTime)}
           </span>
         </div>
 
         {/* Reason */}
         <div className="mt-4">
-          <label className="mb-2 block text-sm font-medium text-gray-600">
+          <label className="text-text-secondary mb-2 block text-sm font-medium">
             Reason
           </label>
           <div className="flex flex-wrap gap-2">
@@ -1679,8 +1683,8 @@ function ReportModal({
                 onClick={() => setReason(opt.value)}
                 className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
                   reason === opt.value
-                    ? 'border-slate-700 bg-slate-700 text-white'
-                    : 'border-gray-200 text-gray-500 hover:border-gray-400'
+                    ? 'border-accent bg-accent text-accent-text'
+                    : 'border-border text-text-secondary hover:border-border-strong'
                 }`}
               >
                 {opt.label}
@@ -1691,13 +1695,15 @@ function ReportModal({
 
         {/* Details */}
         <div className="mt-3">
-          <label className="text-sm font-medium text-gray-600">Details</label>
+          <label className="text-text-secondary text-sm font-medium">
+            Details
+          </label>
           <textarea
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             placeholder="Any additional context..."
             rows={2}
-            className="mt-1 w-full resize-none rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400"
+            className="border-border bg-surface text-text-secondary placeholder:text-text-tertiary mt-1 w-full resize-none rounded-lg border px-3 py-2 text-sm"
           />
         </div>
 
@@ -1707,7 +1713,7 @@ function ReportModal({
         <div className="mt-5 flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            className="bg-surface-secondary text-text-secondary hover:bg-hover rounded-lg px-4 py-2 text-sm font-medium transition-colors"
           >
             Cancel
           </button>
@@ -1872,7 +1878,7 @@ function ScrubBar({
       >
         {/* Base track */}
         <div
-          className="absolute inset-x-0 rounded-full bg-gray-200"
+          className="bg-surface-secondary absolute inset-x-0 rounded-full"
           style={{ top: barTop, height: barH }}
         />
 
@@ -1981,16 +1987,16 @@ function SpeedSelector({
         onClick={() => setOpen(!open)}
         className={`flex h-8 shrink-0 items-center justify-center rounded-full border px-2 text-xs font-semibold transition-colors ${
           speed !== 1
-            ? 'border-slate-400 bg-slate-50 text-slate-700'
-            : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-500'
+            ? 'border-border-strong bg-surface-secondary text-text-secondary'
+            : 'border-border text-text-tertiary hover:border-border-strong hover:text-text-secondary'
         }`}
         title="Playback speed"
       >
         {speed}x
       </button>
       {open && (
-        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-          <div className="px-3 py-1.5 text-xs font-semibold text-gray-400">
+        <div className="border-border bg-surface absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 overflow-hidden rounded-lg border py-1 shadow-lg">
+          <div className="text-text-tertiary px-3 py-1.5 text-xs font-semibold">
             Speed
           </div>
           {SPEED_OPTIONS.map((s) => (
@@ -2002,13 +2008,13 @@ function SpeedSelector({
               }}
               className={`flex w-full items-center gap-2 px-3 py-1.5 text-sm whitespace-nowrap transition-colors ${
                 speed === s
-                  ? 'bg-slate-50 font-semibold text-slate-800'
-                  : 'text-gray-600 hover:bg-gray-50'
+                  ? 'bg-surface-secondary text-text-primary font-semibold'
+                  : 'text-text-secondary hover:bg-hover'
               }`}
             >
               {speed === s && (
                 <svg
-                  className="h-3 w-3 text-slate-600"
+                  className="text-text-secondary h-3 w-3"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

@@ -34,16 +34,16 @@ import {
 function SignedOutNew() {
   const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
-        <p className="text-base text-gray-500 sm:text-lg">
+        <p className="text-text-secondary text-base sm:text-lg">
           Sign in to create a sketch
         </p>
         <button
           onClick={() => setShowLogin(true)}
-          className="cursor-pointer rounded-xl bg-slate-700 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 sm:text-base"
+          className="bg-accent text-accent-text shadow-border hover:bg-accent-hover cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold shadow-md transition-all sm:text-base"
         >
           Sign in
         </button>
@@ -58,7 +58,7 @@ function SignedInNew() {
   const remixId = searchParams.get('remix');
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       <DrawCanvas userId={user.id} remixId={remixId} />
     </div>
@@ -499,7 +499,7 @@ function DrawCanvas({
   const progress = started ? (duration - timeLeft) / duration : 0;
 
   const topBtnClass =
-    'rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700';
+    'rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary';
 
   if (finished) {
     return (
@@ -522,18 +522,20 @@ function DrawCanvas({
               Practice
             </Link>
             {remixAuthor && (
-              <span className="text-xs text-gray-400">
+              <span className="text-text-tertiary text-xs">
                 Remix of{' '}
-                <span className="font-medium text-gray-500">
+                <span className="text-text-secondary font-medium">
                   @{remixAuthor}
                 </span>
               </span>
             )}
           </div>
         ) : remixAuthor ? (
-          <span className="text-xs text-gray-400">
+          <span className="text-text-tertiary text-xs">
             Remix of{' '}
-            <span className="font-medium text-gray-500">@{remixAuthor}</span>
+            <span className="text-text-secondary font-medium">
+              @{remixAuthor}
+            </span>
           </span>
         ) : (
           <div />
@@ -554,8 +556,8 @@ function DrawCanvas({
                 }}
                 className={`rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ${
                   drawing.traceUrl
-                    ? 'border-slate-300 bg-slate-50 text-slate-700'
-                    : 'border-gray-200 text-gray-500 hover:text-gray-800'
+                    ? 'border-border-strong bg-surface-secondary text-text-secondary'
+                    : 'border-border text-text-secondary hover:text-text-primary'
                 }`}
               >
                 {drawing.traceUrl ? 'Easy mode ✓' : 'Easy mode'}
@@ -574,15 +576,15 @@ function DrawCanvas({
                       i > 0 ? 'border-l-0' : ''
                     } ${
                       duration === d
-                        ? 'border-slate-700 bg-slate-700 text-white'
-                        : 'border-gray-200 bg-white text-gray-500 hover:text-gray-800'
+                        ? 'border-accent bg-accent text-accent-text'
+                        : 'border-border bg-surface text-text-secondary hover:text-text-primary'
                     }`}
                   >
                     {d}s
                   </button>
                 ))}
               </div>
-              <span className="hidden animate-pulse text-sm text-gray-400 sm:inline">
+              <span className="text-text-tertiary hidden animate-pulse text-sm sm:inline">
                 {remixLoading ? 'Loading remix...' : 'Draw to start!'}
               </span>
             </>
@@ -590,7 +592,7 @@ function DrawCanvas({
           {started && (
             <>
               {drawing.traceUrl && (
-                <label className="flex cursor-pointer items-center gap-1.5 text-xs text-gray-500 select-none">
+                <label className="text-text-secondary flex cursor-pointer items-center gap-1.5 text-xs select-none">
                   <input
                     type="checkbox"
                     checked={drawing.showTrace}
@@ -627,7 +629,7 @@ function DrawCanvas({
       )}
 
       {/* Canvas */}
-      <div className="relative overflow-hidden border-y border-gray-200 bg-white sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
+      <div className="border-border bg-surface relative overflow-hidden border-y sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
         <canvas
           ref={drawing.canvasRef}
           width={CANVAS_W}
@@ -655,9 +657,9 @@ function DrawCanvas({
             }}
           />
         )}
-        <div className="absolute right-0 bottom-0 left-0 h-1.5 bg-gray-100">
+        <div className="bg-surface-secondary absolute right-0 bottom-0 left-0 h-1.5">
           <div
-            className="h-full bg-slate-700 transition-all duration-1000 ease-linear"
+            className="bg-accent h-full transition-all duration-1000 ease-linear"
             style={{ width: `${progress * 100}%` }}
           />
         </div>
@@ -1043,19 +1045,19 @@ function TrimPhase({
   return (
     <div className="flex w-full max-w-4xl flex-col gap-2 py-2 sm:gap-4 sm:p-6">
       <div className="flex items-center justify-between gap-2 px-2 sm:px-0">
-        <span className="text-sm font-medium text-gray-500">
+        <span className="text-text-secondary text-sm font-medium">
           Trim your sketch
         </span>
         <div className="flex items-center gap-2">
           <button
             onClick={skip}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50"
+            className="border-border text-text-secondary hover:bg-hover rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors"
           >
             Skip
           </button>
           <button
             onClick={saveTrim}
-            className="rounded-lg bg-slate-700 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-slate-800"
+            className="bg-accent text-accent-text hover:bg-accent-hover rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors"
           >
             {hasTrimmed ? 'Save trim' : 'Done'}
           </button>
@@ -1063,7 +1065,7 @@ function TrimPhase({
       </div>
 
       {/* Canvas with replay */}
-      <div className="relative overflow-hidden border-y border-gray-200 bg-white sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
+      <div className="border-border bg-surface relative overflow-hidden border-y sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
         <canvas
           ref={canvasRef}
           width={CANVAS_W}
@@ -1090,11 +1092,11 @@ function TrimPhase({
                   }
                 : resume
           }
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-200 transition-colors hover:border-slate-400 hover:bg-slate-50"
+          className="border-border hover:border-border-strong hover:bg-surface-secondary flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors"
         >
           {reachedEnd ? (
             <svg
-              className="h-4 w-4 text-slate-700"
+              className="text-accent h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -1102,7 +1104,7 @@ function TrimPhase({
             </svg>
           ) : playing ? (
             <svg
-              className="h-4 w-4 text-gray-600"
+              className="text-text-secondary h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -1110,7 +1112,7 @@ function TrimPhase({
             </svg>
           ) : (
             <svg
-              className="ml-0.5 h-4 w-4 text-gray-600"
+              className="text-text-secondary ml-0.5 h-4 w-4"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -1123,8 +1125,8 @@ function TrimPhase({
           onClick={() => setLoop((l) => !l)}
           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors ${
             loop
-              ? 'border-slate-400 bg-slate-50 text-slate-700'
-              : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-500'
+              ? 'border-border-strong bg-surface-secondary text-text-secondary'
+              : 'border-border text-text-tertiary hover:border-border-strong hover:text-text-secondary'
           }`}
           title="Loop"
         >
@@ -1147,7 +1149,7 @@ function TrimPhase({
           }}
         />
 
-        <span className="w-10 text-right text-xs text-gray-400 tabular-nums">
+        <span className="text-text-tertiary w-10 text-right text-xs tabular-nums">
           {formatTime(scrubValue)}
         </span>
 
@@ -1205,14 +1207,14 @@ function TrimPhase({
           </div>
         </div>
 
-        <span className="w-10 text-xs text-gray-400 tabular-nums">
+        <span className="text-text-tertiary w-10 text-xs tabular-nums">
           {formatTime(maxTime)}
         </span>
       </div>
 
       {hasTrimmed && (
         <div className="px-2 sm:px-0">
-          <span className="text-xs text-gray-400">
+          <span className="text-text-tertiary text-xs">
             Trimmed: {formatTime(trimStart)} – {formatTime(trimEnd)}
           </span>
         </div>
@@ -1250,16 +1252,16 @@ function TrimSpeedSelector({
         onClick={() => setOpen(!open)}
         className={`flex h-8 shrink-0 items-center justify-center rounded-full border px-2 text-xs font-semibold transition-colors ${
           speed !== 1
-            ? 'border-slate-400 bg-slate-50 text-slate-700'
-            : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-500'
+            ? 'border-border-strong bg-surface-secondary text-text-secondary'
+            : 'border-border text-text-tertiary hover:border-border-strong hover:text-text-secondary'
         }`}
         title="Playback speed"
       >
         {speed}x
       </button>
       {open && (
-        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-          <div className="px-3 py-1.5 text-xs font-semibold text-gray-400">
+        <div className="border-border bg-surface absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 overflow-hidden rounded-lg border py-1 shadow-lg">
+          <div className="text-text-tertiary px-3 py-1.5 text-xs font-semibold">
             Speed
           </div>
           {TRIM_SPEED_OPTIONS.map((s) => (
@@ -1271,13 +1273,13 @@ function TrimSpeedSelector({
               }}
               className={`flex w-full items-center gap-2 px-3 py-1.5 text-sm whitespace-nowrap transition-colors ${
                 speed === s
-                  ? 'bg-slate-50 font-semibold text-slate-800'
-                  : 'text-gray-600 hover:bg-gray-50'
+                  ? 'bg-surface-secondary text-text-primary font-semibold'
+                  : 'text-text-secondary hover:bg-hover'
               }`}
             >
               {speed === s && (
                 <svg
-                  className="h-3 w-3 text-slate-600"
+                  className="text-text-secondary h-3 w-3"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

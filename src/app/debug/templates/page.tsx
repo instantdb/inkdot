@@ -37,17 +37,17 @@ export default function TemplatesDebugPage() {
   }, [lightboxIdx, goPrev, goNext]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 font-sans">
+    <div className="bg-surface-secondary min-h-screen p-8 font-sans">
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <Link
               href="/"
-              className="text-sm text-gray-400 hover:text-gray-600"
+              className="text-text-tertiary hover:text-text-secondary text-sm"
             >
               &larr; Back
             </Link>
-            <h1 className="mt-1 text-2xl font-bold text-gray-800">
+            <h1 className="text-text-primary mt-1 text-2xl font-bold">
               Templates ({TEMPLATES.length})
             </h1>
           </div>
@@ -57,16 +57,18 @@ export default function TemplatesDebugPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search templates..."
-              className="w-64 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+              className="border-border w-64 rounded-lg border px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
             />
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">BG:</span>
+              <span className="text-text-tertiary text-xs">BG:</span>
               {['#ffffff', '#1a1a1a', '#f5f0e8', '#0f172a'].map((c) => (
                 <button
                   key={c}
                   onClick={() => setBg(c)}
                   className={`h-7 w-7 rounded-full border-2 transition-all ${
-                    bg === c ? 'scale-110 border-slate-700' : 'border-gray-300'
+                    bg === c
+                      ? 'border-accent scale-110'
+                      : 'border-border-strong'
                   }`}
                   style={{ backgroundColor: c }}
                 />
@@ -76,7 +78,7 @@ export default function TemplatesDebugPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <p className="py-20 text-center text-gray-400">
+          <p className="text-text-tertiary py-20 text-center">
             No templates match &quot;{search}&quot;
           </p>
         ) : (
@@ -85,7 +87,7 @@ export default function TemplatesDebugPage() {
               <div key={tpl.id} className="space-y-2">
                 <button
                   onClick={() => setLightboxIdx(i)}
-                  className="w-full cursor-pointer overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-shadow hover:shadow-md"
+                  className="border-border w-full cursor-pointer overflow-hidden rounded-xl border shadow-sm transition-shadow hover:shadow-md"
                   style={{ backgroundColor: bg }}
                 >
                   <img
@@ -95,10 +97,10 @@ export default function TemplatesDebugPage() {
                   />
                 </button>
                 <div className="flex items-center justify-between px-1">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-text-secondary text-sm font-medium">
                     {tpl.name}
                   </span>
-                  <span className="text-xs text-gray-400">{tpl.id}</span>
+                  <span className="text-text-tertiary text-xs">{tpl.id}</span>
                 </div>
               </div>
             ))}

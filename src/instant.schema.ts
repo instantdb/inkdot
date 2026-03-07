@@ -48,6 +48,7 @@ const _schema = i.schema({
       lastBgColor: i.string().optional(),
       lastBrushSize: i.number().optional(),
       showCursor: i.boolean().optional(),
+      darkMode: i.string().optional(),
     }),
   },
   links: {

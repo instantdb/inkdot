@@ -1070,14 +1070,14 @@ export function TemplatePicker({
   onUploadClick: () => void;
 }) {
   return (
-    <div className="mx-2 rounded-xl border border-gray-200 bg-gray-50 p-3 sm:mx-0 sm:p-4">
+    <div className="border-border bg-surface-secondary mx-2 rounded-xl border p-3 sm:mx-0 sm:p-4">
       <div className="mb-2 flex items-center justify-between sm:mb-3">
-        <span className="text-xs font-medium text-gray-600 sm:text-sm">
+        <span className="text-text-secondary text-xs font-medium sm:text-sm">
           Pick a template to trace over
         </span>
         <button
           onClick={onClose}
-          className="cursor-pointer p-1 text-gray-300 transition-colors hover:text-gray-500"
+          className="text-text-tertiary hover:text-text-secondary cursor-pointer p-1 transition-colors"
         >
           <svg
             width="16"
@@ -1098,8 +1098,8 @@ export function TemplatePicker({
           onClick={() => onSelectTrace(null)}
           className={`cursor-pointer rounded-lg border-2 text-xs font-medium transition-all ${
             !traceUrl
-              ? 'border-slate-700 text-slate-700 shadow-md'
-              : 'border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500'
+              ? 'border-accent text-accent shadow-md'
+              : 'border-border-strong text-text-tertiary hover:border-border-strong hover:text-text-secondary border-dashed'
           }`}
         >
           <div className="flex aspect-[4/3] items-center justify-center">
@@ -1110,8 +1110,8 @@ export function TemplatePicker({
           onClick={onUploadClick}
           className={`cursor-pointer rounded-lg border-2 transition-all ${
             traceUrl?.startsWith('blob:')
-              ? 'border-slate-700 text-slate-700 shadow-md'
-              : 'border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500'
+              ? 'border-accent text-accent shadow-md'
+              : 'border-border-strong text-text-tertiary hover:border-border-strong hover:text-text-secondary border-dashed'
           }`}
         >
           <div className="flex aspect-[4/3] flex-col items-center justify-center gap-0.5">
@@ -1137,17 +1137,17 @@ export function TemplatePicker({
             onClick={() => onSelectTrace(tpl.src)}
             className={`group cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${
               traceUrl === tpl.src
-                ? 'border-slate-700 shadow-md'
-                : 'border-gray-200 hover:border-gray-400'
+                ? 'border-accent shadow-md'
+                : 'border-border hover:border-border-strong'
             }`}
           >
             <div className="relative aspect-[4/3] overflow-hidden">
               <img
                 src={tpl.src}
                 alt={tpl.name}
-                className="h-full w-full bg-white object-contain p-0.5 sm:p-1"
+                className="bg-surface h-full w-full object-contain p-0.5 sm:p-1"
               />
-              <span className="absolute right-0 bottom-0 left-0 bg-white/80 px-1 py-0.5 text-[8px] font-medium text-gray-600 sm:px-2 sm:py-1 sm:text-[10px]">
+              <span className="text-text-secondary absolute right-0 bottom-0 left-0 bg-white/80 px-1 py-0.5 text-[8px] font-medium sm:px-2 sm:py-1 sm:text-[10px]">
                 {tpl.name}
               </span>
             </div>

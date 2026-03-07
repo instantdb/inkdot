@@ -20,16 +20,16 @@ import {
 function SignedOutPractice() {
   const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
-        <p className="text-base text-gray-500 sm:text-lg">
+        <p className="text-text-secondary text-base sm:text-lg">
           Sign in to practice drawing
         </p>
         <button
           onClick={() => setShowLogin(true)}
-          className="cursor-pointer rounded-xl bg-slate-700 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 sm:text-base"
+          className="bg-accent text-accent-text shadow-border hover:bg-accent-hover cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold shadow-md transition-all sm:text-base"
         >
           Sign in
         </button>
@@ -45,27 +45,8 @@ export default function PracticePage() {
         <SignedOutPractice />
       </db.SignedOut>
       <db.SignedIn>
-        <div className="flex min-h-[100dvh] flex-col bg-white font-sans text-gray-800">
-          <div className="flex w-full items-center justify-between px-3 pt-2 sm:mx-auto sm:max-w-4xl sm:px-6 sm:pt-4">
-            <Link
-              href="/"
-              className="text-lg font-bold tracking-tight sm:text-xl"
-            >
-              <span className="text-slate-700">ink</span>
-              <span className="text-stone-500">dot</span>
-              <span className="ml-1.5 rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-600 sm:px-2 sm:text-xs">
-                Practice
-              </span>
-            </Link>
-            <div className="flex items-center gap-2">
-              <Link
-                href="/new"
-                className="rounded-lg bg-slate-700 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-slate-800 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
-              >
-                Create sketch
-              </Link>
-            </div>
-          </div>
+        <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
+          <AuthHeader />
           <PracticeCanvas />
         </div>
       </db.SignedIn>
@@ -108,16 +89,19 @@ function PracticeCanvas() {
   }, [canvasRef]);
 
   return (
-    <div className="flex w-full flex-1 flex-col sm:mx-auto sm:max-w-4xl sm:p-6">
+    <div className="flex w-full max-w-4xl flex-col gap-2 py-2 sm:gap-4 sm:p-6">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-3 py-2 sm:px-0 sm:pb-4">
+      <div className="flex min-h-11 items-center justify-between gap-2 px-2 sm:px-0">
         <Link
           href="/new"
-          className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:border-slate-300 hover:text-gray-800"
+          className="border-border text-text-secondary hover:border-border-strong hover:text-text-primary rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors"
         >
           Create sketch
         </Link>
-        <div className="flex items-center gap-2 sm:gap-4">
+        <span className="text-text-tertiary text-xs font-medium">
+          Practice mode
+        </span>
+        <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
           <input
             ref={traceInputRef}
             type="file"
@@ -129,8 +113,8 @@ function PracticeCanvas() {
             onClick={() => drawing.setShowEasyMode((v) => !v)}
             className={`rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ${
               drawing.traceUrl
-                ? 'border-slate-300 bg-slate-50 text-slate-700'
-                : 'border-gray-200 text-gray-500 hover:text-gray-800'
+                ? 'border-border-strong bg-surface-secondary text-text-secondary'
+                : 'border-border text-text-secondary hover:text-text-primary'
             }`}
           >
             {drawing.traceUrl ? 'Easy mode ✓' : 'Easy mode'}
@@ -142,8 +126,8 @@ function PracticeCanvas() {
                   onClick={() => drawing.setShowTrace(true)}
                   className={`rounded-l-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ${
                     drawing.showTrace
-                      ? 'border-slate-700 bg-slate-700 text-white'
-                      : 'border-gray-200 bg-white text-gray-500 hover:text-gray-800'
+                      ? 'border-accent bg-accent text-accent-text'
+                      : 'border-border bg-surface text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   On
@@ -152,8 +136,8 @@ function PracticeCanvas() {
                   onClick={() => drawing.setShowTrace(false)}
                   className={`rounded-r-lg border border-l-0 px-2.5 py-1.5 text-xs font-medium transition-colors ${
                     !drawing.showTrace
-                      ? 'border-slate-700 bg-slate-700 text-white'
-                      : 'border-gray-200 bg-white text-gray-500 hover:text-gray-800'
+                      ? 'border-accent bg-accent text-accent-text'
+                      : 'border-border bg-surface text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   Off
@@ -174,7 +158,7 @@ function PracticeCanvas() {
           )}
           <button
             onClick={drawing.clearCanvas}
-            className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:border-red-300 hover:text-red-500"
+            className="border-border text-text-secondary rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors hover:border-red-300 hover:text-red-500"
           >
             Clear
           </button>
@@ -183,18 +167,16 @@ function PracticeCanvas() {
 
       {/* Easy mode template picker */}
       {drawing.showEasyMode && (
-        <div className="mb-2 sm:mb-4">
-          <TemplatePicker
-            traceUrl={drawing.traceUrl}
-            onSelectTrace={drawing.selectTrace}
-            onClose={() => drawing.setShowEasyMode(false)}
-            onUploadClick={() => traceInputRef.current?.click()}
-          />
-        </div>
+        <TemplatePicker
+          traceUrl={drawing.traceUrl}
+          onSelectTrace={drawing.selectTrace}
+          onClose={() => drawing.setShowEasyMode(false)}
+          onUploadClick={() => traceInputRef.current?.click()}
+        />
       )}
 
       {/* Canvas */}
-      <div className="relative overflow-hidden border-y border-gray-200 bg-white sm:mx-0 sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
+      <div className="border-border bg-surface relative overflow-hidden border-y sm:rounded-2xl sm:border sm:shadow-lg sm:shadow-slate-100/50">
         <canvas
           ref={canvasRef}
           width={CANVAS_W}
@@ -211,43 +193,41 @@ function PracticeCanvas() {
             drawing.handlePointerUp(e);
           }}
         />
+        <div className="bg-surface-secondary absolute right-0 bottom-0 left-0 h-1.5" />
       </div>
 
-      {/* Controls below canvas */}
-      <div className="flex flex-col gap-2 py-1 sm:gap-4 sm:py-4">
-        <ToolBar
-          tool={drawing.tool}
-          onToolChange={drawing.changeTool}
-          shapeFilled={drawing.shapeFilled}
-          onShapeFilledChange={drawing.setShapeFilled}
-          brushSize={drawing.brushSize}
-          onBrushSizeChange={drawing.changeBrushSize}
-        />
+      <ToolBar
+        tool={drawing.tool}
+        onToolChange={drawing.changeTool}
+        shapeFilled={drawing.shapeFilled}
+        onShapeFilledChange={drawing.setShapeFilled}
+        brushSize={drawing.brushSize}
+        onBrushSizeChange={drawing.changeBrushSize}
+      />
 
-        <ColorPickers
-          penPalette={drawing.penPalette}
-          bgPalette={drawing.bgPalette}
-          penColor={drawing.penColor}
-          bgColor={drawing.bgColor}
-          onPenColorChange={drawing.changePenColor}
-          onBgColorChange={drawing.changeBgColor}
-          onPaletteChange={(type, index, color) => {
-            const current =
-              type === 'pen' ? [...drawing.penPalette] : [...drawing.bgPalette];
-            current[index] = color;
-            drawing.saveSettings(
-              type === 'pen'
-                ? { penColors: current, lastPenColor: color }
-                : { bgColors: current },
-            );
-            if (type === 'pen') {
-              drawing.writeStateChange({ color });
-            } else {
-              drawing.changeBgColor(color);
-            }
-          }}
-        />
-      </div>
+      <ColorPickers
+        penPalette={drawing.penPalette}
+        bgPalette={drawing.bgPalette}
+        penColor={drawing.penColor}
+        bgColor={drawing.bgColor}
+        onPenColorChange={drawing.changePenColor}
+        onBgColorChange={drawing.changeBgColor}
+        onPaletteChange={(type, index, color) => {
+          const current =
+            type === 'pen' ? [...drawing.penPalette] : [...drawing.bgPalette];
+          current[index] = color;
+          drawing.saveSettings(
+            type === 'pen'
+              ? { penColors: current, lastPenColor: color }
+              : { bgColors: current },
+          );
+          if (type === 'pen') {
+            drawing.writeStateChange({ color });
+          } else {
+            drawing.changeBgColor(color);
+          }
+        }}
+      />
     </div>
   );
 }

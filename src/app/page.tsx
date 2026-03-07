@@ -8,7 +8,7 @@ import { useState } from 'react';
 const PAGE_SIZE = 50;
 
 const createSketchClass =
-  'rounded-lg bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white shadow-md shadow-slate-200 transition-all hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base';
+  'rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-accent-text shadow-md shadow-border transition-all hover:bg-accent-hover hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base';
 
 function CreateSketchButton() {
   const [showLogin, setShowLogin] = useState(false);
@@ -79,7 +79,7 @@ function GalleryContent({
   const hasPrev = pageInfo?.sketches?.hasPreviousPage ?? false;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       <div className="w-full max-w-4xl space-y-4 px-3 py-3 sm:space-y-8 sm:p-6">
         <div className="flex items-center justify-between">
@@ -95,9 +95,9 @@ function GalleryContent({
         </div>
 
         {sketches.length === 0 && !hasPrev ? (
-          <div className="py-12 text-center text-gray-400 sm:py-20">
+          <div className="text-text-tertiary py-12 text-center sm:py-20">
             <p className="mb-4 text-5xl sm:text-6xl">🎨</p>
-            <p className="text-base font-medium text-gray-500 sm:text-lg">
+            <p className="text-text-secondary text-base font-medium sm:text-lg">
               No sketches yet
             </p>
             <p className="mt-2 text-sm">
@@ -127,7 +127,7 @@ function GalleryContent({
                     }
                   }}
                   disabled={!hasPrev}
-                  className="cursor-pointer rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-medium text-slate-700 transition-all hover:bg-slate-50 active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+                  className="border-border-strong text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-4 py-1.5 text-sm font-medium transition-all active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
                 >
                   Previous
                 </button>
@@ -139,7 +139,7 @@ function GalleryContent({
                     }
                   }}
                   disabled={!hasNext}
-                  className="cursor-pointer rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-medium text-slate-700 transition-all hover:bg-slate-50 active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+                  className="border-border-strong text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-4 py-1.5 text-sm font-medium transition-all active:scale-95 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
                 >
                   Next
                 </button>

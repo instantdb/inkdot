@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { getUnverifiedUserFromInstantCookie } from '@instantdb/react/nextjs';
 import { InstantProvider } from './InstantProvider';
+import { ThemeProvider } from './ThemeProvider';
 import './globals.css';
 
 const geistSans = Geist({
@@ -32,6 +33,8 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`;
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -42,11 +45,16 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <InstantProvider user={user ?? undefined}>{children}</InstantProvider>
+        <InstantProvider user={user ?? undefined}>
+          <ThemeProvider>{children}</ThemeProvider>
+        </InstantProvider>
       </body>
     </html>
   );

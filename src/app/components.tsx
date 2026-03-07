@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useTheme } from './ThemeProvider';
 import { useRouter } from 'next/navigation';
 import { sketchQuery } from './sketch/[id]/query';
 
@@ -270,6 +271,180 @@ export const CANVAS_H = 600;
 
 // -- Auth Header --
 
+function ThemeIcon({ theme }: { theme: string }) {
+  if (theme === 'dark')
+    return (
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    );
+  if (theme === 'light')
+    return (
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    );
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <line x1="8" y1="21" x2="16" y2="21" />
+      <line x1="12" y1="17" x2="12" y2="21" />
+    </svg>
+  );
+}
+
+function HeaderMenu() {
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const { theme, setTheme } = useTheme();
+
+  const themeLabel =
+    theme === 'system' ? 'System' : theme === 'light' ? 'Light' : 'Dark';
+  const nextTheme =
+    theme === 'system' ? 'light' : theme === 'light' ? 'dark' : 'system';
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="text-text-tertiary hover:text-text-primary hover:bg-hover flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg transition-colors sm:h-8 sm:w-8"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="5" r="2" />
+          <circle cx="12" cy="12" r="2" />
+          <circle cx="12" cy="19" r="2" />
+        </svg>
+      </button>
+      {open && (
+        <div className="border-border bg-surface absolute top-full right-0 z-50 mt-1 min-w-[160px] overflow-hidden rounded-lg border py-1 shadow-lg">
+          <button
+            onClick={() => {
+              setTheme(nextTheme);
+            }}
+            className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
+          >
+            <ThemeIcon theme={theme} />
+            Theme: {themeLabel}
+          </button>
+          <db.SignedIn>
+            <SignedInMenuItems onClose={() => setOpen(false)} />
+          </db.SignedIn>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SignedInMenuItems({ onClose }: { onClose: () => void }) {
+  const user = db.useUser();
+  const router = useRouter();
+  const { data } = db.useSuspenseQuery({
+    $users: { $: { where: { id: user.id } } },
+  });
+  const handle = data.$users[0]?.handle;
+
+  return (
+    <>
+      {handle && (
+        <button
+          onClick={() => {
+            router.push(`/user/${encodeURIComponent(handle)}`);
+            onClose();
+          }}
+          className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg>
+          My sketches
+        </button>
+      )}
+      <div className="border-border my-1 border-t" />
+      <button
+        onClick={() => {
+          db.auth.signOut();
+          onClose();
+        }}
+        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Sign out
+      </button>
+    </>
+  );
+}
+
 export function AuthHeader() {
   const [showLogin, setShowLogin] = useState(false);
 
@@ -282,7 +457,7 @@ export function AuthHeader() {
             href="/"
             className="text-lg font-bold tracking-tight sm:text-xl"
           >
-            <span className="text-slate-700">ink</span>
+            <span className="text-slate-700 dark:text-zinc-300">ink</span>
             <span className="text-stone-500">dot</span>
           </Link>
           <span className="hidden text-xs text-stone-500 sm:inline">
@@ -310,7 +485,7 @@ export function AuthHeader() {
           <db.SignedOut>
             <button
               onClick={() => setShowLogin(true)}
-              className="cursor-pointer rounded-lg bg-slate-700 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-slate-800 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
+              className="bg-accent text-accent-text hover:bg-accent-hover cursor-pointer rounded-lg px-3 py-1 text-xs font-semibold transition-colors sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
             >
               Sign in
             </button>
@@ -318,6 +493,7 @@ export function AuthHeader() {
           <db.SignedIn>
             <SignedInHeader />
           </db.SignedIn>
+          <HeaderMenu />
         </div>
       </div>
     </>
@@ -326,7 +502,6 @@ export function AuthHeader() {
 
 function SignedInHeader() {
   const user = db.useUser();
-  const router = useRouter();
   const [editingHandle, setEditingHandle] = useState(false);
   const [upgrading, setUpgrading] = useState(false);
   const handleRef = useRef<HTMLInputElement>(null);
@@ -361,7 +536,7 @@ function SignedInHeader() {
       {isGuest && !upgrading && (
         <button
           onClick={() => setUpgrading(true)}
-          className="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
+          className="border-border-strong bg-surface text-text-primary hover:bg-hover cursor-pointer rounded-lg border px-3 py-1 text-xs font-semibold transition-all active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"
         >
           Save account
         </button>
@@ -369,13 +544,13 @@ function SignedInHeader() {
       {!isGuest && !handle && (
         <button
           onClick={() => setEditingHandle(true)}
-          className="text-sm text-gray-500 transition-colors hover:text-gray-800"
+          className="text-text-secondary hover:text-text-primary text-sm transition-colors"
         >
           Set handle
         </button>
       )}
       {!isGuest && handle && (
-        <span className="text-xs font-medium text-gray-500 sm:text-sm">
+        <span className="text-text-secondary text-xs font-medium sm:text-sm">
           @{handle}
         </span>
       )}
@@ -386,10 +561,10 @@ function SignedInHeader() {
             if (e.target === e.currentTarget) setEditingHandle(false);
           }}
         >
-          <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+          <div className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl">
             <button
               onClick={() => setEditingHandle(false)}
-              className="absolute top-3 right-3 text-gray-300 transition-colors hover:text-gray-500"
+              className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
             >
               <svg
                 width="20"
@@ -404,10 +579,10 @@ function SignedInHeader() {
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
-            <h2 className="mb-2 text-center text-lg font-bold text-gray-800">
+            <h2 className="text-text-primary mb-2 text-center text-lg font-bold">
               Choose your handle
             </h2>
-            <p className="mb-5 text-center text-sm text-gray-500">
+            <p className="text-text-secondary mb-5 text-center text-sm">
               This is permanent and can&apos;t be changed later.
             </p>
             <form
@@ -417,8 +592,8 @@ function SignedInHeader() {
               }}
               className="flex flex-col gap-4"
             >
-              <div className="flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5">
-                <span className="text-gray-400">@</span>
+              <div className="border-border flex items-center gap-2 rounded-xl border px-4 py-2.5">
+                <span className="text-text-tertiary">@</span>
                 <input
                   ref={handleRef}
                   type="text"
@@ -430,7 +605,7 @@ function SignedInHeader() {
               </div>
               <button
                 type="submit"
-                className="w-full rounded-xl bg-slate-700 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-slate-800"
+                className="bg-accent text-accent-text hover:bg-accent-hover w-full rounded-xl px-4 py-2.5 font-semibold transition-colors"
               >
                 Save handle
               </button>
@@ -438,20 +613,6 @@ function SignedInHeader() {
           </div>
         </div>
       )}
-      {handle && (
-        <button
-          onClick={() => router.push(`/user/${encodeURIComponent(handle)}`)}
-          className="text-xs text-gray-400 transition-colors hover:text-slate-700"
-        >
-          My sketches
-        </button>
-      )}
-      <button
-        onClick={() => db.auth.signOut()}
-        className="text-xs text-gray-400 transition-colors hover:text-gray-600"
-      >
-        Sign out
-      </button>
     </>
   );
 }
@@ -484,10 +645,10 @@ export function LoginModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+      <div className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-300 transition-colors hover:text-gray-500"
+          className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
         >
           <svg
             width="20"
@@ -545,28 +706,30 @@ function EmailStep({
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      <p className="text-center text-sm text-gray-500">
+      <p className="text-text-secondary text-center text-sm">
         Enter your email to sign in or create an account.
       </p>
       <input
         ref={inputRef}
         type="email"
-        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 focus:border-slate-500 focus:outline-none"
+        className="border-border w-full rounded-xl border px-4 py-2.5 focus:border-slate-500 focus:outline-none"
         placeholder="you@example.com"
         required
         autoFocus
       />
       <button
         type="submit"
-        className="w-full rounded-xl bg-slate-700 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-slate-800"
+        className="bg-accent text-accent-text hover:bg-accent-hover w-full rounded-xl px-4 py-2.5 font-semibold transition-colors"
       >
         Send Code
       </button>
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200" />
+          <div className="border-border w-full border-t" />
         </div>
-        <span className="relative bg-white px-3 text-xs text-gray-400">or</span>
+        <span className="bg-surface text-text-tertiary relative px-3 text-xs">
+          or
+        </span>
       </div>
       <button
         type="button"
@@ -574,7 +737,7 @@ function EmailStep({
           await db.auth.signInAsGuest();
           (onSuccess || onClose)?.();
         }}
-        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 font-medium text-gray-600 transition-colors hover:bg-gray-50"
+        className="border-border text-text-secondary hover:bg-hover w-full rounded-xl border px-4 py-2.5 font-medium transition-colors"
       >
         Continue as Guest
       </button>
@@ -602,14 +765,15 @@ function CodeStep({
 
   return (
     <div className="flex flex-col space-y-4">
-      <p className="text-center text-sm text-gray-500">
-        We sent a code to <strong className="text-gray-700">{sentEmail}</strong>
+      <p className="text-text-secondary text-center text-sm">
+        We sent a code to{' '}
+        <strong className="text-text-primary">{sentEmail}</strong>
       </p>
       <CodeInput onComplete={submitCode} />
       <button
         type="button"
         onClick={onBack}
-        className="text-sm text-gray-400 hover:text-gray-600"
+        className="text-text-tertiary hover:text-text-secondary text-sm"
       >
         Use a different email
       </button>
@@ -698,7 +862,7 @@ function CodeInput({ onComplete }: { onComplete: (code: string) => void }) {
               handleChange(i, pasted);
             }
           }}
-          className="h-12 w-10 rounded-lg border border-gray-200 text-center text-xl font-semibold text-gray-800 transition-colors focus:border-slate-500 focus:outline-none"
+          className="border-border text-text-primary h-12 w-10 rounded-lg border text-center text-xl font-semibold transition-colors focus:border-slate-500 focus:outline-none"
         />
       ))}
     </div>
@@ -718,10 +882,10 @@ export function UpgradeModal({ onClose }: { onClose: () => void }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+      <div className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-300 transition-colors hover:text-gray-500"
+          className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
         >
           <svg
             width="20"
@@ -736,10 +900,10 @@ export function UpgradeModal({ onClose }: { onClose: () => void }) {
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
-        <h2 className="mb-2 text-center text-lg font-bold text-gray-800">
+        <h2 className="text-text-primary mb-2 text-center text-lg font-bold">
           Save your account
         </h2>
-        <p className="mb-5 text-center text-sm text-gray-500">
+        <p className="text-text-secondary mb-5 text-center text-sm">
           Link an email to keep your sketches.
         </p>
         {!sentEmail ? (
@@ -759,22 +923,22 @@ export function UpgradeModal({ onClose }: { onClose: () => void }) {
               ref={inputRef}
               type="email"
               placeholder="you@example.com"
-              className="w-full rounded-xl border border-gray-200 px-4 py-2.5 focus:border-slate-500 focus:outline-none"
+              className="border-border w-full rounded-xl border px-4 py-2.5 focus:border-slate-500 focus:outline-none"
               required
               autoFocus
             />
             <button
               type="submit"
-              className="w-full rounded-xl bg-slate-700 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-slate-800"
+              className="bg-accent text-accent-text hover:bg-accent-hover w-full rounded-xl px-4 py-2.5 font-semibold transition-colors"
             >
               Send Code
             </button>
           </form>
         ) : (
           <div className="flex flex-col space-y-4">
-            <p className="text-center text-sm text-gray-500">
+            <p className="text-text-secondary text-center text-sm">
               We sent a code to{' '}
-              <strong className="text-gray-700">{sentEmail}</strong>
+              <strong className="text-text-primary">{sentEmail}</strong>
             </p>
             <CodeInput
               onComplete={(code) => {
@@ -789,7 +953,7 @@ export function UpgradeModal({ onClose }: { onClose: () => void }) {
             <button
               type="button"
               onClick={() => setSentEmail('')}
-              className="text-sm text-gray-400 hover:text-gray-600"
+              className="text-text-tertiary hover:text-text-secondary text-sm"
             >
               Use a different email
             </button>
@@ -1065,7 +1229,7 @@ function ThumbnailProgressBar({
     <div className="absolute right-0 bottom-0 left-0 h-1 bg-black/10">
       <div
         ref={barRef}
-        className="h-full origin-left bg-slate-700"
+        className="bg-accent h-full origin-left"
         style={{ transform: 'scaleX(0)' }}
       />
     </div>
@@ -1542,7 +1706,7 @@ export function TimerDisplay({
       </svg>
       <span
         className={`absolute text-sm font-bold ${
-          timeLeft <= 5 ? 'text-red-500' : 'text-gray-700'
+          timeLeft <= 5 ? 'text-red-500' : 'text-text-secondary'
         }`}
       >
         {timeLeft}
@@ -2169,7 +2333,7 @@ export function formatTime(ms: number) {
 
 export function Loading() {
   return (
-    <div className="flex h-screen items-center justify-center bg-white">
+    <div className="bg-surface flex h-screen items-center justify-center">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-500 border-t-transparent" />
     </div>
   );
@@ -2177,7 +2341,7 @@ export function Loading() {
 
 export function ErrorMsg({ msg }: { msg: string }) {
   return (
-    <div className="flex h-screen items-center justify-center bg-white text-red-500">
+    <div className="bg-surface flex h-screen items-center justify-center text-red-500">
       Error: {msg}
     </div>
   );
@@ -2266,7 +2430,7 @@ export function SketchCard({
     <>
       <Link
         href={`/sketch/${sketch.id}`}
-        className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-100 active:scale-[0.98] sm:rounded-2xl"
+        className="group border-border bg-surface hover:shadow-border relative overflow-hidden rounded-xl border text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl active:scale-[0.98] sm:rounded-2xl"
         onMouseEnter={() => {
           setIsHovering(true);
           // Start a subscription to warm the reactive cache for the sketch page.
@@ -2425,7 +2589,7 @@ export function SketchCard({
             )}
           </div>
           {isLive && (
-            <span className="animate-pulse rounded-full bg-slate-700 px-2 py-0.5 text-xs font-semibold text-white">
+            <span className="bg-accent text-accent-text animate-pulse rounded-full px-2 py-0.5 text-xs font-semibold">
               LIVE
             </span>
           )}
@@ -2437,16 +2601,16 @@ export function SketchCard({
           onClick={() => setConfirmDelete(false)}
         >
           <div
-            className="rounded-2xl bg-white p-6 shadow-2xl"
+            className="bg-surface rounded-2xl p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="mb-4 text-center font-medium text-gray-800">
+            <p className="text-text-primary mb-4 text-center font-medium">
               Delete this sketch?
             </p>
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => setConfirmDelete(false)}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-100"
+                className="text-text-secondary hover:bg-hover rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
@@ -2503,11 +2667,11 @@ export function ToolBar({
             key={t}
             onClick={() => onToolChange(t)}
             className={`flex h-12 flex-1 items-center justify-center focus-visible:outline-none ${
-              tool === t ? 'text-slate-800' : 'text-gray-400'
+              tool === t ? 'text-text-primary' : 'text-text-tertiary'
             }`}
           >
             <div
-              className={`rounded-xl p-2 ${tool === t ? 'bg-slate-100' : ''}`}
+              className={`rounded-xl p-2 ${tool === t ? 'bg-surface-secondary' : ''}`}
             >
               <ToolIconSvg tool={t} size={24} />
             </div>
@@ -2516,11 +2680,11 @@ export function ToolBar({
         <button
           onClick={() => onShapeFilledChange(!shapeFilled)}
           className={`flex h-12 flex-1 items-center justify-center ${
-            shapeFilled ? 'text-slate-800' : 'text-gray-400'
+            shapeFilled ? 'text-text-primary' : 'text-text-tertiary'
           }`}
         >
           <div
-            className={`rounded-xl p-2 ${shapeFilled ? 'bg-slate-100' : ''}`}
+            className={`rounded-xl p-2 ${shapeFilled ? 'bg-surface-secondary' : ''}`}
           >
             <svg width="24" height="24" viewBox="0 0 24 24">
               {shapeFilled ? (
@@ -2555,7 +2719,9 @@ export function ToolBar({
             key={s}
             onClick={() => onBrushSizeChange(s)}
             className={`flex h-11 w-11 items-center justify-center rounded-xl focus-visible:outline-none ${
-              brushSize === s ? 'bg-slate-100 text-slate-800' : 'text-gray-400'
+              brushSize === s
+                ? 'bg-surface-secondary text-text-primary'
+                : 'text-text-tertiary'
             }`}
           >
             <span
@@ -2574,13 +2740,13 @@ export function ToolBar({
               onClick={() => onToolChange(t)}
               className={`relative rounded-lg p-1.5 transition-all focus-visible:outline-none ${
                 tool === t
-                  ? 'bg-slate-100 text-slate-800 shadow-sm'
-                  : 'text-gray-400 hover:text-gray-600'
+                  ? 'bg-surface-secondary text-text-primary shadow-sm'
+                  : 'text-text-tertiary hover:text-text-secondary'
               }`}
               title={`${t.charAt(0).toUpperCase() + t.slice(1)} (${TOOL_KEYS[t]})`}
             >
               <ToolIconSvg tool={t} size={20} />
-              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded bg-gray-200 text-[9px] font-bold text-gray-500">
+              <span className="bg-surface-secondary text-text-secondary absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded text-[9px] font-bold">
                 {TOOL_KEYS[t]}
               </span>
             </button>
@@ -2589,8 +2755,8 @@ export function ToolBar({
             onClick={() => onShapeFilledChange(!shapeFilled)}
             className={`relative cursor-pointer rounded-lg p-1.5 transition-all focus-visible:outline-none ${
               shapeFilled
-                ? 'bg-slate-100 text-slate-800 shadow-sm'
-                : 'text-gray-400 hover:text-gray-600'
+                ? 'bg-surface-secondary text-text-primary shadow-sm'
+                : 'text-text-tertiary hover:text-text-secondary'
             }`}
             title={`${shapeFilled ? 'Filled' : 'Hollow'} (F)`}
           >
@@ -2617,12 +2783,12 @@ export function ToolBar({
                 />
               )}
             </svg>
-            <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded bg-gray-200 text-[9px] font-bold text-gray-500">
+            <span className="bg-surface-secondary text-text-secondary absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded text-[9px] font-bold">
               F
             </span>
           </button>
         </div>
-        <div className="h-6 w-px bg-gray-200" />
+        <div className="bg-border h-6 w-px" />
         <div className="flex items-center gap-1">
           {BRUSH_SIZES.map((s, i) => {
             const key = ['Q', 'W', 'R', 'T'][i];
@@ -2632,8 +2798,8 @@ export function ToolBar({
                 onClick={() => onBrushSizeChange(s)}
                 className={`relative flex h-8 w-8 items-center justify-center rounded-lg text-xs font-medium transition-all focus-visible:outline-none ${
                   brushSize === s
-                    ? 'bg-slate-100 text-slate-800 shadow-sm'
-                    : 'text-gray-400 hover:text-gray-600'
+                    ? 'bg-surface-secondary text-text-primary shadow-sm'
+                    : 'text-text-tertiary hover:text-text-secondary'
                 }`}
                 title={`Size ${BRUSH_SIZE_LABELS[i]} (${key})`}
               >
@@ -2641,7 +2807,7 @@ export function ToolBar({
                   className="rounded-full bg-current"
                   style={{ width: s + 2, height: s + 2 }}
                 />
-                <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded bg-gray-200 text-[9px] font-bold text-gray-500">
+                <span className="bg-surface-secondary text-text-secondary absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded text-[9px] font-bold">
                   {key}
                 </span>
               </button>
@@ -2724,7 +2890,7 @@ export function PaletteColor({
         onTouchEnd={cancelLongPress}
         onTouchCancel={cancelLongPress}
         className={`${size ? '' : 'h-[30px] w-[30px] sm:h-7 sm:w-7'} shrink-0 rounded-full shadow-sm transition-all ${
-          border ? 'border border-gray-200' : ''
+          border ? 'border-border border' : ''
         } ${
           isSelected
             ? `scale-110 ring-2 ${ring} ring-offset-2`
@@ -2743,7 +2909,7 @@ export function PaletteColor({
         }
       />
       {shortcutLabel && (
-        <span className="absolute -top-1.5 -right-1.5 hidden h-3.5 min-w-3.5 items-center justify-center rounded bg-gray-200 px-0.5 text-[8px] leading-none font-bold text-gray-500 sm:flex">
+        <span className="bg-surface-secondary text-text-secondary absolute -top-1.5 -right-1.5 hidden h-3.5 min-w-3.5 items-center justify-center rounded px-0.5 text-[8px] leading-none font-bold sm:flex">
           {shortcutLabel}
         </span>
       )}
@@ -2782,7 +2948,7 @@ function PaletteRowMobile({
   const row2 = palette.slice(half);
   return (
     <div className="flex flex-col items-center gap-1.5">
-      <span className="text-[10px] font-medium tracking-wider text-gray-400 uppercase">
+      <span className="text-text-tertiary text-[10px] font-medium tracking-wider uppercase">
         {label}
       </span>
       <div className="flex items-center justify-center gap-3">
@@ -2827,7 +2993,7 @@ function PaletteRowMobile({
           />
         ))}
         <label
-          className={`relative h-9 w-9 shrink-0 cursor-pointer rounded-full border-2 border-dashed border-gray-300 ${
+          className={`border-border-strong relative h-9 w-9 shrink-0 cursor-pointer rounded-full border-2 border-dashed ${
             !palette.includes(selectedColor)
               ? `ring-2 ${ring} ring-offset-2`
               : ''
@@ -2867,7 +3033,7 @@ function PaletteRowDesktop({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs tracking-wide text-gray-400 uppercase">
+      <span className="text-text-tertiary text-xs tracking-wide uppercase">
         {label}
       </span>
       <div className="flex items-center gap-2.5">
@@ -2897,7 +3063,7 @@ function PaletteRowDesktop({
           />
         ))}
         <label
-          className={`relative h-7 w-7 shrink-0 cursor-pointer rounded-full border-2 border-dashed border-gray-300 transition-all hover:scale-110 ${
+          className={`border-border-strong relative h-7 w-7 shrink-0 cursor-pointer rounded-full border-2 border-dashed transition-all hover:scale-110 ${
             !palette.includes(selectedColor)
               ? `scale-110 ring-2 ${ring} ring-offset-2`
               : ''
@@ -2971,7 +3137,7 @@ export function ColorPickers({
             onPaletteChange ? (i, c) => onPaletteChange('pen', i, c) : undefined
           }
         />
-        <div className="h-6 w-px bg-gray-200" />
+        <div className="bg-border h-6 w-px" />
         <PaletteRowDesktop
           label="BG"
           palette={bgPalette}

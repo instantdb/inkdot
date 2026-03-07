@@ -22,10 +22,10 @@ function AdminContent() {
 
   return (
     <div className="w-full max-w-4xl space-y-6 p-6">
-      <h1 className="text-xl font-semibold text-gray-800">Reports</h1>
+      <h1 className="text-text-primary text-xl font-semibold">Reports</h1>
 
       {pending.length === 0 && (
-        <p className="text-sm text-gray-400">No pending reports.</p>
+        <p className="text-text-tertiary text-sm">No pending reports.</p>
       )}
 
       {pending.map((report) => (
@@ -38,7 +38,9 @@ function AdminContent() {
 
       {reviewed.length > 0 && (
         <>
-          <h2 className="pt-4 text-lg font-medium text-gray-500">Reviewed</h2>
+          <h2 className="text-text-secondary pt-4 text-lg font-medium">
+            Reviewed
+          </h2>
           {reviewed.map((report) => (
             <ReportCard
               key={report.id}
@@ -96,8 +98,8 @@ function ReportCard({
     <div
       className={`overflow-hidden rounded-xl border p-4 ${
         isPending
-          ? 'border-gray-200 bg-white'
-          : 'border-gray-100 bg-gray-50 opacity-60'
+          ? 'border-border bg-surface'
+          : 'border-border bg-surface-secondary opacity-60'
       }`}
     >
       <div className="flex gap-4">
@@ -107,10 +109,10 @@ function ReportCard({
             <img
               src={report.frame.url}
               alt="Reported frame"
-              className="w-full rounded-lg border border-gray-200"
+              className="border-border w-full rounded-lg border"
             />
           ) : (
-            <div className="flex aspect-[4/3] items-center justify-center rounded-lg bg-gray-100 text-xs text-gray-400">
+            <div className="bg-surface-secondary text-text-tertiary flex aspect-[4/3] items-center justify-center rounded-lg text-xs">
               No frame
             </div>
           )}
@@ -120,7 +122,7 @@ function ReportCard({
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex items-start justify-between">
             <div>
-              <span className="inline-block rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">
+              <span className="bg-surface-secondary text-text-secondary inline-block rounded-full px-2 py-0.5 text-xs font-medium">
                 {report.reason}
               </span>
               {report.status && (
@@ -128,7 +130,7 @@ function ReportCard({
                   className={`ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
                     report.status === 'confirmed'
                       ? 'bg-red-100 text-red-700'
-                      : 'bg-gray-100 text-gray-500'
+                      : 'bg-surface-secondary text-text-secondary'
                   }`}
                 >
                   {report.status}
@@ -145,28 +147,28 @@ function ReportCard({
           </div>
 
           {report.details && (
-            <p className="text-sm text-gray-600">{report.details}</p>
+            <p className="text-text-secondary text-sm">{report.details}</p>
           )}
 
-          <div className="space-y-1.5 text-xs text-gray-400">
+          <div className="text-text-tertiary space-y-1.5 text-xs">
             <div>
-              <span className="text-gray-500">Reported by:</span>{' '}
+              <span className="text-text-secondary">Reported by:</span>{' '}
               {report.reporterEmail || 'unknown'} &middot;{' '}
               {new Date(report.createdAt).toLocaleString()}
               <p>
-                <span className="text-gray-500">Reporter IP:</span>{' '}
+                <span className="text-text-secondary">Reporter IP:</span>{' '}
                 {report.reporterIp} &middot; {report.reporterLocation}
               </p>
               <p
                 className="truncate"
                 title={report.reporterUserAgent ?? undefined}
               >
-                <span className="text-gray-500">Reporter UA:</span>{' '}
+                <span className="text-text-secondary">Reporter UA:</span>{' '}
                 {report.reporterUserAgent}
               </p>
             </div>
             <p>
-              <span className="text-gray-500">Sketch by:</span>{' '}
+              <span className="text-text-secondary">Sketch by:</span>{' '}
               {sketch?.author?.handle
                 ? `@${sketch.author.handle}`
                 : sketch?.author?.email || 'unknown'}
@@ -179,7 +181,7 @@ function ReportCard({
               <button
                 onClick={() => callAction('dismiss')}
                 disabled={!!acting}
-                className="cursor-pointer rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                className="border-border text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-50"
               >
                 {acting === 'dismiss' ? 'Dismissing...' : 'Dismiss'}
               </button>
@@ -208,7 +210,7 @@ function ReportCard({
               <button
                 onClick={() => callAction('undo')}
                 disabled={!!acting}
-                className="cursor-pointer text-xs font-medium text-gray-400 underline transition-colors hover:text-gray-600 disabled:opacity-50"
+                className="text-text-tertiary hover:text-text-secondary cursor-pointer text-xs font-medium underline transition-colors disabled:opacity-50"
               >
                 {acting === 'undo' ? 'Undoing...' : 'Undo'}
               </button>
@@ -223,16 +225,16 @@ function ReportCard({
 function SignedOutAdmin() {
   const [showLogin, setShowLogin] = useState(false);
   return (
-    <div className="flex min-h-screen flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-screen flex-col items-center font-sans">
       <AuthHeader />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
-        <p className="text-lg text-gray-500">
+        <p className="text-text-secondary text-lg">
           Sign in with an @instantdb.com email to continue.
         </p>
         <button
           onClick={() => setShowLogin(true)}
-          className="cursor-pointer rounded-xl bg-slate-700 px-5 py-2 font-semibold text-white shadow-md transition-all hover:bg-slate-800"
+          className="bg-accent text-accent-text hover:bg-accent-hover cursor-pointer rounded-xl px-5 py-2 font-semibold shadow-md transition-all"
         >
           Sign in
         </button>
@@ -246,10 +248,10 @@ function SignedInAdmin() {
 
   if (!user.email?.endsWith('@instantdb.com')) {
     return (
-      <div className="flex min-h-screen flex-col items-center bg-white font-sans text-gray-800">
+      <div className="bg-surface text-text-primary flex min-h-screen flex-col items-center font-sans">
         <AuthHeader />
         <div className="flex flex-1 flex-col items-center justify-center gap-4">
-          <p className="text-lg text-gray-500">
+          <p className="text-text-secondary text-lg">
             You need an @instantdb.com email to access this page.
           </p>
         </div>
@@ -258,7 +260,7 @@ function SignedInAdmin() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-white font-sans text-gray-800">
+    <div className="bg-surface text-text-primary flex min-h-screen flex-col items-center font-sans">
       <AuthHeader />
       <AdminContent />
     </div>
