@@ -813,32 +813,12 @@ export function LiveThumbnail({ streamId }: { streamId: string }) {
     const reader = readStream.getReader();
 
     let buffer = '';
-    let currentTool = '';
-    let currentColor = '';
-    let currentSize = 4;
-    let shapeStart: { x: number; y: number } | null = null;
-    const shapeTools = ['rect', 'circle', 'line'];
     const allEvents: StrokeEvent[] = [];
-
-    const redraw = () => {
-      const ofs = buildOffsets(allEvents);
-      const del = buildDeletedSet(allEvents);
-      ctx.fillStyle = DEFAULT_BG;
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      lastX = 0;
-      lastY = 0;
-      for (const prev of allEvents) {
-        if (prev.type === 'bg') {
-          ctx.fillStyle = prev.color || DEFAULT_BG;
-          ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-        } else if (
-          prev.type !== 'cursor' &&
-          prev.type !== 'state' &&
-          prev.type !== 'delete'
-        ) {
-          drawEvent(ctx, prev, 1, ofs, del);
-        }
-      }
+    const incState: IncrementalState = {
+      tool: '',
+      color: '',
+      size: 4,
+      shapeStart: null,
     };
 
     (async () => {
@@ -854,51 +834,32 @@ export function LiveThumbnail({ streamId }: { streamId: string }) {
             try {
               const evt: StrokeEvent = JSON.parse(line);
               allEvents.push(evt);
-              if (evt.type === 'bg') {
-                ctx.fillStyle = evt.color || DEFAULT_BG;
-                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-              } else if (evt.type === 'state') {
-                if (evt.tool) currentTool = evt.tool;
-                if (evt.color) currentColor = evt.color;
-                if (evt.size) currentSize = evt.size;
-              } else if (
-                evt.type === 'start' &&
-                shapeTools.includes(evt.tool || '')
-              ) {
-                currentTool = evt.tool || 'rect';
-                currentColor = evt.color || currentColor;
-                if (evt.size) currentSize = evt.size;
-                shapeStart = { x: evt.x, y: evt.y };
-              } else if (
-                evt.type === 'cursor' &&
-                shapeStart &&
-                shapeTools.includes(currentTool)
-              ) {
-                redraw();
+
+              const result = processEventIncremental(
+                ctx,
+                evt,
+                allEvents,
+                incState,
+              );
+
+              if (result.needsFullRedraw) {
+                renderEventsToCanvas(ctx, allEvents);
+              }
+
+              if (result.shapePreview) {
+                renderEventsToCanvas(ctx, allEvents);
+                const sp = result.shapePreview;
                 drawShapeOnCanvas(
                   ctx,
-                  currentTool,
-                  shapeStart.x,
-                  shapeStart.y,
-                  evt.x,
-                  evt.y,
-                  currentColor,
-                  currentSize,
+                  sp.shape,
+                  sp.x1,
+                  sp.y1,
+                  sp.x2,
+                  sp.y2,
+                  sp.color,
+                  sp.size,
                   1,
                 );
-              } else if (evt.type === 'relocate' || evt.type === 'delete') {
-                redraw();
-              } else if (evt.type === 'shape' || evt.type === 'end') {
-                shapeStart = null;
-                const ofs = buildOffsets(allEvents);
-                const del = buildDeletedSet(allEvents);
-                if (evt.type !== 'end' || !shapeTools.includes(currentTool)) {
-                  drawEvent(ctx, evt, 1, ofs, del);
-                }
-              } else if (evt.type !== 'cursor') {
-                const ofs = buildOffsets(allEvents);
-                const del = buildDeletedSet(allEvents);
-                drawEvent(ctx, evt, 1, ofs, del);
               }
             } catch {}
           }
@@ -1329,6 +1290,259 @@ export function floodFill(
     stack.push(x + 1, y, x - 1, y, x, y + 1, x, y - 1);
   }
   ctx.putImageData(imageData, 0, 0);
+}
+
+// -- Unified Event Rendering --
+
+export type RenderResult = {
+  tool: string;
+  color: string;
+  size: number;
+  cursor: { x: number; y: number } | null;
+};
+
+/**
+ * Full redraw: clears canvas, builds offsets/deleted, iterates events, returns final state.
+ * Replaces all "redraw from scratch" code paths.
+ */
+export function renderEventsToCanvas(
+  ctx: CanvasRenderingContext2D,
+  events: StrokeEvent[],
+  opts?: {
+    upToTime?: number;
+    bgColor?: string;
+  },
+): RenderResult {
+  const bgColor = opts?.bgColor ?? DEFAULT_BG;
+  const upToTime = opts?.upToTime;
+
+  const filtered =
+    upToTime != null ? events.filter((e) => e.t <= upToTime) : events;
+
+  const offsets = buildOffsets(filtered);
+  const deleted = buildDeletedSet(filtered);
+
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+  resetDrawState();
+
+  const shapeToolSet = ['rect', 'circle', 'line'];
+  let currentTool = '';
+  let currentColor = '';
+  let currentSize = 4;
+  let cursorX: number | null = null;
+  let cursorY: number | null = null;
+  // Track in-progress shape for preview rendering
+  let shapeStart: { x: number; y: number } | null = null;
+  let shapeCursorX: number | null = null;
+  let shapeCursorY: number | null = null;
+
+  for (const evt of filtered) {
+    if (evt.type === 'bg') {
+      ctx.fillStyle = evt.color || DEFAULT_BG;
+      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    } else if (evt.type === 'state') {
+      if (evt.tool) currentTool = evt.tool;
+      if (evt.color) currentColor = evt.color;
+      if (evt.size) currentSize = evt.size;
+    } else if (evt.type === 'cursor') {
+      cursorX = evt.x;
+      cursorY = evt.y;
+      // Track cursor position during shape drawing for preview
+      if (shapeStart) {
+        shapeCursorX = evt.x;
+        shapeCursorY = evt.y;
+      }
+    } else if (
+      evt.type !== 'relocate' &&
+      evt.type !== 'delete' &&
+      evt.type !== 'click'
+    ) {
+      if (evt.type === 'start') {
+        currentTool = evt.tool || 'pen';
+        currentColor = evt.color || '#1e293b';
+        if (evt.size) currentSize = evt.size;
+        if (shapeToolSet.includes(currentTool)) {
+          shapeStart = { x: evt.x, y: evt.y };
+          shapeCursorX = null;
+          shapeCursorY = null;
+        }
+      } else if (evt.type === 'shape') {
+        currentTool = evt.shape || 'rect';
+        currentColor = evt.color || '#1e293b';
+        if (evt.size) currentSize = evt.size;
+        shapeStart = null;
+      } else if (evt.type === 'fill') {
+        currentTool = 'fill';
+        currentColor = evt.color || '#1e293b';
+      } else if (evt.type === 'end') {
+        shapeStart = null;
+      }
+      // Use x2/y2 for cursor position on shape events (fixes snap-to-start bug)
+      cursorX = evt.type === 'shape' && evt.x2 != null ? evt.x2 : evt.x;
+      cursorY = evt.type === 'shape' && evt.y2 != null ? evt.y2 : evt.y;
+      drawEvent(ctx, evt, 1, offsets, deleted);
+    }
+  }
+
+  // Draw in-progress shape preview if we stopped mid-shape
+  if (shapeStart && shapeCursorX != null && shapeCursorY != null) {
+    drawShapeOnCanvas(
+      ctx,
+      currentTool,
+      shapeStart.x,
+      shapeStart.y,
+      shapeCursorX,
+      shapeCursorY,
+      currentColor,
+      currentSize,
+      1,
+    );
+  }
+
+  return {
+    tool: currentTool,
+    color: currentColor,
+    size: currentSize,
+    cursor:
+      cursorX != null && cursorY != null ? { x: cursorX, y: cursorY } : null,
+  };
+}
+
+export type IncrementalState = {
+  tool: string;
+  color: string;
+  size: number;
+  shapeStart: { x: number; y: number } | null;
+};
+
+export type IncrementalResult = {
+  needsFullRedraw: boolean;
+  cursorPosition: { x: number; y: number } | null;
+  isDrawEvent: boolean;
+  stateChanged: boolean;
+  shapePreview?: {
+    shape: string;
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+    color: string;
+    size: number;
+  };
+};
+
+const SHAPE_TOOLS = ['rect', 'circle', 'line'];
+
+/**
+ * Incremental single-event processing: updates state, draws to canvas, returns
+ * cursor/redraw info. Replaces all "process one new event" code paths.
+ *
+ * - Mutates `state` in place (tool/color/size/shapeStart).
+ * - Does NOT touch cursorRef — callers apply the returned cursor to their own ref.
+ */
+export function processEventIncremental(
+  ctx: CanvasRenderingContext2D,
+  evt: StrokeEvent,
+  allEvents: StrokeEvent[],
+  state: IncrementalState,
+): IncrementalResult {
+  // Events that require a full redraw
+  if (evt.type === 'bg' || evt.type === 'relocate' || evt.type === 'delete') {
+    return {
+      needsFullRedraw: true,
+      cursorPosition: null,
+      isDrawEvent: false,
+      stateChanged: false,
+    };
+  }
+
+  // State change (tool/color/size switch)
+  if (evt.type === 'state') {
+    if (evt.tool) state.tool = evt.tool;
+    if (evt.color) state.color = evt.color;
+    if (evt.size) state.size = evt.size;
+    return {
+      needsFullRedraw: false,
+      cursorPosition: null,
+      isDrawEvent: false,
+      stateChanged: true,
+    };
+  }
+
+  // Cursor event
+  if (evt.type === 'cursor') {
+    // During shape drawing, provide preview data
+    if (state.shapeStart && SHAPE_TOOLS.includes(state.tool)) {
+      return {
+        needsFullRedraw: false,
+        cursorPosition: { x: evt.x, y: evt.y },
+        isDrawEvent: false,
+        stateChanged: false,
+        shapePreview: {
+          shape: state.tool,
+          x1: state.shapeStart.x,
+          y1: state.shapeStart.y,
+          x2: evt.x,
+          y2: evt.y,
+          color: state.color,
+          size: state.size,
+        },
+      };
+    }
+    return {
+      needsFullRedraw: false,
+      cursorPosition: { x: evt.x, y: evt.y },
+      isDrawEvent: false,
+      stateChanged: false,
+    };
+  }
+
+  // Click event (cursor press indicator)
+  if (evt.type === 'click') {
+    return {
+      needsFullRedraw: false,
+      cursorPosition: { x: evt.x, y: evt.y },
+      isDrawEvent: false,
+      stateChanged: false,
+    };
+  }
+
+  // Draw events: start, move, end, shape, fill
+  if (evt.type === 'start') {
+    state.tool = evt.tool || 'pen';
+    state.color = evt.color || '#1e293b';
+    if (evt.size) state.size = evt.size;
+    if (SHAPE_TOOLS.includes(state.tool)) {
+      state.shapeStart = { x: evt.x, y: evt.y };
+    }
+  } else if (evt.type === 'shape') {
+    state.tool = evt.shape || 'rect';
+    state.color = evt.color || '#1e293b';
+    if (evt.size) state.size = evt.size;
+    state.shapeStart = null;
+  } else if (evt.type === 'fill') {
+    state.tool = 'fill';
+    state.color = evt.color || '#1e293b';
+  } else if (evt.type === 'end') {
+    state.shapeStart = null;
+  }
+
+  // Draw the event with current offsets
+  const offsets = buildOffsets(allEvents);
+  const deleted = buildDeletedSet(allEvents);
+  drawEvent(ctx, evt, 1, offsets, deleted);
+
+  // For shape events, cursor goes to x2/y2 (end point, not start)
+  const cursorX = evt.type === 'shape' && evt.x2 != null ? evt.x2 : evt.x;
+  const cursorY = evt.type === 'shape' && evt.y2 != null ? evt.y2 : evt.y;
+
+  return {
+    needsFullRedraw: false,
+    cursorPosition: { x: cursorX, y: cursorY },
+    isDrawEvent: true,
+    stateChanged: false,
+  };
 }
 
 // -- Helpers --

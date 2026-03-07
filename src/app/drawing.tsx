@@ -20,6 +20,7 @@ import {
   floodFill,
   isLightColor,
   resetDrawState,
+  renderEventsToCanvas,
   TEMPLATES,
 } from './components';
 
@@ -354,20 +355,25 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         return;
       }
 
-      let currentBg = _initialBg;
-      for (const evt of localEventsRef.current) {
-        if (evt.type === 'bg') currentBg = evt.color || DEFAULT_BG;
-      }
-      ctx.fillStyle = currentBg;
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-
-      // Draw trace image on canvas if enabled (practice mode)
-      if (
+      // For trace-on-canvas (practice mode), we need to draw trace between
+      // bg and strokes. First find the final bg, fill it, draw trace, then
+      // draw strokes using the shared renderer with events that skip bg.
+      const hasTrace =
         drawTraceOnCanvasRef.current &&
         showTraceRef.current &&
-        traceImgRef.current
-      ) {
-        const img = traceImgRef.current;
+        traceImgRef.current;
+
+      if (hasTrace) {
+        // Determine final bg color
+        let currentBg = _initialBg;
+        for (const evt of localEventsRef.current) {
+          if (evt.type === 'bg') currentBg = evt.color || DEFAULT_BG;
+        }
+        ctx.fillStyle = currentBg;
+        ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+        // Draw trace image under strokes
+        const img = traceImgRef.current!;
         const scale = Math.min(CANVAS_W / img.width, CANVAS_H / img.height);
         const w = img.width * scale;
         const h = img.height * scale;
@@ -377,25 +383,18 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         ctx.globalAlpha = traceOpacityRef.current;
         ctx.drawImage(img, x, y, w, h);
         ctx.restore();
-      }
 
-      resetDrawState();
-      for (const evt of localEventsRef.current) {
-        if (
-          evt.type !== 'bg' &&
-          evt.type !== 'cursor' &&
-          evt.type !== 'state' &&
-          evt.type !== 'relocate' &&
-          evt.type !== 'click'
-        ) {
-          drawEvent(
-            ctx,
-            evt,
-            1,
-            shapeOffsetsRef.current,
-            deletedShapesRef.current,
-          );
+        // Draw strokes (bg events will be handled by drawEvent which skips them)
+        resetDrawState();
+        const offsets = buildOffsets(localEventsRef.current);
+        const deleted = buildDeletedSet(localEventsRef.current);
+        for (const evt of localEventsRef.current) {
+          drawEvent(ctx, evt, 1, offsets, deleted);
         }
+      } else {
+        renderEventsToCanvas(ctx, localEventsRef.current, {
+          bgColor: _initialBg,
+        });
       }
 
       canvasCacheRef.current = ctx.getImageData(0, 0, CANVAS_W, CANVAS_H);
@@ -535,18 +534,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let currentBg = DEFAULT_BG;
-    for (const evt of events) {
-      if (evt.type === 'bg') currentBg = evt.color || DEFAULT_BG;
-    }
-    ctx.fillStyle = currentBg;
-    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-    resetDrawState();
-    for (const evt of events) {
-      if (evt.type !== 'bg') {
-        drawEvent(ctx, evt, 1);
-      }
-    }
+    renderEventsToCanvas(ctx, events);
 
     canvasCacheRef.current = ctx.getImageData(0, 0, CANVAS_W, CANVAS_H);
     canvasCacheDirtyRef.current = false;
@@ -1102,55 +1090,61 @@ export function TemplatePicker({
       <div className="grid max-h-44 grid-cols-4 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-6 sm:gap-2">
         <button
           onClick={() => onSelectTrace(null)}
-          className={`flex aspect-[4/3] cursor-pointer items-center justify-center rounded-lg border-2 text-xs font-medium transition-all ${
+          className={`cursor-pointer rounded-lg border-2 text-xs font-medium transition-all ${
             !traceUrl
               ? 'border-slate-700 text-slate-700 shadow-md'
               : 'border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500'
           }`}
         >
-          None
+          <div className="flex aspect-[4/3] items-center justify-center">
+            None
+          </div>
         </button>
         <button
           onClick={onUploadClick}
-          className={`flex aspect-[4/3] cursor-pointer flex-col items-center justify-center gap-0.5 rounded-lg border-2 transition-all ${
+          className={`cursor-pointer rounded-lg border-2 transition-all ${
             traceUrl?.startsWith('blob:')
               ? 'border-slate-700 text-slate-700 shadow-md'
               : 'border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500'
           }`}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
-          </svg>
-          <span className="text-[9px] font-medium">Upload</span>
+          <div className="flex aspect-[4/3] flex-col items-center justify-center gap-0.5">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <span className="text-[9px] font-medium">Upload</span>
+          </div>
         </button>
         {TEMPLATES.map((tpl) => (
           <button
             key={tpl.id}
             onClick={() => onSelectTrace(tpl.src)}
-            className={`group relative cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${
+            className={`group cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${
               traceUrl === tpl.src
                 ? 'border-slate-700 shadow-md'
                 : 'border-gray-200 hover:border-gray-400'
             }`}
           >
-            <img
-              src={tpl.src}
-              alt={tpl.name}
-              className="aspect-[4/3] w-full bg-white object-contain p-0.5 sm:p-1"
-            />
-            <span className="absolute right-0 bottom-0 left-0 bg-white/80 px-1 py-0.5 text-[8px] font-medium text-gray-600 sm:px-2 sm:py-1 sm:text-[10px]">
-              {tpl.name}
-            </span>
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={tpl.src}
+                alt={tpl.name}
+                className="h-full w-full bg-white object-contain p-0.5 sm:p-1"
+              />
+              <span className="absolute right-0 bottom-0 left-0 bg-white/80 px-1 py-0.5 text-[8px] font-medium text-gray-600 sm:px-2 sm:py-1 sm:text-[10px]">
+                {tpl.name}
+              </span>
+            </div>
           </button>
         ))}
       </div>

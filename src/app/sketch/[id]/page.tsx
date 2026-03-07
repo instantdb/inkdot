@@ -7,18 +7,17 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   type StrokeEvent,
+  type IncrementalState,
   AuthHeader,
   CursorOverlay,
   ErrorMsg,
   DEFAULT_BG,
   CANVAS_W,
   CANVAS_H,
-  buildOffsets,
-  buildDeletedSet,
-  drawEvent,
   drawShapeOnCanvas,
   formatTime,
-  resetDrawState,
+  renderEventsToCanvas,
+  processEventIncremental,
 } from '../../components';
 
 type UserInfo = { id: string; email?: string | null };
@@ -370,54 +369,19 @@ function ReplayCanvas({
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    const events = eventsRef.current;
 
-    // Build offsets and deleted set from all events up to targetTime
-    const eventsUpTo = events.filter((e) => e.t <= targetTime);
-    const offsets = buildOffsets(eventsUpTo);
-    const deleted = buildDeletedSet(eventsUpTo);
+    const result = renderEventsToCanvas(ctx, eventsRef.current, {
+      upToTime: targetTime,
+    });
 
-    ctx.fillStyle = DEFAULT_BG;
-    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-    resetDrawState();
-
-    let currentTool = '';
-    let currentColor = '';
-    for (const evt of eventsUpTo) {
-      if (evt.type === 'bg') {
-        ctx.fillStyle = evt.color || DEFAULT_BG;
-        ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      } else if (evt.type === 'state') {
-        if (evt.tool) currentTool = evt.tool;
-        if (evt.color) currentColor = evt.color;
-      } else if (evt.type === 'cursor') {
-        cursorRef.current = {
-          x: evt.x,
-          y: evt.y,
-          tool: currentTool || undefined,
-          color: currentColor || undefined,
-          lastDrawTime: cursorRef.current?.lastDrawTime,
-        };
-      } else if (evt.type !== 'relocate' && evt.type !== 'delete') {
-        if (evt.type === 'start') {
-          currentTool = evt.tool || 'pen';
-          currentColor = evt.color || '#1e293b';
-        } else if (evt.type === 'shape') {
-          currentTool = evt.shape || 'rect';
-          currentColor = evt.color || '#1e293b';
-        } else if (evt.type === 'fill') {
-          currentTool = 'fill';
-          currentColor = evt.color || '#1e293b';
-        }
-        cursorRef.current = {
-          x: evt.x,
-          y: evt.y,
-          tool: currentTool || undefined,
-          color: currentColor || undefined,
-          lastDrawTime: performance.now(),
-        };
-        drawEvent(ctx, evt, 1, offsets, deleted);
-      }
+    if (result.cursor) {
+      cursorRef.current = {
+        x: result.cursor.x,
+        y: result.cursor.y,
+        tool: result.tool || undefined,
+        color: result.color || undefined,
+        lastDrawTime: performance.now(),
+      };
     }
   }, []);
 
@@ -439,30 +403,12 @@ function ReplayCanvas({
     state.isPaused = false;
     state.isScrubbing = false;
 
-    let liveTool = '';
-    let liveColor = '';
-    let liveSize = 4;
-    let liveShapeStart: { x: number; y: number } | null = null;
-    const LIVE_SHAPE_TOOLS = ['rect', 'circle', 'line'];
-
-    const liveRedraw = () => {
-      const ofs = buildOffsets(events);
-      const del = buildDeletedSet(events);
-      ctx.fillStyle = DEFAULT_BG;
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      resetDrawState();
-      for (const prev of events) {
-        if (prev.type === 'bg') {
-          ctx.fillStyle = prev.color || DEFAULT_BG;
-          ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-        } else if (
-          prev.type !== 'cursor' &&
-          prev.type !== 'state' &&
-          prev.type !== 'delete'
-        ) {
-          drawEvent(ctx, prev, 1, ofs, del);
-        }
-      }
+    // Shared incremental state for both live and replay processing
+    const incState: IncrementalState = {
+      tool: '',
+      color: '',
+      size: 4,
+      shapeStart: null,
     };
 
     let firstEventReceived = false;
@@ -477,82 +423,47 @@ function ReplayCanvas({
       }
 
       if (isLive) {
-        if (evt.type === 'bg') {
-          ctx.fillStyle = evt.color || DEFAULT_BG;
-          ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-        } else if (evt.type === 'state') {
-          if (evt.tool) liveTool = evt.tool;
-          if (evt.color) liveColor = evt.color;
-          if (evt.size) liveSize = evt.size;
-        } else if (
-          evt.type === 'start' &&
-          LIVE_SHAPE_TOOLS.includes(evt.tool || '')
-        ) {
-          liveTool = evt.tool || 'rect';
-          liveColor = evt.color || liveColor;
-          if (evt.size) liveSize = evt.size;
-          liveShapeStart = { x: evt.x, y: evt.y };
-        } else if (
-          evt.type === 'cursor' &&
-          liveShapeStart &&
-          LIVE_SHAPE_TOOLS.includes(liveTool)
-        ) {
-          liveRedraw();
-          drawShapeOnCanvas(
-            ctx,
-            liveTool,
-            liveShapeStart.x,
-            liveShapeStart.y,
-            evt.x,
-            evt.y,
-            liveColor,
-            liveSize,
-            1,
-          );
-        } else if (evt.type === 'relocate' || evt.type === 'delete') {
-          liveRedraw();
-        } else if (evt.type === 'shape' || evt.type === 'end') {
-          liveShapeStart = null;
-          const ofs = buildOffsets(events);
-          const del = buildDeletedSet(events);
-          if (evt.type !== 'end' || !LIVE_SHAPE_TOOLS.includes(liveTool)) {
-            drawEvent(ctx, evt, 1, ofs, del);
-          }
-        } else if (evt.type !== 'cursor') {
-          const ofs = buildOffsets(events);
-          const del = buildDeletedSet(events);
-          drawEvent(ctx, evt, 1, ofs, del);
+        const result = processEventIncremental(ctx, evt, events, incState);
+
+        if (result.needsFullRedraw) {
+          renderEventsToCanvas(ctx, events);
         }
 
-        if (evt.type === 'state') {
+        if (result.shapePreview) {
+          // Shape preview during live: redraw canvas then draw preview shape
+          renderEventsToCanvas(ctx, events);
+          const sp = result.shapePreview;
+          drawShapeOnCanvas(
+            ctx,
+            sp.shape,
+            sp.x1,
+            sp.y1,
+            sp.x2,
+            sp.y2,
+            sp.color,
+            sp.size,
+            1,
+          );
+        }
+
+        // Update cursor
+        if (result.stateChanged) {
           cursorRef.current = {
             x: cursorRef.current?.x ?? 0,
             y: cursorRef.current?.y ?? 0,
-            tool: liveTool || undefined,
-            color: liveColor || undefined,
+            tool: incState.tool || undefined,
+            color: incState.color || undefined,
             lastDrawTime: cursorRef.current?.lastDrawTime,
           };
-        } else if (
-          evt.type !== 'bg' &&
-          evt.type !== 'relocate' &&
-          evt.type !== 'delete'
-        ) {
-          if (evt.type === 'start') {
-            liveTool = evt.tool || 'pen';
-            liveColor = evt.color || '#1e293b';
-          } else if (evt.type === 'shape') {
-            liveTool = evt.shape || 'rect';
-            liveColor = evt.color || '#1e293b';
-          } else if (evt.type === 'fill') {
-            liveTool = 'fill';
-            liveColor = evt.color || '#1e293b';
-          }
+        } else if (result.cursorPosition && !result.needsFullRedraw) {
           cursorRef.current = {
-            x: evt.x,
-            y: evt.y,
-            tool: liveTool || undefined,
-            color: liveColor || undefined,
-            lastDrawTime: performance.now(),
+            x: result.cursorPosition.x,
+            y: result.cursorPosition.y,
+            tool: incState.tool || undefined,
+            color: incState.color || undefined,
+            lastDrawTime: result.isDrawEvent
+              ? performance.now()
+              : cursorRef.current?.lastDrawTime,
           };
         }
 
@@ -600,7 +511,6 @@ function ReplayCanvas({
       for (let i = 0; i < streamIds.length; i++) {
         if (cancelledRef.current) break;
         const lastTime = await readSingleStream(streamIds[i], timeOffset);
-        // Add a small gap between streams so events don't overlap
         if (i < streamIds.length - 1) {
           timeOffset = lastTime + 500;
         }
@@ -609,23 +519,7 @@ function ReplayCanvas({
       // If starting paused (e.g. after stopping lineage), show final frame
       if (initialPaused && events.length > 0) {
         const finalTime = events[events.length - 1].t;
-        const ofs = buildOffsets(events);
-        const del = buildDeletedSet(events);
-        ctx.fillStyle = DEFAULT_BG;
-        ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-        resetDrawState();
-        for (const evt of events) {
-          if (evt.type === 'bg') {
-            ctx.fillStyle = evt.color || DEFAULT_BG;
-            ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-          } else if (
-            evt.type !== 'cursor' &&
-            evt.type !== 'state' &&
-            evt.type !== 'delete'
-          ) {
-            drawEvent(ctx, evt, 1, ofs, del);
-          }
-        }
+        renderEventsToCanvas(ctx, events);
         state.eventIdx = events.length;
         state.isPaused = true;
         setScrubValue(finalTime);
@@ -634,16 +528,18 @@ function ReplayCanvas({
       }
     })();
 
-    // Replay loop
-    let replayTool = '';
-    let replayColor = '';
-    let replaySize = 4;
-    let shapeStart: { x: number; y: number } | null = null;
-    const SHAPE_TOOLS = ['rect', 'circle', 'line'];
+    // Replay loop — uses separate incremental state from live processing
+    const replayState: IncrementalState = {
+      tool: '',
+      color: '',
+      size: 4,
+      shapeStart: null,
+    };
+
     const frame = () => {
       if (cancelledRef.current) return;
 
-      // When live, events are drawn directly in the stream reader — skip frame-based replay
+      // When live, events are drawn directly in the stream reader
       if (isLive && !doneRef.current) {
         animFrameRef.current = requestAnimationFrame(frame);
         return;
@@ -669,74 +565,48 @@ function ReplayCanvas({
             events[state.eventIdx].t <= elapsed
           ) {
             const evt = events[state.eventIdx];
-            if (
-              evt.type === 'relocate' ||
-              evt.type === 'bg' ||
-              evt.type === 'delete'
-            ) {
-              // Batch redraws — just mark and advance
+
+            const result = processEventIncremental(
+              ctx,
+              evt,
+              events.slice(0, state.eventIdx + 1),
+              replayState,
+            );
+
+            if (result.needsFullRedraw) {
               state.eventIdx++;
               needsRedraw = true;
               continue;
             }
+
             // Flush any pending redraws before processing other events
             if (needsRedraw) {
               needsRedraw = false;
               redrawUpTo(evt.t);
             }
-            if (evt.type === 'state') {
-              if (evt.tool) replayTool = evt.tool;
-              if (evt.color) replayColor = evt.color;
-              cursorRef.current = {
-                x: cursorRef.current?.x ?? 0,
-                y: cursorRef.current?.y ?? 0,
-                tool: replayTool || undefined,
-                color: replayColor || undefined,
-                lastDrawTime: cursorRef.current?.lastDrawTime,
-              };
-            } else if (evt.type === 'cursor') {
-              cursorRef.current = {
-                x: evt.x,
-                y: evt.y,
-                tool: replayTool || undefined,
-                color: replayColor || undefined,
-                lastDrawTime: cursorRef.current?.lastDrawTime,
-              };
-              if (shapeStart && SHAPE_TOOLS.includes(replayTool)) {
-                const sliced = events.slice(0, state.eventIdx + 1);
-                const ofs = buildOffsets(sliced);
-                const del = buildDeletedSet(sliced);
-                ctx.fillStyle = DEFAULT_BG;
-                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-                resetDrawState();
-                for (let i = 0; i < state.eventIdx; i++) {
-                  const prev = events[i];
-                  if (prev.type === 'bg') {
-                    ctx.fillStyle = prev.color || DEFAULT_BG;
-                    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-                  } else if (
-                    prev.type !== 'cursor' &&
-                    prev.type !== 'state' &&
-                    prev.type !== 'relocate' &&
-                    prev.type !== 'delete'
-                  ) {
-                    drawEvent(ctx, prev, 1, ofs, del);
-                  }
-                }
-                drawShapeOnCanvas(
-                  ctx,
-                  replayTool,
-                  shapeStart.x,
-                  shapeStart.y,
-                  evt.x,
-                  evt.y,
-                  replayColor,
-                  replaySize,
-                  1,
-                );
-              }
-            } else if (evt.type === 'click') {
-              // Signal cursor press state
+
+            // Handle shape preview (cursor during shape drawing)
+            if (result.shapePreview) {
+              renderEventsToCanvas(
+                ctx,
+                events.slice(0, state.eventIdx),
+              );
+              const sp = result.shapePreview;
+              drawShapeOnCanvas(
+                ctx,
+                sp.shape,
+                sp.x1,
+                sp.y1,
+                sp.x2,
+                sp.y2,
+                sp.color,
+                sp.size,
+                1,
+              );
+            }
+
+            // Update cursor
+            if (evt.type === 'click') {
               if (cursorRef.current) {
                 cursorRef.current = {
                   ...cursorRef.current,
@@ -744,36 +614,26 @@ function ReplayCanvas({
                   pressTime: performance.now(),
                 };
               }
-            } else {
-              if (evt.type === 'start') {
-                replayTool = evt.tool || 'pen';
-                replayColor = evt.color || '#1e293b';
-                if (evt.size) replaySize = evt.size;
-                if (SHAPE_TOOLS.includes(replayTool)) {
-                  shapeStart = { x: evt.x, y: evt.y };
-                }
-              } else if (evt.type === 'shape') {
-                replayTool = evt.shape || 'rect';
-                replayColor = evt.color || '#1e293b';
-                shapeStart = null;
-              } else if (evt.type === 'fill') {
-                replayTool = 'fill';
-                replayColor = evt.color || '#1e293b';
-              } else if (evt.type === 'end') {
-                shapeStart = null;
-              }
+            } else if (result.stateChanged) {
               cursorRef.current = {
-                x: evt.x,
-                y: evt.y,
-                tool: replayTool || undefined,
-                color: replayColor || undefined,
-                lastDrawTime: performance.now(),
+                x: cursorRef.current?.x ?? 0,
+                y: cursorRef.current?.y ?? 0,
+                tool: replayState.tool || undefined,
+                color: replayState.color || undefined,
+                lastDrawTime: cursorRef.current?.lastDrawTime,
               };
-              const sliced = events.slice(0, state.eventIdx + 1);
-              const ofs = buildOffsets(sliced);
-              const del = buildDeletedSet(sliced);
-              drawEvent(ctx, evt, 1, ofs, del);
+            } else if (result.cursorPosition) {
+              cursorRef.current = {
+                x: result.cursorPosition.x,
+                y: result.cursorPosition.y,
+                tool: replayState.tool || undefined,
+                color: replayState.color || undefined,
+                lastDrawTime: result.isDrawEvent
+                  ? performance.now()
+                  : cursorRef.current?.lastDrawTime,
+              };
             }
+
             state.eventIdx++;
           }
           // Flush any remaining batched redraws
@@ -793,30 +653,26 @@ function ReplayCanvas({
               state.eventIdx = 0;
               state.replayStart = performance.now() - ts / speedRef.current;
               state.isPaused = false;
-              resetDrawState();
-              ctx.fillStyle = DEFAULT_BG;
-              ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
               // Redraw up to trim start
-              const loopOfs = buildOffsets(events);
-              const loopDel = buildDeletedSet(events);
+              const loopResult = renderEventsToCanvas(ctx, events, {
+                upToTime: ts,
+              });
+
+              // Find event index for trim start
               for (let i = 0; i < events.length; i++) {
                 if (events[i].t > ts) {
                   state.eventIdx = i;
                   break;
                 }
-                const prev = events[i];
-                if (prev.type === 'bg') {
-                  ctx.fillStyle = prev.color || DEFAULT_BG;
-                  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-                } else if (
-                  prev.type !== 'cursor' &&
-                  prev.type !== 'state' &&
-                  prev.type !== 'delete'
-                ) {
-                  drawEvent(ctx, prev, 1, loopOfs, loopDel);
-                }
                 state.eventIdx = i + 1;
               }
+
+              // Reset replay state to match render result
+              replayState.tool = loopResult.tool;
+              replayState.color = loopResult.color;
+              replayState.size = loopResult.size;
+              replayState.shapeStart = null;
             } else {
               state.isPaused = true;
               setPlaying(false);
@@ -1609,28 +1465,7 @@ function ReportModal({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const eventsUpTo = events.filter((e) => e.t <= scrubTime);
-    const offsets = buildOffsets(eventsUpTo);
-    const deleted = buildDeletedSet(eventsUpTo);
-
-    ctx.fillStyle = DEFAULT_BG;
-    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-    resetDrawState();
-
-    for (const evt of eventsUpTo) {
-      if (evt.type === 'bg') {
-        ctx.fillStyle = evt.color || DEFAULT_BG;
-        ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      } else if (
-        evt.type !== 'cursor' &&
-        evt.type !== 'state' &&
-        evt.type !== 'relocate' &&
-        evt.type !== 'delete' &&
-        evt.type !== 'click'
-      ) {
-        drawEvent(ctx, evt, 1, offsets, deleted);
-      }
-    }
+    renderEventsToCanvas(ctx, events, { upToTime: scrubTime });
   }, [events, scrubTime]);
 
   const handleSubmit = async () => {
