@@ -280,9 +280,44 @@ function DrawCanvas({
       }
 
       const resolved: StrokeEvent[] = [];
+
+      // Snapshot start marker
+      resolved.push({ t: 0, x: 0, y: 0, type: 'snapshot-start' });
+
       if (lastBg) {
         resolved.push({ ...lastBg, t: 0 });
       }
+
+      // Collapse pen strokes into compact stroke events
+      // Track current stroke being built: shapeId -> path points
+      let currentStroke: {
+        shapeId: string;
+        color: string;
+        size: number;
+        tool: string;
+        points: { x: number; y: number }[];
+      } | null = null;
+
+      const flushStroke = () => {
+        if (!currentStroke || currentStroke.points.length === 0) return;
+        const pts = currentStroke.points;
+        const pathParts = [`M${pts[0].x},${pts[0].y}`];
+        for (let i = 1; i < pts.length; i++) {
+          pathParts.push(`L${pts[i].x},${pts[i].y}`);
+        }
+        resolved.push({
+          t: 0,
+          x: pts[0].x,
+          y: pts[0].y,
+          type: 'stroke',
+          path: pathParts.join(' '),
+          color: currentStroke.color,
+          size: currentStroke.size,
+          tool: currentStroke.tool,
+          shapeId: currentStroke.shapeId,
+        });
+        currentStroke = null;
+      };
 
       for (const evt of trimmedEvents) {
         if (
@@ -291,7 +326,9 @@ function DrawCanvas({
           evt.type === 'state' ||
           evt.type === 'relocate' ||
           evt.type === 'click' ||
-          evt.type === 'delete'
+          evt.type === 'delete' ||
+          evt.type === 'snapshot-start' ||
+          evt.type === 'snapshot-end'
         )
           continue;
         if (evt.shapeId && deleted.has(evt.shapeId)) continue;
@@ -299,6 +336,58 @@ function DrawCanvas({
         const o = evt.shapeId
           ? offsets.get(evt.shapeId) || { dx: 0, dy: 0 }
           : { dx: 0, dy: 0 };
+
+        // Pen strokes: collapse start/move/end into single stroke event
+        if (
+          evt.type === 'start' &&
+          (evt.tool === 'pen' || evt.tool === 'eraser')
+        ) {
+          flushStroke();
+          currentStroke = {
+            shapeId: evt.shapeId || '',
+            color: evt.color || '#1e293b',
+            size: evt.size || 4,
+            tool: evt.tool,
+            points: [{ x: evt.x + o.dx, y: evt.y + o.dy }],
+          };
+          continue;
+        }
+
+        if (
+          (evt.type === 'move' || evt.type === 'end') &&
+          currentStroke &&
+          evt.shapeId === currentStroke.shapeId
+        ) {
+          currentStroke.points.push({ x: evt.x + o.dx, y: evt.y + o.dy });
+          if (evt.type === 'end') {
+            flushStroke();
+          }
+          continue;
+        }
+
+        // Already-collapsed stroke events: apply offsets to path
+        if (evt.type === 'stroke' && evt.path) {
+          flushStroke();
+          const adjustedPath = evt.path
+            .split(' ')
+            .map((cmd) => {
+              const prefix = cmd[0];
+              const [cx, cy] = cmd.slice(1).split(',').map(Number);
+              return `${prefix}${cx + o.dx},${cy + o.dy}`;
+            })
+            .join(' ');
+          resolved.push({
+            ...evt,
+            t: 0,
+            x: evt.x + o.dx,
+            y: evt.y + o.dy,
+            path: adjustedPath,
+          });
+          continue;
+        }
+
+        // Non-pen events (shape, fill): keep as-is with offset applied
+        flushStroke();
         const resolved_evt: StrokeEvent = {
           ...evt,
           t: 0,
@@ -309,6 +398,12 @@ function DrawCanvas({
         if (evt.y2 !== undefined) resolved_evt.y2 = evt.y2 + o.dy;
         resolved.push(resolved_evt);
       }
+
+      // Flush any remaining stroke
+      flushStroke();
+
+      // Snapshot end marker
+      resolved.push({ t: 0, x: 0, y: 0, type: 'snapshot-end' });
 
       if (cancelled) return;
 

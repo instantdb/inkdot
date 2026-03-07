@@ -23,7 +23,10 @@ export type StrokeEvent = {
     | 'state'
     | 'relocate'
     | 'click'
-    | 'delete';
+    | 'delete'
+    | 'stroke'
+    | 'snapshot-start'
+    | 'snapshot-end';
   color?: string;
   tool?: string;
   size?: number;
@@ -34,6 +37,8 @@ export type StrokeEvent = {
   filled?: boolean;
   // Shape identity for move tool
   shapeId?: string;
+  // For compact stroke events (SVG-like path data: "M10,20 L15,25 L20,30")
+  path?: string;
 };
 
 // Accumulated offsets from relocate events, keyed by shapeId
@@ -838,6 +843,7 @@ export function LiveThumbnail({
       size: 4,
       shapeStart: null,
     };
+    let snapshotBuffer: StrokeEvent[] | null = null;
 
     (async () => {
       try {
@@ -852,6 +858,23 @@ export function LiveThumbnail({
             try {
               const evt: StrokeEvent = JSON.parse(line);
               allEvents.push(evt);
+
+              // Snapshot buffering: batch events between markers
+              if (evt.type === 'snapshot-start') {
+                snapshotBuffer = [];
+                continue;
+              }
+              if (evt.type === 'snapshot-end') {
+                if (snapshotBuffer) {
+                  renderEventsToCanvas(ctx, allEvents);
+                  snapshotBuffer = null;
+                }
+                continue;
+              }
+              if (snapshotBuffer) {
+                snapshotBuffer.push(evt);
+                continue;
+              }
 
               const result = processEventIncremental(
                 ctx,
@@ -1480,7 +1503,9 @@ export function drawEvent(
     evt.type === 'bg' ||
     evt.type === 'relocate' ||
     evt.type === 'click' ||
-    evt.type === 'delete'
+    evt.type === 'delete' ||
+    evt.type === 'snapshot-start' ||
+    evt.type === 'snapshot-end'
   )
     return;
   if (evt.shapeId && deleted?.has(evt.shapeId)) return;
@@ -1510,6 +1535,47 @@ export function drawEvent(
       Math.round(oy * scale),
       evt.color || '#1e293b',
     );
+    return;
+  }
+
+  if (evt.type === 'stroke' && evt.path) {
+    const size = (evt.size || 4) * scale;
+    const color = evt.color || '#1e293b';
+    const commands = evt.path.split(' ');
+    let cx = 0;
+    let cy = 0;
+    let first = true;
+    for (const cmd of commands) {
+      if (cmd.startsWith('M')) {
+        const [mx, my] = cmd.slice(1).split(',').map(Number);
+        cx = (mx + (evt.shapeId && offsets?.get(evt.shapeId)?.dx || 0)) * scale;
+        cy = (my + (evt.shapeId && offsets?.get(evt.shapeId)?.dy || 0)) * scale;
+        if (first) {
+          // Draw initial dot like 'start' does
+          ctx.beginPath();
+          ctx.arc(cx, cy, size / 2, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+          first = false;
+        }
+      } else if (cmd.startsWith('L')) {
+        const [lx, ly] = cmd.slice(1).split(',').map(Number);
+        const nx = (lx + (evt.shapeId && offsets?.get(evt.shapeId)?.dx || 0)) * scale;
+        const ny = (ly + (evt.shapeId && offsets?.get(evt.shapeId)?.dy || 0)) * scale;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(nx, ny);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = size;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        cx = nx;
+        cy = ny;
+      }
+    }
+    lastX = cx;
+    lastY = cy;
     return;
   }
 
@@ -1728,7 +1794,9 @@ export function renderEventsToCanvas(
     } else if (
       evt.type !== 'relocate' &&
       evt.type !== 'delete' &&
-      evt.type !== 'click'
+      evt.type !== 'click' &&
+      evt.type !== 'snapshot-start' &&
+      evt.type !== 'snapshot-end'
     ) {
       if (evt.type === 'start') {
         currentTool = evt.tool || 'pen';
@@ -1749,10 +1817,25 @@ export function renderEventsToCanvas(
         currentColor = evt.color || '#1e293b';
       } else if (evt.type === 'end') {
         shapeStart = null;
+      } else if (evt.type === 'stroke') {
+        currentTool = evt.tool || 'pen';
+        currentColor = evt.color || '#1e293b';
+        if (evt.size) currentSize = evt.size;
       }
       // Use x2/y2 for cursor position on shape events (fixes snap-to-start bug)
-      cursorX = evt.type === 'shape' && evt.x2 != null ? evt.x2 : evt.x;
-      cursorY = evt.type === 'shape' && evt.y2 != null ? evt.y2 : evt.y;
+      if (evt.type === 'stroke' && evt.path) {
+        // Parse last point from path for cursor
+        const commands = evt.path.split(' ');
+        const last = commands[commands.length - 1];
+        if (last && (last.startsWith('L') || last.startsWith('M'))) {
+          const [px, py] = last.slice(1).split(',').map(Number);
+          cursorX = px;
+          cursorY = py;
+        }
+      } else {
+        cursorX = evt.type === 'shape' && evt.x2 != null ? evt.x2 : evt.x;
+        cursorY = evt.type === 'shape' && evt.y2 != null ? evt.y2 : evt.y;
+      }
       drawEvent(ctx, evt, 1, offsets, deleted);
     }
   }
@@ -1819,6 +1902,16 @@ export function processEventIncremental(
   allEvents: StrokeEvent[],
   state: IncrementalState,
 ): IncrementalResult {
+  // Snapshot markers signal batch rendering
+  if (evt.type === 'snapshot-start' || evt.type === 'snapshot-end') {
+    return {
+      needsFullRedraw: true,
+      cursorPosition: null,
+      isDrawEvent: false,
+      stateChanged: false,
+    };
+  }
+
   // Events that require a full redraw
   if (evt.type === 'bg' || evt.type === 'relocate' || evt.type === 'delete') {
     return {
@@ -1876,6 +1969,37 @@ export function processEventIncremental(
       needsFullRedraw: false,
       cursorPosition: { x: evt.x, y: evt.y },
       isDrawEvent: false,
+      stateChanged: false,
+    };
+  }
+
+  // Compact stroke event
+  if (evt.type === 'stroke') {
+    state.tool = evt.tool || 'pen';
+    state.color = evt.color || '#1e293b';
+    if (evt.size) state.size = evt.size;
+
+    const offsets = buildOffsets(allEvents);
+    const deleted = buildDeletedSet(allEvents);
+    drawEvent(ctx, evt, 1, offsets, deleted);
+
+    // Parse last point from path for cursor position
+    let cursorX = evt.x;
+    let cursorY = evt.y;
+    if (evt.path) {
+      const commands = evt.path.split(' ');
+      const last = commands[commands.length - 1];
+      if (last && (last.startsWith('L') || last.startsWith('M'))) {
+        const [px, py] = last.slice(1).split(',').map(Number);
+        cursorX = px;
+        cursorY = py;
+      }
+    }
+
+    return {
+      needsFullRedraw: false,
+      cursorPosition: { x: cursorX, y: cursorY },
+      isDrawEvent: true,
       stateChanged: false,
     };
   }

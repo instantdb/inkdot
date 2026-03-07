@@ -453,6 +453,7 @@ function ReplayCanvas({
     };
 
     let firstEventReceived = false;
+    let snapshotBuffer: StrokeEvent[] | null = null;
 
     const processEvent = (evt: StrokeEvent) => {
       events.push(evt);
@@ -464,6 +465,24 @@ function ReplayCanvas({
       }
 
       if (isLive) {
+        // Snapshot buffering: batch events between markers
+        if (evt.type === 'snapshot-start') {
+          snapshotBuffer = [];
+          return;
+        }
+        if (evt.type === 'snapshot-end') {
+          if (snapshotBuffer) {
+            renderEventsToCanvas(ctx, events);
+            snapshotBuffer = null;
+          }
+          state.eventIdx = events.length;
+          return;
+        }
+        if (snapshotBuffer) {
+          snapshotBuffer.push(evt);
+          return;
+        }
+
         const result = processEventIncremental(ctx, evt, events, incState);
 
         if (result.needsFullRedraw) {
