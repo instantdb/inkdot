@@ -626,6 +626,22 @@ function ReplayCanvas({
           ) {
             const evt = events[state.eventIdx];
 
+            // Snapshot buffering: wait for snapshot-end, then render all at once
+            if (evt.type === 'snapshot-start') {
+              let endIdx = state.eventIdx + 1;
+              while (endIdx < events.length && events[endIdx].type !== 'snapshot-end') {
+                endIdx++;
+              }
+              if (endIdx >= events.length || events[endIdx].type !== 'snapshot-end') {
+                // snapshot-end hasn't arrived yet — stop processing, wait for more data
+                break;
+              }
+              state.eventIdx = endIdx + 1;
+              renderEventsToCanvas(ctx, events.slice(0, state.eventIdx));
+              needsRedraw = false;
+              continue;
+            }
+
             const result = processEventIncremental(
               ctx,
               evt,

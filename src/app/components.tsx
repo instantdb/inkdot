@@ -1116,6 +1116,23 @@ export function ReplayThumbnail({
       let needsRedraw = false;
       while (eventIdx < trimEndIdx && allEvents[eventIdx].t <= elapsed) {
         const evt = allEvents[eventIdx];
+
+        // Snapshot buffering: wait for snapshot-end, then render all at once
+        if (evt.type === 'snapshot-start') {
+          let endIdx = eventIdx + 1;
+          while (endIdx < trimEndIdx && allEvents[endIdx].type !== 'snapshot-end') {
+            endIdx++;
+          }
+          if (endIdx >= trimEndIdx || allEvents[endIdx].type !== 'snapshot-end') {
+            // snapshot-end hasn't arrived yet — stop processing, wait for more data
+            break;
+          }
+          eventIdx = endIdx + 1;
+          renderEventsToCanvas(ctx, allEvents.slice(0, eventIdx));
+          needsRedraw = false;
+          continue;
+        }
+
         const result = processEventIncremental(
           ctx,
           evt,

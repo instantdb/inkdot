@@ -158,7 +158,6 @@ function DrawCanvas({
     setStarted(true);
     streamActiveRef.current = true;
     setTimeLeft(duration);
-    startTimeRef.current = performance.now();
 
     const txOps = [
       db.tx.sketches[sketchId]
@@ -207,6 +206,11 @@ function DrawCanvas({
         size: drawing.brushSize,
       }) + '\n',
     );
+
+    // Start the timestamp clock AFTER writing remix/initial events
+    // so the first real drawing event has t≈0 and playback doesn't
+    // show dead time at the start
+    startTimeRef.current = performance.now();
   };
 
   // Load remix events
