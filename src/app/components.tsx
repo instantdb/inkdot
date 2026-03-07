@@ -912,11 +912,14 @@ export function LiveThumbnail({
               // Update progress
               if (duration && allEvents.length > 1) {
                 const first = allEvents[0].t;
-                const totalMs = duration * 1000;
-                progressRef.current = Math.min(
-                  1,
-                  (evt.t - first) / totalMs,
-                );
+                progressRef.current = computePlaybackProgress({
+                  elapsed: evt.t,
+                  start: first,
+                  end: first + duration * 1000,
+                  stalledOnStream: false,
+                  lastProcessedTime: evt.t,
+                  previousProgress: progressRef.current,
+                });
               }
             } catch {}
           }
@@ -1022,11 +1025,170 @@ export function ReplayThumbnail({
     let animFrame = 0;
     const allEvents: StrokeEvent[] = [];
 
+    const ts = trimStart ?? 0;
+    let streamDone = false;
+    let trimStartIdx = 0;
+    let trimStartFound = false;
+    let replayStarted = false;
+    let replayStart = 0;
+
+    const replayState: IncrementalState = {
+      tool: '',
+      color: '',
+      size: 4,
+      shapeStart: null,
+    };
+    let eventIdx = 0;
+
+    const redrawUpTo = (time: number) => {
+      const result = renderEventsToCanvas(ctx, allEvents, {
+        upToTime: time,
+      });
+      replayState.tool = result.tool;
+      replayState.color = result.color;
+      replayState.size = result.size;
+      replayState.shapeStart = null;
+    };
+
+    // Compute effective trim end (only known once stream is done if trimEnd is null)
+    const getTe = () =>
+      trimEnd ?? (allEvents.length > 0 ? allEvents[allEvents.length - 1].t : 0);
+
+    // Get the current upper bound index for replay
+    const getTrimEndIdx = () => {
+      if (trimEnd == null) return allEvents.length;
+      // Binary-ish: find first event past trimEnd
+      for (let i = allEvents.length - 1; i >= 0; i--) {
+        if (allEvents[i].t <= trimEnd) return i + 1;
+      }
+      return 0;
+    };
+
+    const startReplay = () => {
+      if (replayStarted) return;
+      replayStarted = true;
+
+      // Render initial state at trim start
+      const initResult = renderEventsToCanvas(
+        ctx,
+        allEvents.slice(0, trimStartIdx),
+      );
+      replayState.tool = initResult.tool;
+      replayState.color = initResult.color;
+      replayState.size = initResult.size;
+      replayState.shapeStart = null;
+
+      eventIdx = trimStartIdx;
+      replayStart = performance.now();
+      animFrame = requestAnimationFrame(frame);
+    };
+
+    const frame = () => {
+      if (cancelled) return;
+
+      const elapsed =
+        (performance.now() - replayStart) * playbackSpeed + ts;
+      const trimEndIdx = getTrimEndIdx();
+
+      let needsRedraw = false;
+      while (eventIdx < trimEndIdx && allEvents[eventIdx].t <= elapsed) {
+        const evt = allEvents[eventIdx];
+        const result = processEventIncremental(
+          ctx,
+          evt,
+          allEvents.slice(0, eventIdx + 1),
+          replayState,
+        );
+
+        if (result.needsFullRedraw) {
+          eventIdx++;
+          needsRedraw = true;
+          continue;
+        }
+
+        if (needsRedraw) {
+          needsRedraw = false;
+          redrawUpTo(evt.t);
+        }
+
+        if (result.shapePreview) {
+          renderEventsToCanvas(ctx, allEvents.slice(0, eventIdx));
+          const sp = result.shapePreview;
+          drawShapeOnCanvas(
+            ctx,
+            sp.shape,
+            sp.x1,
+            sp.y1,
+            sp.x2,
+            sp.y2,
+            sp.color,
+            sp.size,
+            1,
+          );
+        }
+
+        // Update cursor
+        if (evt.type === 'click') {
+          if (cursorRef.current) {
+            cursorRef.current = {
+              ...cursorRef.current,
+              pressed: true,
+              pressTime: performance.now(),
+            };
+          }
+        } else if (result.cursorPosition) {
+          cursorRef.current = {
+            x: result.cursorPosition.x,
+            y: result.cursorPosition.y,
+            tool: replayState.tool || undefined,
+            color: replayState.color || undefined,
+            lastDrawTime: result.isDrawEvent
+              ? performance.now()
+              : cursorRef.current?.lastDrawTime,
+          };
+        } else if (result.stateChanged) {
+          cursorRef.current = {
+            x: cursorRef.current?.x ?? 0,
+            y: cursorRef.current?.y ?? 0,
+            tool: replayState.tool || undefined,
+            color: replayState.color || undefined,
+            lastDrawTime: cursorRef.current?.lastDrawTime,
+          };
+        }
+
+        eventIdx++;
+      }
+
+      if (needsRedraw) {
+        redrawUpTo(elapsed);
+      }
+
+      // Update progress
+      progressRef.current = computePlaybackProgress({
+        elapsed,
+        start: ts,
+        end: getTe(),
+        stalledOnStream: !streamDone && eventIdx >= allEvents.length,
+        lastProcessedTime:
+          eventIdx > trimStartIdx ? allEvents[eventIdx - 1].t : ts,
+        previousProgress: progressRef.current,
+      });
+
+      // Stop when done: stream must be finished and all events processed
+      if (streamDone && eventIdx >= trimEndIdx) {
+        progressRef.current = 1;
+        cursorRef.current = null;
+        return;
+      }
+
+      animFrame = requestAnimationFrame(frame);
+    };
+
+    // Read stream and start replay as soon as we have events past trimStart
     const readStream = db.streams.createReadStream({ streamId });
     const reader = readStream.getReader();
-
-    // Read all events first, then start replay
     let buffer = '';
+
     (async () => {
       try {
         while (!cancelled) {
@@ -1039,149 +1201,39 @@ export function ReplayThumbnail({
             if (!line.trim()) continue;
             try {
               allEvents.push(JSON.parse(line));
-            } catch {}
+            } catch {
+              continue;
+            }
+
+            // Find trimStartIdx once
+            if (!trimStartFound) {
+              const lastEvt = allEvents[allEvents.length - 1];
+              if (lastEvt.t >= ts) {
+                trimStartFound = true;
+                trimStartIdx = allEvents.length - 1;
+                // Walk back to find exact boundary
+                for (let i = 0; i < allEvents.length; i++) {
+                  if (allEvents[i].t >= ts) {
+                    trimStartIdx = i;
+                    break;
+                  }
+                }
+                startReplay();
+              }
+            }
           }
         }
       } catch (e) {
         if (!(e instanceof DOMException && e.name === 'AbortError')) throw e;
       }
 
-      if (cancelled || allEvents.length === 0) return;
+      streamDone = true;
 
-      // Find trim boundaries by index for efficient slicing
-      const ts = trimStart ?? 0;
-      const te = trimEnd ?? allEvents[allEvents.length - 1].t;
-
-      let trimStartIdx = 0;
-      let trimEndIdx = allEvents.length;
-      for (let i = 0; i < allEvents.length; i++) {
-        if (allEvents[i].t < ts) trimStartIdx = i + 1;
-        if (allEvents[i].t > te) {
-          trimEndIdx = i;
-          break;
-        }
+      // If trimStart is 0 and we got events but never started replay
+      if (!replayStarted && allEvents.length > 0 && !cancelled) {
+        trimStartIdx = 0;
+        startReplay();
       }
-
-      if (trimStartIdx >= trimEndIdx) return;
-
-      // Render initial state at trim start
-      const initResult = renderEventsToCanvas(
-        ctx,
-        allEvents.slice(0, trimStartIdx),
-      );
-
-      const replayState: IncrementalState = {
-        tool: initResult.tool,
-        color: initResult.color,
-        size: initResult.size,
-        shapeStart: null,
-      };
-      let eventIdx = trimStartIdx;
-      let replayStart = performance.now();
-
-      const redrawUpTo = (time: number) => {
-        const result = renderEventsToCanvas(ctx, allEvents, {
-          upToTime: time,
-        });
-        replayState.tool = result.tool;
-        replayState.color = result.color;
-        replayState.size = result.size;
-        replayState.shapeStart = null;
-      };
-
-      const frame = () => {
-        if (cancelled) return;
-
-        const elapsed =
-          (performance.now() - replayStart) * playbackSpeed + ts;
-
-        let needsRedraw = false;
-        while (eventIdx < trimEndIdx && allEvents[eventIdx].t <= elapsed) {
-          const evt = allEvents[eventIdx];
-          const result = processEventIncremental(
-            ctx,
-            evt,
-            allEvents.slice(0, eventIdx + 1),
-            replayState,
-          );
-
-          if (result.needsFullRedraw) {
-            eventIdx++;
-            needsRedraw = true;
-            continue;
-          }
-
-          if (needsRedraw) {
-            needsRedraw = false;
-            redrawUpTo(evt.t);
-          }
-
-          if (result.shapePreview) {
-            renderEventsToCanvas(ctx, allEvents.slice(0, eventIdx));
-            const sp = result.shapePreview;
-            drawShapeOnCanvas(
-              ctx,
-              sp.shape,
-              sp.x1,
-              sp.y1,
-              sp.x2,
-              sp.y2,
-              sp.color,
-              sp.size,
-              1,
-            );
-          }
-
-          // Update cursor
-          if (evt.type === 'click') {
-            if (cursorRef.current) {
-              cursorRef.current = {
-                ...cursorRef.current,
-                pressed: true,
-                pressTime: performance.now(),
-              };
-            }
-          } else if (result.cursorPosition) {
-            cursorRef.current = {
-              x: result.cursorPosition.x,
-              y: result.cursorPosition.y,
-              tool: replayState.tool || undefined,
-              color: replayState.color || undefined,
-              lastDrawTime: result.isDrawEvent
-                ? performance.now()
-                : cursorRef.current?.lastDrawTime,
-            };
-          } else if (result.stateChanged) {
-            cursorRef.current = {
-              x: cursorRef.current?.x ?? 0,
-              y: cursorRef.current?.y ?? 0,
-              tool: replayState.tool || undefined,
-              color: replayState.color || undefined,
-              lastDrawTime: cursorRef.current?.lastDrawTime,
-            };
-          }
-
-          eventIdx++;
-        }
-
-        if (needsRedraw) {
-          redrawUpTo(elapsed);
-        }
-
-        // Update progress
-        progressRef.current = Math.min(1, (elapsed - ts) / (te - ts));
-
-        // Stop when done (no loop)
-        if (eventIdx >= trimEndIdx) {
-          progressRef.current = 1;
-          cursorRef.current = null;
-          return;
-        }
-
-        animFrame = requestAnimationFrame(frame);
-      };
-
-      animFrame = requestAnimationFrame(frame);
     })();
 
     return () => {
@@ -1866,6 +1918,33 @@ export function processEventIncremental(
 }
 
 // -- Helpers --
+
+/**
+ * Compute playback progress as 0-1.
+ * Time-based for smoothness, but held back when stalled on stream data.
+ * Monotonic: never decreases from previousProgress.
+ */
+export function computePlaybackProgress({
+  elapsed,
+  start,
+  end,
+  stalledOnStream,
+  lastProcessedTime,
+  previousProgress,
+}: {
+  elapsed: number;
+  start: number;
+  end: number;
+  stalledOnStream: boolean;
+  lastProcessedTime: number;
+  previousProgress: number;
+}): number {
+  const range = end - start;
+  if (range <= 0) return previousProgress;
+  const displayTime = stalledOnStream ? lastProcessedTime : elapsed;
+  const next = Math.min(1, (displayTime - start) / range);
+  return next > previousProgress ? next : previousProgress;
+}
 
 export function formatTime(ms: number) {
   const s = Math.floor(ms / 1000);

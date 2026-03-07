@@ -18,6 +18,7 @@ import {
   formatTime,
   renderEventsToCanvas,
   processEventIncremental,
+  computePlaybackProgress,
 } from '../../components';
 
 type UserInfo = { id: string; email?: string | null };
@@ -1791,7 +1792,14 @@ function ScrubBar({
   const barRange = Math.max(barEnd - barStart, 1);
 
   const clamp = (v: number) => Math.max(0, Math.min(100, v));
-  const playPct = clamp(((scrubValue - barStart) / barRange) * 100);
+  const playPct = computePlaybackProgress({
+    elapsed: scrubValue,
+    start: barStart,
+    end: barEnd,
+    stalledOnStream: false,
+    lastProcessedTime: scrubValue,
+    previousProgress: 0,
+  }) * 100;
 
   // For trim mode, percentages are relative to full maxTime
   const fullMax = maxTime || 1;
