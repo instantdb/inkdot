@@ -5,6 +5,7 @@ export function sketchQuery(sketchId: string) {
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
+      votes: {},
       $: { where: { id: sketchId } },
     },
   } as const;

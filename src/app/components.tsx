@@ -456,6 +456,7 @@ export function AuthHeader() {
           <Link
             href="/"
             className="text-lg font-bold tracking-tight sm:text-xl"
+            style={{ fontFamily: 'var(--font-kanit)' }}
           >
             <span className="text-slate-700 dark:text-zinc-300">ink</span>
             <span className="text-stone-500">dot</span>
@@ -663,7 +664,10 @@ export function LoginModal({
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
-        <h2 className="mb-6 text-center text-2xl font-bold tracking-tight">
+        <h2
+          className="mb-6 text-center text-2xl font-bold tracking-tight"
+          style={{ fontFamily: 'var(--font-kanit)' }}
+        >
           <span className="text-slate-700">ink</span>
           <span className="text-stone-500">dot</span>
         </h2>
@@ -2347,6 +2351,240 @@ export function ErrorMsg({ msg }: { msg: string }) {
   );
 }
 
+function AnimatedNumber({ value }: { value: number }) {
+  const [state, setState] = useState({
+    prev: value,
+    key: 0,
+    direction: 'up' as 'up' | 'down',
+  });
+
+  // Derive new state when value changes (React pattern for syncing props to state)
+  if (value !== state.prev) {
+    setState({
+      prev: value,
+      key: state.key + 1,
+      direction: value > state.prev ? 'up' : 'down',
+    });
+  }
+
+  return (
+    <span
+      key={state.key}
+      className="inline-block tabular-nums"
+      style={{
+        animation:
+          state.key > 0 ? `slide-in-${state.direction} 0.25s ease-out` : 'none',
+      }}
+    >
+      {value}
+    </span>
+  );
+}
+
+export function UpvoteButton({
+  sketchId,
+  score,
+  votes,
+  compact,
+  authorId,
+}: {
+  sketchId: string;
+  score: number;
+  votes: { id: string }[];
+  compact?: boolean;
+  authorId?: string;
+}) {
+  const { user } = db.useAuth();
+  const isOwnSketch = !!user && !!authorId && user.id === authorId;
+  const voted = isOwnSketch || votes.length > 0;
+  // Author's implicit upvote adds 1 to the stored score
+  const adjustedScore = score + 1;
+  const [optimistic, setOptimistic] = useState<{
+    voted: boolean;
+    score: number;
+  } | null>(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [pending, setPending] = useState(false);
+
+  const displayVoted = optimistic ? optimistic.voted : voted;
+  const displayScore = optimistic ? optimistic.score : adjustedScore;
+
+  // Reset optimistic state when real data catches up
+  useEffect(() => {
+    if (optimistic) {
+      setOptimistic(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voted, score]);
+
+  const handleClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isOwnSketch) return;
+
+    if (!user || !user.email) {
+      setShowLogin(true);
+      return;
+    }
+
+    if (pending) return;
+    setPending(true);
+
+    // Optimistic update
+    setOptimistic({
+      voted: !displayVoted,
+      score: displayVoted ? Math.max(0, displayScore - 1) : displayScore + 1,
+    });
+
+    try {
+      await fetch('/api/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sketchId }),
+      });
+    } catch {
+      // Revert on error
+      setOptimistic(null);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const pencilPath =
+    'M9 6 L10 4.3 L11 2.7 L12 1 L13 2.7 L14 4.3 L15 6 L15 18 L9 18 Z';
+
+  const pencilIcon = (size: number) => (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      style={{ overflow: 'visible' }}
+    >
+      {/* Pencil body */}
+      <path
+        d={pencilPath}
+        fill={displayVoted ? '#fbbf24' : 'none'}
+        stroke={displayVoted ? '#b45309' : 'currentColor'}
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+        style={{ transition: 'fill 0.3s, stroke 0.3s' }}
+      />
+      {/* Graphite tip detail */}
+      <line
+        x1="12"
+        y1="1"
+        x2="12"
+        y2="6"
+        stroke={displayVoted ? '#374151' : 'currentColor'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      {/* Center graphite core line */}
+      <line
+        x1="12"
+        y1="6"
+        x2="12"
+        y2="18"
+        stroke={displayVoted ? '#92400e' : 'currentColor'}
+        strokeWidth="1.2"
+        opacity="0.5"
+      />
+      {/* Hexagonal facet edges */}
+      <line
+        x1="10.5"
+        y1="6"
+        x2="10.5"
+        y2="18"
+        stroke={displayVoted ? '#92400e' : 'currentColor'}
+        strokeWidth="0.5"
+        opacity="0.15"
+      />
+      <line
+        x1="13.5"
+        y1="6"
+        x2="13.5"
+        y2="18"
+        stroke={displayVoted ? '#92400e' : 'currentColor'}
+        strokeWidth="0.5"
+        opacity="0.15"
+      />
+      {/* Ferrule band */}
+      <rect
+        x="9"
+        y="18"
+        width="6"
+        height="2"
+        fill={displayVoted ? '#9ca3af' : 'none'}
+        stroke={displayVoted ? '#6b7280' : 'currentColor'}
+        strokeWidth="1.5"
+        style={{ transition: 'fill 0.3s, stroke 0.3s' }}
+      />
+      {/* Eraser */}
+      <rect
+        x="9"
+        y="20"
+        width="6"
+        height="2.5"
+        rx="1"
+        fill={displayVoted ? '#f472b6' : 'currentColor'}
+        fillOpacity={displayVoted ? 1 : 0.15}
+        stroke={displayVoted ? '#db2777' : 'currentColor'}
+        strokeWidth="1.5"
+        style={{ transition: 'fill 0.3s, stroke 0.3s, fill-opacity 0.3s' }}
+      />
+    </svg>
+  );
+
+  if (compact) {
+    return (
+      <>
+        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+        <button
+          onClick={
+            isOwnSketch
+              ? (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              : handleClick
+          }
+          className={`flex items-center gap-1 rounded-md bg-black/50 px-1.5 py-0.5 text-[10px] font-medium text-white tabular-nums transition-colors sm:text-xs ${isOwnSketch ? '!cursor-default' : 'cursor-pointer hover:bg-black/70'}`}
+        >
+          {pencilIcon(12)}
+          {displayScore > 0 && <AnimatedNumber value={displayScore} />}
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      <button
+        onClick={
+          isOwnSketch
+            ? (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            : handleClick
+        }
+        className={`border-border-strong flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-semibold tabular-nums transition-all sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm ${
+          displayVoted ? 'text-text-primary' : 'text-text-secondary'
+        } ${
+          isOwnSketch
+            ? '!cursor-default'
+            : 'hover:bg-hover cursor-pointer active:scale-95'
+        }`}
+      >
+        {pencilIcon(16)}
+        <AnimatedNumber value={displayScore} />
+      </button>
+    </>
+  );
+}
+
 export function SketchCard({
   sketch,
   isAdmin,
@@ -2356,9 +2594,11 @@ export function SketchCard({
   sketch: {
     id: string;
     createdAt: number;
+    score?: number | null;
+    votes?: { id: string }[];
     stream?: { id: string; done?: boolean | null };
     thumbnail?: { url: string };
-    author?: { handle?: string | null };
+    author?: { id?: string; handle?: string | null };
     duration?: number | null;
     trimStart?: number | null;
     trimEnd?: number | null;
@@ -2588,11 +2828,22 @@ export function SketchCard({
               </span>
             )}
           </div>
-          {isLive && (
-            <span className="bg-accent text-accent-text animate-pulse rounded-full px-2 py-0.5 text-xs font-semibold">
-              LIVE
-            </span>
-          )}
+          <div className="flex items-center gap-1">
+            {isLive && (
+              <span className="bg-accent text-accent-text animate-pulse rounded-full px-2 py-0.5 text-xs font-semibold">
+                LIVE
+              </span>
+            )}
+            {!isLive && (
+              <UpvoteButton
+                sketchId={sketch.id}
+                score={sketch.score ?? 0}
+                votes={sketch.votes ?? []}
+                authorId={sketch.author?.id}
+                compact
+              />
+            )}
+          </div>
         </div>
       </Link>
       {confirmDelete && (

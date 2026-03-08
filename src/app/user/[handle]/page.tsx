@@ -30,6 +30,7 @@ function UserGalleryContent({
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
+      votes: {},
       $: {
         order: { createdAt: 'desc' as const },
         where: { 'author.handle': handle },

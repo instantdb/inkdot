@@ -1,7 +1,14 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    rules: {
+      '*.ttf': {
+        loaders: ['./loaders/binary-loader.js'],
+        as: '*.js',
+      },
+    },
+  },
 };
 
 export default nextConfig;
