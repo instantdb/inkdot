@@ -19,6 +19,7 @@ import {
   renderEventsToCanvas,
   processEventIncremental,
   computePlaybackProgress,
+  UpvoteButton,
 } from '../../components';
 
 type UserInfo = { id: string; email?: string | null };
@@ -234,6 +235,9 @@ function SketchPageContent({ user }: { user?: UserInfo }) {
         onSaveShowCursor={saveShowCursor}
         initialPaused={lineageStopped}
         onDelete={() => setDeleting(true)}
+        score={sketch.score ?? 0}
+        votes={sketch.votes ?? []}
+        authorId={sketch.author?.id}
       />
       {sketch.remixOf && (
         <RemixHistory
@@ -274,6 +278,9 @@ function ReplayCanvas({
   onSaveShowCursor,
   initialPaused,
   onDelete,
+  score,
+  votes,
+  authorId,
 }: {
   sketchId: string;
   streamIds: string[];
@@ -292,6 +299,9 @@ function ReplayCanvas({
   onSaveShowCursor?: (show: boolean) => void;
   initialPaused?: boolean;
   onDelete?: () => void;
+  score: number;
+  votes: { id: string }[];
+  authorId?: string;
 }) {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -868,6 +878,12 @@ function ReplayCanvas({
           )}
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <UpvoteButton
+            sketchId={sketchId}
+            score={score}
+            votes={votes}
+            authorId={authorId}
+          />
           <button
             onClick={() => router.push(`/new?remix=${sketchId}`)}
             className="border-border-strong text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-3 py-1 text-xs font-semibold transition-all active:scale-95 sm:rounded-xl sm:px-4 sm:py-1.5 sm:text-sm"

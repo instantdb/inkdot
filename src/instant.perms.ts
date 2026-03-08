@@ -62,6 +62,14 @@ const rules = {
       delete: 'isAdmin',
     },
   },
+  votes: {
+    allow: {
+      view: 'auth.id == data.user',
+      create: 'false',
+      update: 'false',
+      delete: 'false',
+    },
+  },
   userSettings: {
     bind: {
       isOwner: 'data.owner == auth.id',

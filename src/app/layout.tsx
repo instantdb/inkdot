@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Archivo, Kanit } from 'next/font/google';
 import { getUnverifiedUserFromInstantCookie } from '@instantdb/react/nextjs';
 import { InstantProvider } from './InstantProvider';
 import { ThemeProvider } from './ThemeProvider';
+import Script from 'next/script';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const fArchivo = Archivo({ variable: '--font-archivo', subsets: ['latin'] });
+const fKanit = Kanit({
+  variable: '--font-kanit',
   subsets: ['latin'],
+  weight: ['700'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+const allFontVars = [fArchivo, fKanit].map((f) => f.variable).join(' ');
 
 export const metadata: Metadata = {
   title: 'InkDot',
@@ -33,8 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`;
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -47,11 +45,9 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${allFontVars} antialiased`}>
         <InstantProvider user={user ?? undefined}>
           <ThemeProvider>{children}</ThemeProvider>
         </InstantProvider>

@@ -1,11 +1,13 @@
 import { ImageResponse } from 'next/og';
+import kanitBold from './fonts/Kanit-Bold.ttf';
 
-export const runtime = 'edge';
 export const alt = 'InkDot — Draw, share, and remix sketches';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default function OGImage() {
+export default async function OGImage() {
+  const fontData = kanitBold.buffer as ArrayBuffer;
+
   return new ImageResponse(
     <div
       style={{
@@ -23,6 +25,7 @@ export default function OGImage() {
           display: 'flex',
           alignItems: 'baseline',
           marginBottom: '24px',
+          fontFamily: 'Kanit',
         }}
       >
         <span
@@ -67,6 +70,16 @@ export default function OGImage() {
         powered by InstantDB
       </span>
     </div>,
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Kanit',
+          data: fontData,
+          weight: 700,
+          style: 'normal',
+        },
+      ],
+    },
   );
 }

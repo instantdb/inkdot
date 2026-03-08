@@ -27,6 +27,10 @@ const _schema = i.schema({
       trimStart: i.number().optional(),
       trimEnd: i.number().optional(),
       flagged: i.boolean().optional(),
+      score: i.number().indexed().optional(),
+    }),
+    votes: i.entity({
+      createdAt: i.number().indexed(),
     }),
     reports: i.entity({
       createdAt: i.number().indexed(),
@@ -149,6 +153,32 @@ const _schema = i.schema({
         on: 'sketches',
         has: 'many',
         label: 'remixes',
+      },
+    },
+    voteSketch: {
+      forward: {
+        on: 'votes',
+        has: 'one',
+        label: 'sketch',
+        onDelete: 'cascade',
+      },
+      reverse: {
+        on: 'sketches',
+        has: 'many',
+        label: 'votes',
+      },
+    },
+    voteUser: {
+      forward: {
+        on: 'votes',
+        has: 'one',
+        label: 'user',
+        onDelete: 'cascade',
+      },
+      reverse: {
+        on: '$users',
+        has: 'many',
+        label: 'votes',
       },
     },
   },
