@@ -13,11 +13,11 @@ importers:
   .:
     dependencies:
       '@instantdb/admin':
-        specifier: branch-suspense-debug
-        version: 0.22.155-branch-suspense-debug.22922116303.1
+        specifier: latest
+        version: 0.22.156
       '@instantdb/react':
-        specifier: branch-suspense-debug
-        version: 0.22.155-branch-suspense-debug.22922116303.1(react@19.2.4)
+        specifier: latest
+        version: 0.22.156(react@19.2.4)
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -658,33 +658,33 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@instantdb/admin@0.22.155-branch-suspense-debug.22922116303.1':
-    resolution: {integrity: sha512-WAko3ySExG4Mnz9hUUeYbW7CuNLTV+308jIsoPMAiFNx0sliwrUuWnDQtQZkHTcehS2gvve3sKomlQ1+Oh7Gnw==}
+  '@instantdb/admin@0.22.156':
+    resolution: {integrity: sha512-hZtK2mZBZ9emY3ICIBmgVMeOssS+CIBLmcorPtWQTqELYYogIyX5TsAOKtCEThQXG0DrnQ/tjuBdGjAaeBXZmA==}
 
   '@instantdb/core@0.22.155':
     resolution: {integrity: sha512-YpP6t6nK7dSKr23So78pEXq28aNDygXe7StihtxzxJDVT8sDA+tRGLo77QGIUgdyG62VHP1iuIWG1xnaBPPdMQ==}
 
-  '@instantdb/core@0.22.155-branch-suspense-debug.22922116303.1':
-    resolution: {integrity: sha512-6z3aebqFYXrGzllZ6rvE+cU6+oVQcqG4n0uL6fN/MFbIda7A6WcXf1DgR+U6gS8i9cwfDRC9/DoZ4scauHBaAg==}
+  '@instantdb/core@0.22.156':
+    resolution: {integrity: sha512-mAUG5+fsfHo+0ih1UoEggcSLR3PNJeg9pf2YBhVVHLx8uvP/p9q5SCTGE10/L1blImJ2x9V2DHRLoqnbMAFYBw==}
 
   '@instantdb/platform@0.22.155':
     resolution: {integrity: sha512-0UsSE+cqvhXGeJD1NsP+sFlLD9ZOX4pvvZyf+FnP9e2p6L7mCRXPblu+SPn9dGX0Hq6sjlPH3kEcSM3ZnzNWuQ==}
 
-  '@instantdb/react-common@0.22.155-branch-suspense-debug.22922116303.1':
-    resolution: {integrity: sha512-WrO6vREKnolh7mC7LatKcBWJt2NWKXDJDC8iRrXtnp1GbNKvmtXbLYU1StTv1AAvbCruL2tH+iepxGtM37O3lQ==}
+  '@instantdb/react-common@0.22.156':
+    resolution: {integrity: sha512-8QAQ9FReJ0SPzjiVZJzv1a8KtbaZsHNgDCESQ6EanU0jLng3pxmOY7mV7SGh1m1e9a5Bu0yaSyOlYj4V0j4HzA==}
     peerDependencies:
       react: '>=16'
 
-  '@instantdb/react@0.22.155-branch-suspense-debug.22922116303.1':
-    resolution: {integrity: sha512-ug6wavKsf5i3uRSt4D/LdZRnXldS1cAYfv/LolmkTY6X6iaDmoGnYduwZJ771edXrbZH9+O0CdEY4lU0k2bPEw==}
+  '@instantdb/react@0.22.156':
+    resolution: {integrity: sha512-EgH86+KxlwCc1v4vjNZqVJUYJtOIAbceqZIQrAJRENlJIcnZqoj0fbdKluS8CDZkvVsrG6MJsx5T62Z2UvfD9w==}
     peerDependencies:
       react: '>=16'
 
   '@instantdb/version@0.22.155':
     resolution: {integrity: sha512-S4kF3Cj5NKWMnHdhDnhe5jSBIWtMi7AEQeaqgQW59gm1XXk80/R0M9OZ0p1L9RWbgV/o4U/LHdSYtoWdw+MZPQ==}
 
-  '@instantdb/version@0.22.155-branch-suspense-debug.22922116303.1':
-    resolution: {integrity: sha512-tr1b8dmRbYqEdzO0skAttwial83UUxEsRklh7W4f0avwFiF0kbhhDbPnyxPW7+eF3Mh7DBtXIpskC1UVA6XqiQ==}
+  '@instantdb/version@0.22.156':
+    resolution: {integrity: sha512-DIKte2HMBUbnTXWlTGIES+b0mzibMGhjOx//PAh2CFztJZXUzdiQvKQ6joxUz6dS+dRYfwaMrUEIZksRMHMxXw==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -3062,10 +3062,10 @@ snapshots:
   '@img/sharp-win32-x64@0.34.5':
     optional: true
 
-  '@instantdb/admin@0.22.155-branch-suspense-debug.22922116303.1':
+  '@instantdb/admin@0.22.156':
     dependencies:
-      '@instantdb/core': 0.22.155-branch-suspense-debug.22922116303.1
-      '@instantdb/version': 0.22.155-branch-suspense-debug.22922116303.1
+      '@instantdb/core': 0.22.156
+      '@instantdb/version': 0.22.156
       cookie: 1.1.1
       eventsource: 4.1.0
       uuid: 11.1.0
@@ -3076,9 +3076,9 @@ snapshots:
       mutative: 1.3.0
       uuid: 11.1.0
 
-  '@instantdb/core@0.22.155-branch-suspense-debug.22922116303.1':
+  '@instantdb/core@0.22.156':
     dependencies:
-      '@instantdb/version': 0.22.155-branch-suspense-debug.22922116303.1
+      '@instantdb/version': 0.22.156
       mutative: 1.3.0
       uuid: 11.1.0
 
@@ -3089,23 +3089,23 @@ snapshots:
       '@instantdb/core': 0.22.155
       '@instantdb/version': 0.22.155
 
-  '@instantdb/react-common@0.22.155-branch-suspense-debug.22922116303.1(react@19.2.4)':
+  '@instantdb/react-common@0.22.156(react@19.2.4)':
     dependencies:
-      '@instantdb/core': 0.22.155-branch-suspense-debug.22922116303.1
-      '@instantdb/version': 0.22.155-branch-suspense-debug.22922116303.1
+      '@instantdb/core': 0.22.156
+      '@instantdb/version': 0.22.156
       react: 19.2.4
 
-  '@instantdb/react@0.22.155-branch-suspense-debug.22922116303.1(react@19.2.4)':
+  '@instantdb/react@0.22.156(react@19.2.4)':
     dependencies:
-      '@instantdb/core': 0.22.155-branch-suspense-debug.22922116303.1
-      '@instantdb/react-common': 0.22.155-branch-suspense-debug.22922116303.1(react@19.2.4)
-      '@instantdb/version': 0.22.155-branch-suspense-debug.22922116303.1
+      '@instantdb/core': 0.22.156
+      '@instantdb/react-common': 0.22.156(react@19.2.4)
+      '@instantdb/version': 0.22.156
       eventsource: 4.1.0
       react: 19.2.4
 
   '@instantdb/version@0.22.155': {}
 
-  '@instantdb/version@0.22.155-branch-suspense-debug.22922116303.1': {}
+  '@instantdb/version@0.22.156': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

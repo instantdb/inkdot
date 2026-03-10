@@ -16,8 +16,8 @@
     "pull:dev": "instant-cli pull --env .env.development"
   },
   "dependencies": {
-    "@instantdb/admin": "branch-suspense-debug",
-    "@instantdb/react": "branch-suspense-debug",
+    "@instantdb/admin": "latest",
+    "@instantdb/react": "latest",
     "next": "16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
