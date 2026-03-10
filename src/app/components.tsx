@@ -2,6 +2,7 @@
 
 import { db } from '@/lib/db';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { useTheme } from './ThemeProvider';
 import { useRouter } from 'next/navigation';
@@ -2543,7 +2544,11 @@ export function UpvoteButton({
   if (compact) {
     return (
       <>
-        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+        {showLogin &&
+          createPortal(
+            <LoginModal onClose={() => setShowLogin(false)} />,
+            document.body,
+          )}
         <button
           onClick={
             isOwnSketch
@@ -2564,7 +2569,11 @@ export function UpvoteButton({
 
   return (
     <>
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showLogin &&
+        createPortal(
+          <LoginModal onClose={() => setShowLogin(false)} />,
+          document.body,
+        )}
       <button
         onClick={
           isOwnSketch
