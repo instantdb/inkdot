@@ -8,19 +8,10 @@ import { BrowsePageHeader } from '../BrowsePageHeader';
 import { AuthHeader } from '../components';
 import { SketchPageContent } from '../sketch/[id]/SketchPageContent';
 
-type BestSketch = {
+type BestPreview = {
   id: string;
-  createdAt: number;
-  flagged?: boolean | null;
-  score?: number | null;
-  votes?: { id: string }[];
-  stream?: { id: string; done?: boolean | null };
-  thumbnail?: { url: string };
-  author?: { id?: string; handle?: string | null };
-  duration?: number | null;
-  trimStart?: number | null;
-  trimEnd?: number | null;
-  remixOf?: { author?: { handle?: string | null } } | null;
+  thumbnailUrl?: string;
+  authorHandle?: string;
 };
 
 export default function BestPage() {
@@ -34,33 +25,50 @@ export default function BestPage() {
   const [queuedBestSketchId, setQueuedBestSketchId] = useState<string | null>(
     null,
   );
-  const [isPlaybackActive, setIsPlaybackActive] = useState(false);
+
+  // Query queued sketch thumbnail + author for the "New #1" overlay
+  const { data: queuedData } = db.useQuery(
+    queuedBestSketchId
+      ? {
+          sketches: {
+            thumbnail: {},
+            author: {},
+            $: { where: { id: queuedBestSketchId } },
+          },
+        }
+      : null,
+  );
+  const queuedSketch = queuedData?.sketches?.[0];
+  const queuedBestPreview: BestPreview | null = queuedSketch
+    ? {
+        id: queuedSketch.id,
+        thumbnailUrl: queuedSketch.thumbnail?.url,
+        authorHandle: queuedSketch.author?.handle ?? undefined,
+      }
+    : null;
 
   useEffect(() => {
     if (!bestSketchId) return;
     startTransition(() => {
       setActiveSketchId((current) => {
         if (current == null) return bestSketchId;
-        if (!isPlaybackActive && current !== bestSketchId) return bestSketchId;
+        // Never swap immediately — always queue so the overlay can show
         return current;
       });
       setQueuedBestSketchId((current) => {
         if (activeSketchId == null || activeSketchId === bestSketchId) {
           return null;
         }
-        if (!isPlaybackActive) {
-          return null;
-        }
-        return current === bestSketchId ? current : bestSketchId;
+        // Don't replace an already-queued sketch — wait until it starts playing
+        if (current != null) return current;
+        return bestSketchId;
       });
     });
-  }, [activeSketchId, bestSketchId, isPlaybackActive]);
+  }, [activeSketchId, bestSketchId]);
 
   const handleAutoplayBestNavigate = useCallback((nextSketchId: string) => {
     setActiveSketchId(nextSketchId);
-    setQueuedBestSketchId((current) =>
-      current === nextSketchId ? null : current,
-    );
+    setQueuedBestSketchId((cur) => (cur === nextSketchId ? null : cur));
   }, []);
 
   if (activeSketchId) {
@@ -70,8 +78,9 @@ export default function BestPage() {
         forcedSketchId={activeSketchId}
         forcedAutoplayParam="best"
         nextAutoplayBestSketchId={queuedBestSketchId}
+        nextAutoplayBestData={queuedBestPreview}
         onAutoplayBestNavigate={handleAutoplayBestNavigate}
-        onPlaybackActiveChange={setIsPlaybackActive}
+        onPlaybackActiveChange={() => {}}
         showBestExplanation
         showBestHeader
       />
@@ -90,11 +99,11 @@ export default function BestPage() {
       </div>
       <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 px-3 py-6 text-center sm:px-6">
         <p className="text-text-secondary text-base sm:text-lg">
-          Opening the current best sketch...
+          Finding the current best sketch...
         </p>
 
         <p className="text-text-tertiary text-sm sm:text-base">
-          No visible best sketch is available yet.
+          No best sketch is available yet.
         </p>
         <Link
           href="/"

@@ -3,6 +3,7 @@
 import { AnimatedTopSketchGrid } from '../AnimatedTopSketchGrid';
 import { DEFAULT_PAGE_SIZE, topPageQuery } from '@/lib/browse-queries';
 import { db } from '@/lib/db';
+import { uuidCompare } from '@/lib/uuid-compare';
 import {
   reconcileOptimisticVotes,
   useOptimisticVoteScores,
@@ -54,7 +55,7 @@ function TopGalleryContent({
         (optimisticScores[b.id]?.score ?? b.score ?? 0) -
         (optimisticScores[a.id]?.score ?? a.score ?? 0);
       if (scoreDelta !== 0) return scoreDelta;
-      return b.createdAt - a.createdAt;
+      return uuidCompare(b.id, a.id);
     });
   const startIndex = page * DEFAULT_PAGE_SIZE;
   const sketches = sortedSketches.slice(

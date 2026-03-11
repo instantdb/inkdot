@@ -22,6 +22,7 @@ export function newestPageQuery(
       ...viewerVotesQuery(user),
       $: {
         order: { createdAt: 'desc' as const },
+        first: DEFAULT_PAGE_SIZE,
         ...(cursors ?? {}),
       },
     },
@@ -38,7 +39,10 @@ export function topPageQuery(
       author: {},
       remixOf: { author: {} },
       ...viewerVotesQuery(user),
-      $: {},
+      $: {
+        order: { score: 'desc' as const },
+        first: DEFAULT_PAGE_SIZE,
+      },
     },
   };
 }
@@ -54,7 +58,7 @@ export function bestPageQuery(
       remixOf: { author: {} },
       ...viewerVotesQuery(user),
       $: {
-        where: { or: [{ flagged: false }, { flagged: { $isNull: true } }] },
+        where: { flagged: { $ne: true } },
         order: { score: 'desc' as const },
         first: 1,
       },

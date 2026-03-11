@@ -52,11 +52,18 @@ export default function SketchPage() {
   );
 }
 
+type BestPreview = {
+  id: string;
+  thumbnailUrl?: string;
+  authorHandle?: string;
+};
+
 export function SketchPageContent({
   user,
   forcedSketchId,
   forcedAutoplayParam,
   nextAutoplayBestSketchId,
+  nextAutoplayBestData,
   onAutoplayBestNavigate,
   onPlaybackActiveChange,
   showBestExplanation,
@@ -66,6 +73,7 @@ export function SketchPageContent({
   forcedSketchId?: string;
   forcedAutoplayParam?: string | null;
   nextAutoplayBestSketchId?: string | null;
+  nextAutoplayBestData?: BestPreview | null;
   onAutoplayBestNavigate?: (sketchId: string) => void;
   onPlaybackActiveChange?: (isActive: boolean) => void;
   showBestExplanation?: boolean;
@@ -302,6 +310,8 @@ export function SketchPageContent({
         savedTrimEnd={isLineagePlaying ? null : (sketch.trimEnd ?? null)}
         remixOf={isLineagePlaying ? null : (sketch.remixOf ?? null)}
         autoplay={!!autoplayParam}
+        autoplayBest={autoplayBest}
+        nextBestPreview={nextAutoplayBestData ?? undefined}
         onAutoplayEnd={handleReachedEnd}
         onPlaybackActiveChange={onPlaybackActiveChange}
         savedSpeed={savedSpeed}
@@ -336,6 +346,129 @@ export function SketchPageContent({
   );
 }
 
+function NextUpOverlay({
+  preview,
+  countdownActive,
+  onPlayNow,
+  onDismiss,
+}: {
+  preview: { thumbnailUrl?: string; authorHandle?: string };
+  countdownActive: boolean;
+  onPlayNow: () => void;
+  onDismiss: () => void;
+}) {
+  const COUNTDOWN_SECONDS = 3;
+  const [countdown, setCountdown] = useState(COUNTDOWN_SECONDS);
+
+  useEffect(() => {
+    if (!countdownActive) return;
+    if (countdown <= 0) {
+      onPlayNow();
+      return;
+    }
+    const timer = window.setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [countdownActive, countdown, onPlayNow]);
+
+  return (
+    <button
+      onClick={onPlayNow}
+      className="group/overlay absolute right-3 bottom-3 w-28 overflow-hidden rounded-lg bg-black/85 text-left shadow-lg backdrop-blur-sm sm:w-32"
+      style={{ animation: 'slide-in-up 0.3s ease-out' }}
+    >
+      {/* Thumbnail */}
+      <div
+        className="relative aspect-[4/3] w-full overflow-hidden shadow-[inset_0_0_12px_rgba(255,255,255,0.3)]"
+        style={{ backgroundColor: DEFAULT_BG }}
+      >
+        {preview.thumbnailUrl ? (
+          <img
+            src={preview.thumbnailUrl}
+            alt="Next sketch"
+            className="h-full w-full object-cover"
+          />
+        ) : null}
+        {/* Frosted glass pill */}
+        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-black/40 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-white uppercase backdrop-blur-md sm:text-[10px]">
+          {preview.authorHandle ? <>New #1 · @{preview.authorHandle}</> : 'New #1'}
+        </span>
+      </div>
+      {/* Play icon centered over entire card on hover */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover/overlay:bg-black/40">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-md transition-opacity group-hover/overlay:opacity-100">
+          <svg viewBox="0 0 24 24" fill="black" className="ml-0.5 h-5 w-5">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
+      </div>
+      {/* Countdown spinner */}
+      {countdownActive && (
+        <div className="pointer-events-none absolute top-1 right-1">
+          <svg width="22" height="22" className="-rotate-90 drop-shadow-md">
+            <circle
+              cx="11"
+              cy="11"
+              r="10"
+              fill="rgba(0,0,0,0.5)"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="1.5"
+            />
+            <circle
+              cx="11"
+              cy="11"
+              r="10"
+              fill="none"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeDasharray={2 * Math.PI * 10}
+              strokeDashoffset={
+                2 * Math.PI * 10 -
+                ((COUNTDOWN_SECONDS - countdown) / COUNTDOWN_SECONDS) *
+                  2 *
+                  Math.PI *
+                  10
+              }
+              strokeLinecap="round"
+              className="transition-[stroke-dashoffset] duration-1000 ease-linear"
+            />
+            <text
+              x="11"
+              y="11"
+              textAnchor="middle"
+              dominantBaseline="central"
+              className="rotate-90 fill-white text-[8px] font-semibold"
+              style={{ transformOrigin: '11px 11px' }}
+            >
+              {countdown}
+            </text>
+          </svg>
+        </div>
+      )}
+      {/* Dismiss X — top-left, only on hover */}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDismiss();
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.stopPropagation();
+            onDismiss();
+          }
+        }}
+        className="absolute top-1 left-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/50 text-white/60 opacity-0 transition-all group-hover/overlay:opacity-100 hover:text-white"
+        aria-label="Dismiss"
+      >
+        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </div>
+    </button>
+  );
+}
+
 function ReplayCanvas({
   sketchId,
   streamIds,
@@ -348,6 +481,8 @@ function ReplayCanvas({
   savedTrimEnd,
   remixOf,
   autoplay,
+  autoplayBest,
+  nextBestPreview,
   onAutoplayEnd,
   onPlaybackActiveChange,
   savedSpeed,
@@ -372,6 +507,8 @@ function ReplayCanvas({
   savedTrimEnd: number | null;
   remixOf: { id: string; author?: { handle?: string | null } } | null;
   autoplay?: boolean;
+  autoplayBest?: boolean;
+  nextBestPreview?: { thumbnailUrl?: string; authorHandle?: string } | null;
   onAutoplayEnd?: () => void;
   onPlaybackActiveChange?: (isActive: boolean) => void;
   savedSpeed?: number | null;
@@ -416,6 +553,7 @@ function ReplayCanvas({
   const [playing, setPlaying] = useState(!initialPaused);
   const [done, setDone] = useState(false);
   const [reachedEnd, setReachedEnd] = useState(false);
+  const [dismissedNextUp, setDismissedNextUp] = useState(false);
   const [loop, setLoop] = useState(false);
   const [scrubValue, setScrubValue] = useState(0);
   const [maxTime, setMaxTime] = useState(0);
@@ -492,6 +630,12 @@ function ReplayCanvas({
   doneRef.current = done;
   const autoplayRef = useRef(autoplay);
   autoplayRef.current = autoplay;
+  const autoplayBestRef = useRef(autoplayBest);
+  autoplayBestRef.current = autoplayBest;
+  const dismissedNextUpRef = useRef(dismissedNextUp);
+  dismissedNextUpRef.current = dismissedNextUp;
+  const nextBestPreviewRef = useRef(nextBestPreview);
+  nextBestPreviewRef.current = nextBestPreview;
   const onAutoplayEndRef = useRef(onAutoplayEnd);
   onAutoplayEndRef.current = onAutoplayEnd;
   const recordedViewForRunRef = useRef(false);
@@ -887,7 +1031,18 @@ function ReplayCanvas({
               setReachedEnd(true);
               cursorRef.current = null;
               if (autoplayRef.current) {
-                onAutoplayEndRef.current?.();
+                // When autoplayBest with a visible overlay, the NextUpOverlay
+                // handles the countdown and fires onAutoplayEnd — skip here.
+                // But if dismissed, navigate normally.
+                if (
+                  !(
+                    autoplayBestRef.current &&
+                    nextBestPreviewRef.current &&
+                    !dismissedNextUpRef.current
+                  )
+                ) {
+                  onAutoplayEndRef.current?.();
+                }
               }
             }
           }
@@ -1043,6 +1198,21 @@ function ReplayCanvas({
           <span className="bg-accent text-accent-text absolute top-3 left-3 animate-pulse rounded-full px-2.5 py-1 text-xs font-semibold shadow-md">
             LIVE
           </span>
+        )}
+        {autoplayBest && nextBestPreview && !dismissedNextUp && (
+          <NextUpOverlay
+            preview={nextBestPreview}
+            countdownActive={!playing}
+            onPlayNow={() => {
+              onAutoplayEndRef.current?.();
+            }}
+            onDismiss={() => {
+              setDismissedNextUp(true);
+              if (reachedEnd) {
+                onAutoplayEndRef.current?.();
+              }
+            }}
+          />
         )}
       </div>
 

@@ -2782,6 +2782,7 @@ export function SketchCard({
     thumbnail?: { url: string };
     author?: { id?: string; handle?: string | null };
     duration?: number | null;
+    durationMs?: number | null;
     trimStart?: number | null;
     trimEnd?: number | null;
     remixOf?: { author?: { handle?: string | null } } | null;
@@ -2837,12 +2838,11 @@ export function SketchCard({
     };
   }, [everLive, thumbnailUrl]);
 
-  // Effective duration accounting for trim (trimStart/trimEnd are in ms, duration is in seconds)
-  const effectiveDuration = sketch.duration
-    ? Math.round(
-        ((sketch.trimEnd ?? sketch.duration * 1000) - (sketch.trimStart ?? 0)) /
-          1000,
-      )
+  // Effective duration in ms — same calculation as the playback bar
+  const totalMs =
+    sketch.durationMs ?? (sketch.duration ? sketch.duration * 1000 : null);
+  const effectiveDurationMs = totalMs
+    ? (sketch.trimEnd ?? totalMs) - (sketch.trimStart ?? 0)
     : null;
 
   // Detect orphaned streams (not closed but past expected duration)
@@ -2950,9 +2950,9 @@ export function SketchCard({
             )}
           </div>
         )}
-        {effectiveDuration != null && effectiveDuration > 0 && (
+        {effectiveDurationMs != null && effectiveDurationMs > 0 && (
           <span className="absolute top-1.5 left-1.5 rounded-md bg-black/50 px-1.5 py-0.5 text-[10px] font-medium text-white sm:top-2 sm:left-2 sm:text-xs">
-            {effectiveDuration}s
+            {Math.floor(effectiveDurationMs / 1000)}s
           </span>
         )}
         {isAdmin && (

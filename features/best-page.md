@@ -18,3 +18,11 @@ Adds a real `/best` route that plays the highest-scoring visible sketch in place
 - Added an explainer banner on `/best` so the auto-switching behavior is visible to the user
 - `/best` now uses the same shared browse-page header style as `/top` and `/newest`, with its explainer folded into the same header card
 - Removed the homepage "Most loved" see-all link
+
+## Next-Up & Previous Best (follow-up)
+- When playback ends and a new best is queued, a Netflix-style "Up Next" overlay appears at bottom-right of the canvas with a 5-second countdown ring, thumbnail, author handle, "Play now" button, and dismiss X
+- If countdown reaches 0 or "Play now" is clicked, navigation fires to the queued sketch
+- Dismissing the overlay cancels auto-navigation, leaving the user on the finished sketch
+- After transitioning to a new best, a thin "Previously #1" banner appears between the header and canvas showing the old best's thumbnail and author handle as a link
+- The previous-best banner auto-dismisses after 8 seconds or can be dismissed manually
+- BestPage queries both the queued and active sketch's thumbnail/author to power these previews

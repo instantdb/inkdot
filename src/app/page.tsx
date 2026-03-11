@@ -10,6 +10,7 @@ import {
 } from '@/lib/browse-queries';
 import { db } from '@/lib/db';
 import { sketchQuery, viewerVotesQuery } from '@/lib/sketch-query';
+import { uuidCompare } from '@/lib/uuid-compare';
 import {
   reconcileOptimisticVotes,
   useOptimisticVoteScores,
@@ -214,7 +215,7 @@ function TopGallerySection({
         (optimisticScores[b.id]?.score ?? b.score ?? 0) -
         (optimisticScores[a.id]?.score ?? a.score ?? 0);
       if (scoreDelta !== 0) return scoreDelta;
-      return b.createdAt - a.createdAt;
+      return uuidCompare(b.id, a.id);
     })
     .slice(0, TOP_PREVIEW_COUNT);
 
