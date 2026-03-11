@@ -19,3 +19,4 @@ Adds direct navigation to the live browsing pages and introduces a live `/top` p
 - Kept `/top` on `useSuspenseQuery` with pagination so it updates like the other live browse pages
 - Switched `/top` to live client-side pagination over the full sketch list so displayed entries are truly sorted by score, then recency
 - Wired `/top` into the upvote button's optimistic score updates so entries re-order immediately on vote
+- `/top` now animates vote-driven reordering locally with a short FLIP-style transform on the card grid
