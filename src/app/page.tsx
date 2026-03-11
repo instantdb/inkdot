@@ -6,7 +6,8 @@ import { AuthHeader, LoginModal, SketchCard } from './components';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 const PAGE_SIZE = 50;
-const NEW_COLLAPSED_COUNT = 3;
+const NEW_MOBILE_PREVIEW_COUNT = 3;
+const NEW_DESKTOP_PREVIEW_COUNT = 4;
 
 const createSketchClass =
   'rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-accent-text shadow-md shadow-border transition-all hover:bg-accent-hover hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base';
@@ -57,7 +58,7 @@ function NewGallerySection({
       votes: {},
       $: {
         order: { createdAt: 'desc' as const },
-        first: NEW_COLLAPSED_COUNT,
+        first: NEW_DESKTOP_PREVIEW_COUNT,
       },
     },
   });
@@ -76,6 +77,9 @@ function NewGallerySection({
       isAdmin={isAdmin}
       playbackSpeed={playbackSpeed}
       showCursor={showCursor}
+      mobileColumns={3}
+      desktopColumns={4}
+      mobileVisibleCount={NEW_MOBILE_PREVIEW_COUNT}
     />
   );
 }
@@ -367,6 +371,9 @@ function SketchGrid({
   isAdmin,
   playbackSpeed,
   showCursor,
+  mobileColumns = 2,
+  desktopColumns = 3,
+  mobileVisibleCount,
 }: {
   sketches: {
     id: string;
@@ -384,18 +391,36 @@ function SketchGrid({
   isAdmin?: boolean;
   playbackSpeed: number;
   showCursor: boolean;
+  mobileColumns?: 2 | 3;
+  desktopColumns?: 3 | 4;
+  mobileVisibleCount?: number;
 }) {
+  const mobileGridClass =
+    mobileColumns === 3 ? 'grid-cols-3 sm:grid-cols-2' : 'grid-cols-2';
+  const desktopGridClass =
+    desktopColumns === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3';
+
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-      {sketches.map((sketch) => (
-        <SketchCard
-          key={sketch.id}
-          sketch={sketch}
-          isAdmin={!!isAdmin}
-          playbackSpeed={playbackSpeed}
-          showCursor={showCursor}
-        />
-      ))}
+    <div
+      className={`grid ${mobileGridClass} ${desktopGridClass} gap-3 sm:gap-5`}
+    >
+      {sketches.map((sketch, index) => {
+        const mobileVisibilityClass =
+          mobileVisibleCount != null && index >= mobileVisibleCount
+            ? 'hidden sm:block'
+            : '';
+
+        return (
+          <div key={sketch.id} className={mobileVisibilityClass}>
+            <SketchCard
+              sketch={sketch}
+              isAdmin={!!isAdmin}
+              playbackSpeed={playbackSpeed}
+              showCursor={showCursor}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

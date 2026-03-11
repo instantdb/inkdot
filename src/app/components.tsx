@@ -2741,7 +2741,7 @@ export function SketchCard({
     <>
       <Link
         href={`/sketch/${sketch.id}`}
-        className="group border-border bg-surface hover:shadow-border relative overflow-hidden rounded-xl border text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl active:scale-[0.98] sm:rounded-2xl"
+        className="group border-border bg-surface hover:shadow-border relative block w-full overflow-hidden rounded-xl border text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl active:scale-[0.98] sm:rounded-2xl"
         onMouseEnter={() => {
           setIsHovering(true);
           // Start a subscription to warm the reactive cache for the sketch page.
