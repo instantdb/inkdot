@@ -12,6 +12,8 @@ import {
   CursorOverlay,
   LoginModal,
   TimerDisplay,
+  InkDisplay,
+  InkBudgetPreview,
   ToolBar,
   ColorPickers,
   DEFAULT_BG,
@@ -113,14 +115,22 @@ function DrawCanvas({
       }
     : undefined;
 
+  const [budgetMode, setBudgetMode] = useState<'time' | 'ink'>('time');
   const [duration, setDuration] = useState(15);
   const [timeLeft, setTimeLeft] = useState(15);
+  const [inkBudget, setInkBudget] = useState(6000);
+  const [inkRemaining, setInkRemaining] = useState(6000);
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
   const [recordingDurationMs, setRecordingDurationMs] = useState(0);
 
   const finishedRef = useRef(false);
   const streamActiveRef = useRef(false);
+  const finishRecordingRef = useRef(() => {});
+  const budgetModeRef = useRef(budgetMode);
+  budgetModeRef.current = budgetMode;
+  const inkBudgetRef = useRef(inkBudget);
+  inkBudgetRef.current = inkBudget;
 
   // Drawing hook
   const drawing = useDrawingCanvas({
@@ -147,6 +157,14 @@ function DrawCanvas({
     }, []),
     writeCursorEvents: true,
     drawTraceOnCanvas: false,
+    inkBudget: budgetMode === 'ink' ? inkBudget : undefined,
+    onInkUsed: useCallback((used: number) => {
+      const remaining = Math.max(0, inkBudgetRef.current - used);
+      setInkRemaining(remaining);
+      if (remaining <= 0) {
+        finishRecordingRef.current();
+      }
+    }, []),
   });
 
   // ensureStarted needs access to drawing values, so use a ref to avoid circular deps
@@ -155,12 +173,16 @@ function DrawCanvas({
     if (started) return;
     setStarted(true);
     streamActiveRef.current = true;
-    setTimeLeft(duration);
+    if (budgetMode === 'time') {
+      setTimeLeft(duration);
+    }
 
+    const sketchData =
+      budgetMode === 'ink'
+        ? { createdAt: Date.now(), inkBudget }
+        : { createdAt: Date.now(), duration };
     const txOps = [
-      db.tx.sketches[sketchId]
-        .update({ createdAt: Date.now(), duration })
-        .link({ author: userId }),
+      db.tx.sketches[sketchId].update(sketchData).link({ author: userId }),
     ];
     if (remixId) {
       txOps.push(db.tx.sketches[sketchId].link({ remixOf: remixId }));
@@ -456,9 +478,10 @@ function DrawCanvas({
     setRecordingDurationMs(elapsed);
     setFinished(true);
   }, [sketchId, uploadThumbnail]);
+  finishRecordingRef.current = finishRecording;
 
   useEffect(() => {
-    if (!started) return;
+    if (!started || budgetModeRef.current === 'ink') return;
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -496,7 +519,14 @@ function DrawCanvas({
     router.push('/');
   }, [sketchId, router]);
 
-  const progress = started ? (duration - timeLeft) / duration : 0;
+  const progress =
+    budgetMode === 'ink'
+      ? started
+        ? (inkBudget - inkRemaining) / inkBudget
+        : 0
+      : started
+        ? (duration - timeLeft) / duration
+        : 0;
 
   const topBtnClass =
     'rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary';
@@ -562,28 +592,69 @@ function DrawCanvas({
               >
                 {drawing.traceUrl ? 'Easy mode ✓' : 'Easy mode'}
               </button>
+              {/* Mode toggle */}
               <div className="flex">
-                {[15, 30, 60].map((d, i) => (
+                {(['time', 'ink'] as const).map((mode, i) => (
                   <button
-                    key={d}
-                    onClick={() => {
-                      setDuration(d);
-                      setTimeLeft(d);
-                    }}
+                    key={mode}
+                    onClick={() => setBudgetMode(mode)}
                     className={`border px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                      i === 0 ? 'rounded-l-lg' : ''
-                    } ${i === 2 ? 'rounded-r-lg' : ''} ${
-                      i > 0 ? 'border-l-0' : ''
+                      i === 0 ? 'rounded-l-lg' : 'rounded-r-lg border-l-0'
                     } ${
-                      duration === d
-                        ? 'border-accent bg-accent text-accent-text'
-                        : 'border-border bg-surface text-text-secondary hover:text-text-primary'
+                      budgetMode === mode
+                        ? 'border-border-strong bg-surface-secondary text-text-primary'
+                        : 'border-border bg-surface text-text-tertiary hover:text-text-secondary'
                     }`}
                   >
-                    {d}s
+                    {mode === 'time' ? 'Time' : 'Ink'}
                   </button>
                 ))}
               </div>
+              {/* Budget picker */}
+              <div className="flex">
+                {budgetMode === 'time'
+                  ? [15, 30, 60].map((d, i) => (
+                      <button
+                        key={d}
+                        onClick={() => {
+                          setDuration(d);
+                          setTimeLeft(d);
+                        }}
+                        className={`border px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                          i === 0 ? 'rounded-l-lg' : ''
+                        } ${i === 2 ? 'rounded-r-lg' : ''} ${
+                          i > 0 ? 'border-l-0' : ''
+                        } ${
+                          duration === d
+                            ? 'border-accent bg-accent text-accent-text'
+                            : 'border-border bg-surface text-text-secondary hover:text-text-primary'
+                        }`}
+                      >
+                        {d}s
+                      </button>
+                    ))
+                  : [3000, 6000, 12000].map((b, i) => (
+                      <button
+                        key={b}
+                        onClick={() => {
+                          setInkBudget(b);
+                          setInkRemaining(b);
+                        }}
+                        className={`border px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                          i === 0 ? 'rounded-l-lg' : ''
+                        } ${i === 2 ? 'rounded-r-lg' : ''} ${
+                          i > 0 ? 'border-l-0' : ''
+                        } ${
+                          inkBudget === b
+                            ? 'border-accent bg-accent text-accent-text'
+                            : 'border-border bg-surface text-text-secondary hover:text-text-primary'
+                        }`}
+                      >
+                        {b / 1000}k
+                      </button>
+                    ))}
+              </div>
+              {budgetMode === 'ink' && <InkBudgetPreview budget={inkBudget} />}
               <span className="text-text-tertiary hidden animate-pulse text-sm sm:inline">
                 {remixLoading ? 'Loading remix...' : 'Draw to start!'}
               </span>
@@ -610,11 +681,15 @@ function DrawCanvas({
               </button>
             </>
           )}
-          <TimerDisplay
-            timeLeft={timeLeft}
-            duration={duration}
-            progress={progress}
-          />
+          {budgetMode === 'ink' ? (
+            <InkDisplay inkRemaining={inkRemaining} inkBudget={inkBudget} />
+          ) : (
+            <TimerDisplay
+              timeLeft={timeLeft}
+              duration={duration}
+              progress={progress}
+            />
+          )}
         </div>
       </div>
 
@@ -659,8 +734,18 @@ function DrawCanvas({
         )}
         <div className="bg-surface-secondary absolute right-0 bottom-0 left-0 h-1.5">
           <div
-            className="bg-accent h-full transition-all duration-1000 ease-linear"
-            style={{ width: `${progress * 100}%` }}
+            className={`bg-accent h-full transition-all ${budgetMode === 'ink' ? 'duration-150' : 'duration-1000'} ease-linear`}
+            style={{
+              width: `${progress * 100}%`,
+              backgroundColor:
+                budgetMode === 'ink'
+                  ? inkRemaining / inkBudget <= 0.1
+                    ? '#ef4444'
+                    : inkRemaining / inkBudget <= 0.25
+                      ? '#eab308'
+                      : undefined
+                  : undefined,
+            }}
           />
         </div>
       </div>

@@ -51,6 +51,10 @@ export type UseDrawingCanvasOptions = {
   writeCursorEvents?: boolean;
   /** Whether to draw trace image on canvas vs HTML overlay. Default: false */
   drawTraceOnCanvas?: boolean;
+  /** Total ink budget in canvas-px units. undefined = no limit (time mode). */
+  inkBudget?: number;
+  /** Called after each ink deduction with cumulative ink used so far. */
+  onInkUsed?: (used: number) => void;
 };
 
 // --- Hook ---
@@ -65,6 +69,8 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     beforePointerDown: beforePointerDownProp,
     writeCursorEvents: writeCursorEventsProp = false,
     drawTraceOnCanvas: drawTraceOnCanvasProp = false,
+    inkBudget: inkBudgetProp,
+    onInkUsed: onInkUsedProp,
   } = opts;
 
   // --- Derived settings ---
@@ -95,6 +101,87 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       db.transact(tx);
     },
     [settingsId, userSettings, userId],
+  );
+
+  // --- Ink budget refs ---
+  const inkUsedRef = useRef(0);
+  const inkDepletedRef = useRef(false);
+  const inkPreviewCostRef = useRef(0);
+  const lastPenPosRef = useRef<{ x: number; y: number } | null>(null);
+  const inkBudgetRef = useRef(inkBudgetProp);
+  inkBudgetRef.current = inkBudgetProp;
+  const onInkUsedRef = useRef(onInkUsedProp);
+  onInkUsedRef.current = onInkUsedProp;
+
+  const reportInkUsed = useCallback(() => {
+    const budget = inkBudgetRef.current;
+    if (budget === undefined) return;
+    const used = Math.min(
+      budget,
+      inkUsedRef.current + inkPreviewCostRef.current,
+    );
+    onInkUsedRef.current?.(used);
+  }, []);
+
+  const clearInkPreview = useCallback(() => {
+    if (inkPreviewCostRef.current === 0) return;
+    inkPreviewCostRef.current = 0;
+    reportInkUsed();
+  }, [reportInkUsed]);
+
+  const setInkPreview = useCallback(
+    (cost: number) => {
+      const budget = inkBudgetRef.current;
+      if (budget === undefined) return;
+      inkPreviewCostRef.current = Math.min(
+        Math.max(0, budget - inkUsedRef.current),
+        Math.max(0, cost),
+      );
+      reportInkUsed();
+    },
+    [reportInkUsed],
+  );
+
+  const deductInk = useCallback(
+    (cost: number): boolean => {
+      const budget = inkBudgetRef.current;
+      if (budget === undefined) return true; // no limit
+      if (inkDepletedRef.current) return false;
+      inkPreviewCostRef.current = 0;
+      inkUsedRef.current += cost;
+      if (inkUsedRef.current >= budget) {
+        inkUsedRef.current = budget;
+        inkDepletedRef.current = true;
+      }
+      reportInkUsed();
+      return !inkDepletedRef.current;
+    },
+    [reportInkUsed],
+  );
+
+  const getShapeInkCost = useCallback(
+    (
+      shape: 'rect' | 'circle' | 'line',
+      start: { x: number; y: number },
+      end: { x: number; y: number },
+      isFilled: boolean,
+    ) => {
+      if (isFilled) return 75;
+      const w = Math.abs(end.x - start.x);
+      const h = Math.abs(end.y - start.y);
+      if (shape === 'line') {
+        return Math.sqrt(w * w + h * h);
+      }
+      if (shape === 'rect') {
+        return 2 * (w + h);
+      }
+      const rx = w / 2;
+      const ry = h / 2;
+      return (
+        Math.PI * (3 * (rx + ry) - Math.sqrt((3 * rx + ry) * (rx + 3 * ry)))
+      );
+    },
+    [],
   );
 
   // --- Canvas refs ---
@@ -494,7 +581,9 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
   const changeBgColor = useCallback(
     (newBg: string) => {
+      if (inkDepletedRef.current) return;
       saveSettings({ lastBgColor: newBg });
+      deductInk(75);
       const bgEvt: StrokeEvent = {
         t: getTimestampRef.current(),
         x: 0,
@@ -507,7 +596,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       redrawCanvas(DEFAULT_BG);
       onEventRef.current?.(bgEvt);
     },
-    [redrawCanvas, saveSettings],
+    [redrawCanvas, saveSettings, deductInk],
   );
 
   // --- Canvas operations ---
@@ -518,29 +607,34 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     deletedShapesRef.current = new Set();
     canvasCacheDirtyRef.current = true;
     canvasCacheRef.current = null;
+    clearInkPreview();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.fillStyle = bgColorRef.current;
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-  }, []);
+  }, [clearInkPreview]);
 
-  const loadEvents = useCallback((events: StrokeEvent[]) => {
-    localEventsRef.current = [...events];
-    shapeOffsetsRef.current = buildOffsets(events);
-    deletedShapesRef.current = buildDeletedSet(events);
+  const loadEvents = useCallback(
+    (events: StrokeEvent[]) => {
+      localEventsRef.current = [...events];
+      shapeOffsetsRef.current = buildOffsets(events);
+      deletedShapesRef.current = buildDeletedSet(events);
+      clearInkPreview();
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    renderEventsToCanvas(ctx, events);
+      renderEventsToCanvas(ctx, events);
 
-    canvasCacheRef.current = ctx.getImageData(0, 0, CANVAS_W, CANVAS_H);
-    canvasCacheDirtyRef.current = false;
-  }, []);
+      canvasCacheRef.current = ctx.getImageData(0, 0, CANVAS_W, CANVAS_H);
+      canvasCacheDirtyRef.current = false;
+    },
+    [clearInkPreview],
+  );
 
   // --- Pointer handlers ---
 
@@ -560,10 +654,12 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
   const handlePointerDown = useCallback(
     async (e: React.PointerEvent<HTMLCanvasElement>) => {
+      if (inkDepletedRef.current) return;
       if (beforePointerDownRef.current) {
         await beforePointerDownRef.current();
       }
       startedRef.current = true;
+      clearInkPreview();
 
       const pos = getCanvasPos(e);
       const t = getTimestampRef.current();
@@ -605,6 +701,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+        deductInk(75);
         const sid = crypto.randomUUID();
         const fillEvt: StrokeEvent = {
           t,
@@ -649,6 +746,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       const sid = crypto.randomUUID();
       currentShapeIdRef.current = sid;
       isDrawingRef.current = true;
+      lastPenPosRef.current = pos;
       const evt: StrokeEvent = {
         t,
         ...pos,
@@ -662,7 +760,15 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       if (ctx) drawEvent(ctx, evt, 1, shapeOffsetsRef.current);
       writeEvent(evt);
     },
-    [getCanvasPos, writeEvent, findShapeAt, drawHighlight, redrawCanvas],
+    [
+      getCanvasPos,
+      writeEvent,
+      findShapeAt,
+      drawHighlight,
+      redrawCanvas,
+      deductInk,
+      clearInkPreview,
+    ],
   );
 
   const handlePointerMove = useCallback(
@@ -744,6 +850,8 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
           const ctx = canvas.getContext('2d');
           if (!ctx) return;
           const start = shapeStartRef.current;
+          const isFilled = shapeFilledRef.current && currentTool !== 'line';
+          setInkPreview(getShapeInkCost(currentTool, start, pos, isFilled));
           drawShapeOnCanvas(
             ctx,
             currentTool,
@@ -754,13 +862,37 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
             penColorRef.current,
             brushSizeRef.current,
             1,
-            shapeFilledRef.current && currentTool !== 'line',
+            isFilled,
           );
           if (shouldWriteCursor) writeEvent({ t, ...pos, type: 'cursor' });
           return;
         }
 
         // Pen stroke
+        if (inkDepletedRef.current) return;
+        const lastPen = lastPenPosRef.current;
+        if (lastPen) {
+          const dx = pos.x - lastPen.x;
+          const dy = pos.y - lastPen.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > 0) {
+            const canContinue = deductInk(dist);
+            if (!canContinue) {
+              // Force end stroke
+              writeEvent({
+                t,
+                ...pos,
+                type: 'end',
+                shapeId: currentShapeIdRef.current || undefined,
+              });
+              isDrawingRef.current = false;
+              currentShapeIdRef.current = null;
+              lastPenPosRef.current = null;
+              return;
+            }
+          }
+        }
+        lastPenPosRef.current = pos;
         const evt: StrokeEvent = {
           t,
           ...pos,
@@ -777,7 +909,16 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         writeEvent({ t, ...pos, type: 'cursor' });
       }
     },
-    [getCanvasPos, writeEvent, redrawCanvas, findShapeAt, drawHighlight],
+    [
+      getCanvasPos,
+      writeEvent,
+      redrawCanvas,
+      findShapeAt,
+      drawHighlight,
+      deductInk,
+      getShapeInkCost,
+      setInkPreview,
+    ],
   );
 
   const handlePointerUp = useCallback(
@@ -835,6 +976,8 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         const start = shapeStartRef.current;
         shapeStartRef.current = null;
         const isFilled = shapeFilledRef.current && currentTool !== 'line';
+        deductInk(getShapeInkCost(currentTool, start, pos, isFilled));
+
         const shapeEvt: StrokeEvent = {
           t,
           x: start.x,
@@ -870,6 +1013,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       }
 
       // Pen end
+      lastPenPosRef.current = null;
       writeEvent({
         t,
         ...pos,
@@ -878,7 +1022,15 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       });
       currentShapeIdRef.current = null;
     },
-    [getCanvasPos, writeEvent, redrawCanvas, findShapeAt, drawHighlight],
+    [
+      getCanvasPos,
+      writeEvent,
+      redrawCanvas,
+      findShapeAt,
+      drawHighlight,
+      deductInk,
+      getShapeInkCost,
+    ],
   );
 
   // --- Trace file upload handler ---
@@ -954,6 +1106,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
             isDrawingRef.current = false;
             shapeStartRef.current = null;
             currentShapeIdRef.current = null;
+            clearInkPreview();
             redrawCanvas(bgColorRef.current);
           }
           break;
@@ -1008,7 +1161,14 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [changeTool, changeBrushSize, changePenColor, changeBgColor]);
+  }, [
+    changeTool,
+    changeBrushSize,
+    changePenColor,
+    changeBgColor,
+    clearInkPreview,
+    redrawCanvas,
+  ]);
 
   return {
     // Canvas
@@ -1057,6 +1217,9 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
     // Refs for external access
     localEventsRef,
+
+    // Ink budget
+    inkDepletedRef,
   };
 }
 

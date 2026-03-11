@@ -28,6 +28,7 @@ const _schema = i.schema({
       trimEnd: i.number().optional(),
       flagged: i.boolean().optional(),
       score: i.number().indexed().optional(),
+      inkBudget: i.number().optional(),
     }),
     votes: i.entity({
       createdAt: i.number().indexed(),
