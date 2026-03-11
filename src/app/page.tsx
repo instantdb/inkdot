@@ -2,6 +2,7 @@
 
 import { AnimatedTopSketchGrid } from './AnimatedTopSketchGrid';
 import {
+  DEFAULT_PAGE_SIZE,
   bestPageQuery,
   newestPageQuery,
   topPageQuery,
@@ -16,9 +17,9 @@ import Link from 'next/link';
 import { AuthHeader, LoginModal, SketchCard } from './components';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const PAGE_SIZE = 50;
 const NEW_MOBILE_PREVIEW_COUNT = 3;
 const NEW_DESKTOP_PREVIEW_COUNT = 4;
+const TOP_PREVIEW_COUNT = DEFAULT_PAGE_SIZE;
 
 const createSketchClass =
   'rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-accent-text shadow-md shadow-border transition-all hover:bg-accent-hover hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:rounded-xl sm:px-5 sm:py-2 sm:text-base';
@@ -62,7 +63,9 @@ function warmBestRoute(userId?: string) {
 }
 
 function warmNewestRoute(userId?: string) {
-  const newestRouteQuery = newestPageQuery(userId, { first: PAGE_SIZE });
+  const newestRouteQuery = newestPageQuery(userId, {
+    first: DEFAULT_PAGE_SIZE,
+  });
   const unsub = db.core.subscribeQuery(newestRouteQuery, async () => {
     await db.core._reactor.querySubs.flush();
     unsub();
@@ -184,7 +187,6 @@ function TopGallerySection({
   playbackSpeed: number;
   showCursor: boolean;
 }) {
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const optimisticScores = useOptimisticVoteScores();
 
   const { data } = db.useSuspenseQuery(topPageQuery(userId));
@@ -202,33 +204,19 @@ function TopGallerySection({
       if (scoreDelta !== 0) return scoreDelta;
       return b.createdAt - a.createdAt;
     })
-    .slice(0, visibleCount);
-
-  const hasMore = (data.sketches?.length ?? 0) > visibleCount;
+    .slice(0, TOP_PREVIEW_COUNT);
 
   if (sketches.length === 0) {
     return <EmptyState />;
   }
 
   return (
-    <>
-      <AnimatedTopSketchGrid
-        sketches={sketches}
-        isAdmin={!!isAdmin}
-        playbackSpeed={playbackSpeed}
-        showCursor={showCursor}
-      />
-      {hasMore && (
-        <div className="flex justify-center pb-4">
-          <button
-            onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}
-            className="border-border-strong text-text-secondary hover:bg-hover cursor-pointer rounded-lg border px-5 py-1.5 text-sm font-medium transition-all active:scale-95"
-          >
-            Load more
-          </button>
-        </div>
-      )}
-    </>
+    <AnimatedTopSketchGrid
+      sketches={sketches}
+      isAdmin={!!isAdmin}
+      playbackSpeed={playbackSpeed}
+      showCursor={showCursor}
+    />
   );
 }
 
@@ -402,7 +390,9 @@ function GalleryContent({
         </div>
 
         <div className="space-y-3 sm:space-y-4">
-          <SectionHeader>Most loved</SectionHeader>
+          <SectionHeader href="/top" onWarmHref={() => warmRoute('/top')}>
+            Most loved
+          </SectionHeader>
           <TopGallerySection
             userId={userId}
             isAdmin={isAdmin}

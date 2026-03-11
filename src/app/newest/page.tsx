@@ -1,12 +1,14 @@
 'use client';
 
 import { db } from '@/lib/db';
-import { newestPageQuery, type GalleryCursor } from '@/lib/browse-queries';
+import {
+  DEFAULT_PAGE_SIZE,
+  newestPageQuery,
+  type GalleryCursor,
+} from '@/lib/browse-queries';
 import { useState } from 'react';
 import { BrowsePageHeader } from '../BrowsePageHeader';
 import { AuthHeader, SketchCard } from '../components';
-
-const PAGE_SIZE = 50;
 
 function SignedInNewestGallery() {
   const user = db.useUser();
@@ -37,7 +39,7 @@ function NewestGalleryContent({
     after?: GalleryCursor;
     last?: number;
     before?: GalleryCursor;
-  }>({ first: PAGE_SIZE });
+  }>({ first: DEFAULT_PAGE_SIZE });
 
   const { data, pageInfo } = db.useSuspenseQuery(
     newestPageQuery(userId, cursors),
@@ -85,13 +87,13 @@ function NewestGalleryContent({
               hasNext={hasNext}
               onPrev={() => {
                 if (startCursor) {
-                  setCursors({ before: startCursor, last: PAGE_SIZE });
+                  setCursors({ before: startCursor, last: DEFAULT_PAGE_SIZE });
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
               onNext={() => {
                 if (endCursor) {
-                  setCursors({ after: endCursor, first: PAGE_SIZE });
+                  setCursors({ after: endCursor, first: DEFAULT_PAGE_SIZE });
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}

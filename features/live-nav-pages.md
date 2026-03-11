@@ -17,7 +17,9 @@ Adds direct navigation to the live browsing pages and introduces a live `/top` p
 - `/top` and `/newest` now share a lighter browse-page header with a label and tighter title instead of the plain inline heading
 - Added a new live `/top` page ordered by score descending
 - Kept `/top` on `useSuspenseQuery` with pagination so it updates like the other live browse pages
+- The default browse page size is now a shared `51`, so the grid fills evenly in 3-column layouts
 - Switched `/top` to live client-side pagination over the full sketch list so displayed entries are truly sorted by score, then recency
 - Wired `/top` into the upvote button's optimistic score updates so entries re-order immediately on vote
 - `/top` now animates vote-driven reordering locally with a short FLIP-style transform on the card grid
 - The homepage `Most loved` section now uses the same live sorted query and animated reorder behavior instead of the old fixed-order subscription workaround
+- The homepage `Most loved` section is back to a fixed preview set with a `See all` link to `/top`, instead of paginating in place

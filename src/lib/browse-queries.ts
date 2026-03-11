@@ -1,5 +1,7 @@
 import { viewerVotesQuery } from '@/lib/sketch-query';
 
+export const DEFAULT_PAGE_SIZE = 51;
+
 export type GalleryCursor = [string, string, unknown, number];
 
 export function newestPageQuery(

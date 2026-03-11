@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatedTopSketchGrid } from '../AnimatedTopSketchGrid';
-import { topPageQuery } from '@/lib/browse-queries';
+import { DEFAULT_PAGE_SIZE, topPageQuery } from '@/lib/browse-queries';
 import { db } from '@/lib/db';
 import {
   reconcileOptimisticVotes,
@@ -10,8 +10,6 @@ import {
 import { useEffect, useState } from 'react';
 import { BrowsePageHeader } from '../BrowsePageHeader';
 import { AuthHeader } from '../components';
-
-const PAGE_SIZE = 50;
 
 function SignedInTopGallery() {
   const user = db.useUser();
@@ -55,11 +53,14 @@ function TopGalleryContent({
       if (scoreDelta !== 0) return scoreDelta;
       return b.createdAt - a.createdAt;
     });
-  const startIndex = page * PAGE_SIZE;
-  const sketches = sortedSketches.slice(startIndex, startIndex + PAGE_SIZE);
+  const startIndex = page * DEFAULT_PAGE_SIZE;
+  const sketches = sortedSketches.slice(
+    startIndex,
+    startIndex + DEFAULT_PAGE_SIZE,
+  );
 
   const hasPrev = page > 0;
-  const hasNext = startIndex + PAGE_SIZE < sortedSketches.length;
+  const hasNext = startIndex + DEFAULT_PAGE_SIZE < sortedSketches.length;
 
   return (
     <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
