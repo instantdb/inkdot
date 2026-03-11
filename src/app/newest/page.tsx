@@ -1,5 +1,6 @@
 'use client';
 
+import { AnimatedNewestSketchGrid } from '../AnimatedNewestSketchGrid';
 import { db } from '@/lib/db';
 import {
   DEFAULT_PAGE_SIZE,
@@ -8,7 +9,8 @@ import {
 } from '@/lib/browse-queries';
 import { useState } from 'react';
 import { BrowsePageHeader } from '../BrowsePageHeader';
-import { AuthHeader, SketchCard } from '../components';
+import { AuthHeader } from '../components';
+import { usePrependAnimatedSketches } from '../usePrependAnimatedSketches';
 
 function SignedInNewestGallery() {
   const user = db.useUser();
@@ -58,6 +60,15 @@ function NewestGalleryContent({
     | undefined;
   const hasNext = pageInfo?.sketches?.hasNextPage ?? false;
   const hasPrev = pageInfo?.sketches?.hasPreviousPage ?? false;
+  const isLiveFirstPage =
+    cursors.first === DEFAULT_PAGE_SIZE &&
+    cursors.after == null &&
+    cursors.before == null &&
+    cursors.last == null;
+  const { displayedSketches, enteringSketchIds } = usePrependAnimatedSketches({
+    sketches,
+    enabled: isLiveFirstPage,
+  });
 
   return (
     <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
@@ -74,17 +85,13 @@ function NewestGalleryContent({
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-              {sketches.map((sketch) => (
-                <SketchCard
-                  key={sketch.id}
-                  sketch={sketch}
-                  isAdmin={!!isAdmin}
-                  playbackSpeed={playbackSpeed}
-                  showCursor={showCursor}
-                />
-              ))}
-            </div>
+            <AnimatedNewestSketchGrid
+              sketches={displayedSketches}
+              enteringSketchIds={enteringSketchIds}
+              isAdmin={!!isAdmin}
+              playbackSpeed={playbackSpeed}
+              showCursor={showCursor}
+            />
             <Pagination
               hasPrev={hasPrev}
               hasNext={hasNext}

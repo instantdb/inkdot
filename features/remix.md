@@ -29,10 +29,11 @@ Users can "remix" any finished sketch — starting a new sketch with the parent'
 8. Show "Remix of @handle's sketch" indicator
 
 ### Trim-aware remixing
-When loading a parent sketch for remix, we respect its `trimStart` and `trimEnd`:
-- Filter raw events to only include those within `[trimStart, trimEnd]`
+When loading a parent sketch for remix, we respect its `trimEnd` but include ALL events from the start:
+- Filter raw events to only include those up to `trimEnd` (not from `trimStart`)
+- `trimStart` only controls playback start time — shapes drawn before it are still visible on canvas
 - The background color search scans all events up to `trimEnd` to find the correct bg
-- Resolved shapes come only from the trimmed range, so the remix starts from the parent's trimmed final state
+- Resolved shapes come from the full range `[0, trimEnd]`, so the remix starts from the parent's complete visual state at trim end
 
 ### Resolving prevents unbounded growth
 A remix-of-a-remix doesn't grow because the parent stream already contains its resolved ancestors. We just resolve the full set once.

@@ -1,5 +1,6 @@
 'use client';
 
+import { AnimatedNewestSketchGrid } from './AnimatedNewestSketchGrid';
 import { AnimatedTopSketchGrid } from './AnimatedTopSketchGrid';
 import {
   DEFAULT_PAGE_SIZE,
@@ -14,7 +15,8 @@ import {
   useOptimisticVoteScores,
 } from '@/lib/vote-store';
 import Link from 'next/link';
-import { AuthHeader, LoginModal, SketchCard } from './components';
+import { AuthHeader, LoginModal } from './components';
+import { usePrependAnimatedSketches } from './usePrependAnimatedSketches';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 const NEW_MOBILE_PREVIEW_COUNT = 3;
@@ -161,15 +163,20 @@ function NewGallerySection({
   const sketches = (data.sketches ?? []).filter(
     (s) => !s.flagged || s.author?.id === userId,
   );
+  const { displayedSketches, enteringSketchIds } = usePrependAnimatedSketches({
+    sketches,
+    enabled: true,
+  });
 
-  if (sketches.length === 0) {
+  if (displayedSketches.length === 0) {
     return <EmptyState />;
   }
 
   return (
-    <SketchGrid
-      sketches={sketches}
-      isAdmin={isAdmin}
+    <AnimatedNewestSketchGrid
+      sketches={displayedSketches}
+      enteringSketchIds={enteringSketchIds}
+      isAdmin={!!isAdmin}
       playbackSpeed={playbackSpeed}
       showCursor={showCursor}
       mobileColumns={3}
@@ -237,65 +244,6 @@ function EmptyState() {
       <p className="mt-2 text-sm">
         Click &quot;Create Sketch&quot; to create your first one!
       </p>
-    </div>
-  );
-}
-
-function SketchGrid({
-  sketches,
-  isAdmin,
-  playbackSpeed,
-  showCursor,
-  mobileColumns = 2,
-  desktopColumns = 3,
-  mobileVisibleCount,
-}: {
-  sketches: {
-    id: string;
-    createdAt: number;
-    score?: number | null;
-    votes?: { id: string }[];
-    stream?: { id: string; done?: boolean | null };
-    thumbnail?: { url: string };
-    author?: { handle?: string | null; id?: string };
-    duration?: number | null;
-    trimStart?: number | null;
-    trimEnd?: number | null;
-    remixOf?: { author?: { handle?: string | null } } | null;
-  }[];
-  isAdmin?: boolean;
-  playbackSpeed: number;
-  showCursor: boolean;
-  mobileColumns?: 2 | 3;
-  desktopColumns?: 3 | 4;
-  mobileVisibleCount?: number;
-}) {
-  const mobileGridClass =
-    mobileColumns === 3 ? 'grid-cols-3 sm:grid-cols-2' : 'grid-cols-2';
-  const desktopGridClass =
-    desktopColumns === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3';
-
-  return (
-    <div
-      className={`grid ${mobileGridClass} ${desktopGridClass} gap-3 sm:gap-5`}
-    >
-      {sketches.map((sketch, index) => {
-        const mobileVisibilityClass =
-          mobileVisibleCount != null && index >= mobileVisibleCount
-            ? 'hidden sm:block'
-            : '';
-
-        return (
-          <div key={sketch.id} className={mobileVisibilityClass}>
-            <SketchCard
-              sketch={sketch}
-              isAdmin={!!isAdmin}
-              playbackSpeed={playbackSpeed}
-              showCursor={showCursor}
-            />
-          </div>
-        );
-      })}
     </div>
   );
 }
