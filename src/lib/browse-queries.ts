@@ -5,7 +5,7 @@ export const DEFAULT_PAGE_SIZE = 51;
 export type GalleryCursor = [string, string, unknown, number];
 
 export function newestPageQuery(
-  userId?: string,
+  user?: { id?: string | null; type?: string | null } | string | null,
   cursors?: {
     first?: number;
     after?: GalleryCursor;
@@ -19,7 +19,7 @@ export function newestPageQuery(
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: {
         order: { createdAt: 'desc' as const },
         ...(cursors ?? {}),
@@ -28,27 +28,31 @@ export function newestPageQuery(
   };
 }
 
-export function topPageQuery(userId?: string) {
+export function topPageQuery(
+  user?: { id?: string | null; type?: string | null } | string | null,
+) {
   return {
     sketches: {
       stream: {},
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: {},
     },
   };
 }
 
-export function bestPageQuery(userId?: string) {
+export function bestPageQuery(
+  user?: { id?: string | null; type?: string | null } | string | null,
+) {
   return {
     sketches: {
       stream: {},
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: {
         where: { or: [{ flagged: false }, { flagged: { $isNull: true } }] },
         order: { score: 'desc' as const },

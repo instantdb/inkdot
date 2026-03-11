@@ -14,6 +14,7 @@ function SignedInNewestGallery() {
   const user = db.useUser();
   return (
     <NewestGalleryContent
+      user={user}
       userId={user.id}
       isAdmin={!!user.email?.endsWith('@instantdb.com')}
     />
@@ -21,9 +22,11 @@ function SignedInNewestGallery() {
 }
 
 function NewestGalleryContent({
+  user,
   userId,
   isAdmin,
 }: {
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
   isAdmin?: boolean;
 }) {
@@ -42,7 +45,7 @@ function NewestGalleryContent({
   }>({ first: DEFAULT_PAGE_SIZE });
 
   const { data, pageInfo } = db.useSuspenseQuery(
-    newestPageQuery(userId, cursors),
+    newestPageQuery(user, cursors),
   );
 
   const sketches = (data.sketches ?? []).filter(

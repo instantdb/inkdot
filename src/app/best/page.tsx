@@ -25,7 +25,7 @@ type BestSketch = {
 
 export default function BestPage() {
   const { user } = db.useAuth();
-  const { data } = db.useSuspenseQuery(bestPageQuery(user?.id));
+  const { data } = db.useSuspenseQuery(bestPageQuery(user));
 
   const bestSketchId = data.sketches?.[0]?.id;
   const [activeSketchId, setActiveSketchId] = useState<string | null>(

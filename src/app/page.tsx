@@ -40,14 +40,14 @@ function CreateSketchButton() {
   );
 }
 
-function warmBestRoute(userId?: string) {
-  const bestRouteQuery = bestPageQuery(userId);
+function warmBestRoute(user?: { id?: string | null; type?: string | null }) {
+  const bestRouteQuery = bestPageQuery(user);
 
   const unsub = db.core.subscribeQuery(bestRouteQuery, async (resp) => {
     const bestSketchId = resp.data?.sketches?.[0]?.id;
     if (bestSketchId) {
       const warmSketchUnsub = db.core.subscribeQuery(
-        sketchQuery(bestSketchId, userId),
+        sketchQuery(bestSketchId, user),
         async () => {
           await db.core._reactor.querySubs.flush();
           warmSketchUnsub();
@@ -62,8 +62,8 @@ function warmBestRoute(userId?: string) {
   });
 }
 
-function warmNewestRoute(userId?: string) {
-  const newestRouteQuery = newestPageQuery(userId, {
+function warmNewestRoute(user?: { id?: string | null; type?: string | null }) {
+  const newestRouteQuery = newestPageQuery(user, {
     first: DEFAULT_PAGE_SIZE,
   });
   const unsub = db.core.subscribeQuery(newestRouteQuery, async () => {
@@ -72,8 +72,8 @@ function warmNewestRoute(userId?: string) {
   });
 }
 
-function warmTopRoute(userId?: string) {
-  const topRouteQuery = topPageQuery(userId);
+function warmTopRoute(user?: { id?: string | null; type?: string | null }) {
+  const topRouteQuery = topPageQuery(user);
   const unsub = db.core.subscribeQuery(topRouteQuery, async () => {
     await db.core._reactor.querySubs.flush();
     unsub();
@@ -122,6 +122,7 @@ function SignedInGallery() {
   const user = db.useUser();
   return (
     <GalleryContent
+      user={user}
       userId={user.id}
       isAdmin={!!user.email?.endsWith('@instantdb.com')}
     />
@@ -131,11 +132,13 @@ function SignedInGallery() {
 // -- "New" gallery: live-updating, ordered by createdAt --
 
 function NewGallerySection({
+  user,
   userId,
   isAdmin,
   playbackSpeed,
   showCursor,
 }: {
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
   isAdmin?: boolean;
   playbackSpeed: number;
@@ -147,7 +150,7 @@ function NewGallerySection({
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: {
         order: { createdAt: 'desc' as const },
         first: NEW_DESKTOP_PREVIEW_COUNT,
@@ -177,11 +180,13 @@ function NewGallerySection({
 }
 
 function TopGallerySection({
+  user,
   userId,
   isAdmin,
   playbackSpeed,
   showCursor,
 }: {
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
   isAdmin?: boolean;
   playbackSpeed: number;
@@ -189,7 +194,7 @@ function TopGallerySection({
 }) {
   const optimisticScores = useOptimisticVoteScores();
 
-  const { data } = db.useSuspenseQuery(topPageQuery(userId));
+  const { data } = db.useSuspenseQuery(topPageQuery(user));
 
   useEffect(() => {
     reconcileOptimisticVotes(data.sketches ?? []);
@@ -327,9 +332,11 @@ function SectionHeader({
 }
 
 function GalleryContent({
+  user,
   userId,
   isAdmin,
 }: {
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
   isAdmin?: boolean;
 }) {
@@ -347,18 +354,18 @@ function GalleryContent({
       warmedRoutes.current.add(href);
 
       if (href === '/best') {
-        warmBestRoute(userId);
+        warmBestRoute(user);
         return;
       }
 
       if (href === '/newest') {
-        warmNewestRoute(userId);
+        warmNewestRoute(user);
         return;
       }
 
-      warmTopRoute(userId);
+      warmTopRoute(user);
     },
-    [userId],
+    [user],
   );
 
   return (
@@ -382,6 +389,7 @@ function GalleryContent({
             Fresh off the canvas
           </SectionHeader>
           <NewGallerySection
+            user={user}
             userId={userId}
             isAdmin={isAdmin}
             playbackSpeed={playbackSpeed}
@@ -394,6 +402,7 @@ function GalleryContent({
             Most loved
           </SectionHeader>
           <TopGallerySection
+            user={user}
             userId={userId}
             isAdmin={isAdmin}
             playbackSpeed={playbackSpeed}

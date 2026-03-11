@@ -15,6 +15,7 @@ function SignedInTopGallery() {
   const user = db.useUser();
   return (
     <TopGalleryContent
+      user={user}
       userId={user.id}
       isAdmin={!!user.email?.endsWith('@instantdb.com')}
     />
@@ -22,9 +23,11 @@ function SignedInTopGallery() {
 }
 
 function TopGalleryContent({
+  user,
   userId,
   isAdmin,
 }: {
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
   isAdmin?: boolean;
 }) {
@@ -38,7 +41,7 @@ function TopGalleryContent({
   const [page, setPage] = useState(0);
   const optimisticScores = useOptimisticVoteScores();
 
-  const { data } = db.useSuspenseQuery(topPageQuery(userId));
+  const { data } = db.useSuspenseQuery(topPageQuery(user));
 
   useEffect(() => {
     reconcileOptimisticVotes(data.sketches ?? []);

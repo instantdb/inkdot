@@ -8,14 +8,16 @@ import { AuthHeader, ErrorMsg, SketchCard } from '../../components';
 
 function SignedInUserGallery({ handle }: { handle: string }) {
   const user = db.useUser();
-  return <UserGalleryContent handle={handle} userId={user.id} />;
+  return <UserGalleryContent handle={handle} user={user} userId={user.id} />;
 }
 
 function UserGalleryContent({
   handle,
+  user,
   userId,
 }: {
   handle: string;
+  user?: { id?: string | null; type?: string | null };
   userId?: string;
 }) {
   const { data: settingsData } = db.useQuery(
@@ -31,7 +33,7 @@ function UserGalleryContent({
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: {
         order: { createdAt: 'desc' as const },
         where: { 'author.handle': handle },

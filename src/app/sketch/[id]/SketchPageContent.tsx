@@ -30,7 +30,7 @@ import {
 } from '../../components';
 import { BrowsePageHeader } from '../../BrowsePageHeader';
 
-type UserInfo = { id: string; email?: string | null };
+type UserInfo = { id: string; email?: string | null; type?: string | null };
 
 import { sketchQuery } from './query';
 
@@ -77,8 +77,7 @@ export function SketchPageContent({
   const sketchId = forcedSketchId ?? (params.id as string);
   const autoplayParam = forcedAutoplayParam ?? searchParams.get('autoplay');
   const autoplayBest = autoplayParam === 'best';
-
-  const { data } = db.useSuspenseQuery(sketchQuery(sketchId, user?.id));
+  const { data } = db.useSuspenseQuery(sketchQuery(sketchId, user));
 
   const sketch = data.sketches[0];
   const isAuthor = !!user && sketch?.author?.id === user.id;

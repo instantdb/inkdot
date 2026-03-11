@@ -2870,7 +2870,7 @@ export function SketchCard({
           setIsHovering(true);
           // Start a subscription to warm the reactive cache for the sketch page.
           const unsub = db.core.subscribeQuery(
-            sketchQuery(sketch.id, user?.id),
+            sketchQuery(sketch.id, user),
             async () => {
               await db.core._reactor.querySubs.flush();
               unsub();

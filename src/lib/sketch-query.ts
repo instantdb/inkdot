@@ -1,4 +1,16 @@
-export function viewerVotesQuery(userId?: string) {
+type VoteQueryUser = {
+  id?: string | null;
+  type?: string | null;
+};
+
+export function viewerVotesQuery(user?: VoteQueryUser | string | null) {
+  const userId =
+    typeof user === 'string'
+      ? user
+      : user?.type === 'guest'
+        ? undefined
+        : user?.id;
+
   if (!userId) {
     return {};
   }
@@ -12,14 +24,17 @@ export function viewerVotesQuery(userId?: string) {
   } as const;
 }
 
-export function sketchQuery(sketchId: string, userId?: string) {
+export function sketchQuery(
+  sketchId: string,
+  user?: VoteQueryUser | string | null,
+) {
   return {
     sketches: {
       stream: {},
       thumbnail: {},
       author: {},
       remixOf: { author: {} },
-      ...viewerVotesQuery(userId),
+      ...viewerVotesQuery(user),
       $: { where: { id: sketchId } },
     },
   } as const;
