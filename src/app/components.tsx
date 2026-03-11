@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { getErrorMessage } from '@/lib/error-message';
 import { sketchQuery } from '@/lib/sketch-query';
+import { recordSketchView } from '@/lib/view-recording';
 import {
   beginOptimisticVote,
   clearOptimisticVote,
@@ -1334,12 +1335,16 @@ function ThumbnailProgressBar({
 // -- Replay Thumbnail (hover autoplay) --
 
 export function ReplayThumbnail({
+  sketchId,
+  authorUserId,
   streamId,
   trimStart,
   trimEnd,
   playbackSpeed,
   showCursor = true,
 }: {
+  sketchId: string;
+  authorUserId?: string;
   streamId: string;
   trimStart: number;
   trimEnd: number | null;
@@ -1347,6 +1352,7 @@ export function ReplayThumbnail({
   showCursor?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { user } = db.useAuth();
   const progressRef = useRef(0);
   const cursorRef = useRef<{
     x: number;
@@ -1357,6 +1363,7 @@ export function ReplayThumbnail({
     pressed?: boolean;
     pressTime?: number;
   } | null>(null);
+  const recordedViewRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -1377,6 +1384,7 @@ export function ReplayThumbnail({
     let trimStartFound = false;
     let replayStarted = false;
     let replayStart = 0;
+    recordedViewRef.current = false;
 
     const replayState: IncrementalState = {
       tool: '',
@@ -1546,6 +1554,16 @@ export function ReplayThumbnail({
       if (streamDone && eventIdx >= trimEndIdx) {
         progressRef.current = 1;
         cursorRef.current = null;
+        if (!recordedViewRef.current) {
+          recordedViewRef.current = true;
+          void recordSketchView({
+            sketchId,
+            viewerUserId: user?.id,
+            authorUserId,
+          }).catch(() => {
+            recordedViewRef.current = false;
+          });
+        }
         return;
       }
 
@@ -1609,7 +1627,15 @@ export function ReplayThumbnail({
       cancelAnimationFrame(animFrame);
       reader.cancel().catch(() => {});
     };
-  }, [streamId, trimStart, trimEnd, playbackSpeed]);
+  }, [
+    authorUserId,
+    playbackSpeed,
+    sketchId,
+    streamId,
+    trimEnd,
+    trimStart,
+    user?.id,
+  ]);
 
   return (
     <div className="absolute inset-0">
@@ -2917,6 +2943,8 @@ export function SketchCard({
             {isHovering && stream && stream.done && (
               <ReplayThumbnail
                 key={`${stream.id}-${replayRestartKey}`}
+                sketchId={sketch.id}
+                authorUserId={sketch.author?.id}
                 streamId={stream.id}
                 trimStart={sketch.trimStart ?? 0}
                 trimEnd={sketch.trimEnd ?? null}

@@ -76,6 +76,19 @@ const rules = {
       delete: 'false',
     },
   },
+  views: {
+    bind: {
+      hasSketch: 'data.sketch != null',
+      isSignedOutAnonymousView: 'auth.id == null && data.user == null',
+      isSignedInOwnView: 'auth.id != null && data.user == auth.id',
+    },
+    allow: {
+      view: 'false',
+      create: 'hasSketch && (isSignedOutAnonymousView || isSignedInOwnView)',
+      update: 'false',
+      delete: 'false',
+    },
+  },
   userSettings: {
     bind: {
       isOwner: 'data.owner == auth.id',

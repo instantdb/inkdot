@@ -5,6 +5,7 @@ import {
   canDeleteOwnSketch,
   SKETCH_DELETE_WINDOW_MS,
 } from '@/lib/sketch-delete';
+import { recordSketchView } from '@/lib/view-recording';
 import { getErrorMessage } from '@/lib/error-message';
 import { showToast } from '@/lib/toast';
 import { id } from '@instantdb/react';
@@ -313,6 +314,7 @@ export function SketchPageContent({
         score={sketch.score ?? 0}
         votes={sketch.votes ?? []}
         authorId={sketch.author?.id}
+        viewerUserId={user?.id}
       />
       {sketch.remixOf && (
         <RemixHistory
@@ -358,6 +360,7 @@ function ReplayCanvas({
   score,
   votes,
   authorId,
+  viewerUserId,
 }: {
   sketchId: string;
   streamIds: string[];
@@ -381,6 +384,7 @@ function ReplayCanvas({
   score: number;
   votes: { id: string }[];
   authorId?: string;
+  viewerUserId?: string;
 }) {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -491,10 +495,28 @@ function ReplayCanvas({
   autoplayRef.current = autoplay;
   const onAutoplayEndRef = useRef(onAutoplayEnd);
   onAutoplayEndRef.current = onAutoplayEnd;
+  const recordedViewForRunRef = useRef(false);
+
+  const recordCompletedView = useCallback(() => {
+    if (recordedViewForRunRef.current) return;
+    recordedViewForRunRef.current = true;
+
+    void recordSketchView({
+      sketchId,
+      viewerUserId,
+      authorUserId: authorId,
+    }).catch(() => {
+      recordedViewForRunRef.current = false;
+    });
+  }, [authorId, sketchId, viewerUserId]);
 
   useEffect(() => {
     onPlaybackActiveChange?.(playing && !reachedEnd);
   }, [onPlaybackActiveChange, playing, reachedEnd]);
+
+  useEffect(() => {
+    recordedViewForRunRef.current = false;
+  }, [streamIds, sketchId]);
 
   // Close settings popover on click outside
   useEffect(() => {
@@ -833,11 +855,13 @@ function ReplayCanvas({
               (effectiveEnd > 0 && elapsed >= effectiveEnd));
 
           if (pastEnd) {
+            recordCompletedView();
             if (loopRef.current) {
               const ts = trimStartRef.current;
               state.eventIdx = 0;
               state.replayStart = performance.now() - ts / speedRef.current;
               state.isPaused = false;
+              recordedViewForRunRef.current = false;
 
               // Redraw up to trim start
               const loopResult = renderEventsToCanvas(ctx, events, {
@@ -913,6 +937,7 @@ function ReplayCanvas({
   );
 
   const handleReplay = useCallback(() => {
+    recordedViewForRunRef.current = false;
     setReachedEnd(false);
     setPlaying(true);
     const state = replayStateRef.current;

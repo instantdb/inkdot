@@ -32,6 +32,9 @@ const _schema = i.schema({
     votes: i.entity({
       createdAt: i.number().indexed(),
     }),
+    views: i.entity({
+      createdAt: i.number().indexed(),
+    }),
     reports: i.entity({
       createdAt: i.number().indexed(),
       sketchId: i.string(),
@@ -179,6 +182,32 @@ const _schema = i.schema({
         on: '$users',
         has: 'many',
         label: 'votes',
+      },
+    },
+    viewSketch: {
+      forward: {
+        on: 'views',
+        has: 'one',
+        label: 'sketch',
+        onDelete: 'cascade',
+      },
+      reverse: {
+        on: 'sketches',
+        has: 'many',
+        label: 'views',
+      },
+    },
+    viewUser: {
+      forward: {
+        on: 'views',
+        has: 'one',
+        label: 'user',
+        onDelete: 'cascade',
+      },
+      reverse: {
+        on: '$users',
+        has: 'many',
+        label: 'views',
       },
     },
   },
