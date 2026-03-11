@@ -8,6 +8,7 @@ import {
   beginOptimisticVote,
   clearOptimisticVote,
   settleOptimisticVote,
+  useOptimisticVoteEntry,
 } from '@/lib/vote-store';
 import { showToast } from '@/lib/toast';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -2543,24 +2544,13 @@ export function UpvoteButton({
   const voted = isOwnSketch || votes.length > 0;
   // Author's implicit upvote adds 1 to the stored score
   const adjustedScore = score + 1;
-  const [optimistic, setOptimistic] = useState<{
-    voted: boolean;
-    score: number;
-  } | null>(null);
+  const optimistic = useOptimisticVoteEntry(sketchId);
   const [showLogin, setShowLogin] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [pending, setPending] = useState(false);
 
   const displayVoted = optimistic ? optimistic.voted : voted;
-  const displayScore = optimistic ? optimistic.score : adjustedScore;
-
-  // Reset optimistic state when real data catches up
-  useEffect(() => {
-    if (optimistic) {
-      setOptimistic(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voted, score]);
+  const displayScore = optimistic ? optimistic.score + 1 : adjustedScore;
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -2584,12 +2574,10 @@ export function UpvoteButton({
       ? Math.max(0, displayScore - 1)
       : displayScore + 1;
     const nextStoredScore = Math.max(0, nextDisplayScore - 1);
-    const requestId = beginOptimisticVote(sketchId, nextStoredScore);
-
-    // Optimistic update
-    setOptimistic({
-      voted: !displayVoted,
-      score: nextDisplayScore,
+    const nextVoted = !displayVoted;
+    const requestId = beginOptimisticVote(sketchId, {
+      score: nextStoredScore,
+      voted: nextVoted,
     });
 
     try {
@@ -2602,15 +2590,13 @@ export function UpvoteButton({
         throw new Error('Vote request failed');
       }
       const result = (await response.json()) as { score?: number };
-      settleOptimisticVote(
-        sketchId,
-        requestId,
-        result.score ?? nextStoredScore,
-      );
+      settleOptimisticVote(sketchId, requestId, {
+        score: result.score ?? nextStoredScore,
+        voted: nextVoted,
+      });
     } catch {
       // Revert on error
       clearOptimisticVote(sketchId, requestId);
-      setOptimistic(null);
     } finally {
       setPending(false);
     }

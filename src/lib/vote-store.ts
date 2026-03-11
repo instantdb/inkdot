@@ -2,6 +2,7 @@ import { useSyncExternalStore } from 'react';
 
 type VoteStoreEntry = {
   score: number;
+  voted: boolean;
   pending: boolean;
   requestId: number;
 };
@@ -21,12 +22,16 @@ function setSnapshot(nextSnapshot: VoteStoreSnapshot) {
   emitChange();
 }
 
-export function beginOptimisticVote(sketchId: string, score: number) {
+export function beginOptimisticVote(
+  sketchId: string,
+  { score, voted }: { score: number; voted: boolean },
+) {
   const requestId = nextRequestId++;
   setSnapshot({
     ...snapshot,
     [sketchId]: {
       score,
+      voted,
       pending: true,
       requestId,
     },
@@ -37,7 +42,7 @@ export function beginOptimisticVote(sketchId: string, score: number) {
 export function settleOptimisticVote(
   sketchId: string,
   requestId: number,
-  score: number,
+  { score, voted }: { score: number; voted: boolean },
 ) {
   const current = snapshot[sketchId];
   if (!current || current.requestId !== requestId) return;
@@ -46,6 +51,7 @@ export function settleOptimisticVote(
     ...snapshot,
     [sketchId]: {
       score,
+      voted,
       pending: false,
       requestId,
     },
@@ -63,7 +69,11 @@ export function clearOptimisticVote(sketchId: string, requestId?: number) {
 }
 
 export function reconcileOptimisticVotes(
-  sketches: Array<{ id: string; score?: number | null }>,
+  sketches: Array<{
+    id: string;
+    score?: number | null;
+    votes?: { id: string }[];
+  }>,
 ) {
   let changed = false;
   const nextSnapshot = { ...snapshot };
@@ -72,6 +82,7 @@ export function reconcileOptimisticVotes(
     const current = nextSnapshot[sketch.id];
     if (!current || current.pending) continue;
     if ((sketch.score ?? 0) !== current.score) continue;
+    if ((sketch.votes?.length ?? 0) > 0 !== current.voted) continue;
     delete nextSnapshot[sketch.id];
     changed = true;
   }
@@ -92,4 +103,12 @@ function getSnapshot() {
 
 export function useOptimisticVoteScores() {
   return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+}
+
+export function useOptimisticVoteEntry(sketchId: string) {
+  return useSyncExternalStore(
+    subscribe,
+    () => snapshot[sketchId] ?? null,
+    () => snapshot[sketchId] ?? null,
+  );
 }
