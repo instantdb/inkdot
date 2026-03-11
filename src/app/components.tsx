@@ -645,13 +645,14 @@ export function LoginModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 px-4 pt-[10vh] pb-[40vh] backdrop-blur-sm sm:items-center sm:px-0 sm:pt-0 sm:pb-0"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={(event) => handleModalBackdropClick(event, onClose)}
     >
-      <div className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl">
+      <div
+        className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl"
+        onClick={stopModalClick}
+      >
         <button
-          onClick={onClose}
+          onClick={(event) => handleModalCloseClick(event, onClose)}
           className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
         >
           <svg
@@ -891,13 +892,14 @@ export function UpgradeModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 px-4 pt-[10vh] pb-[40vh] backdrop-blur-sm sm:items-center sm:px-0 sm:pt-0 sm:pb-0"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={(event) => handleModalBackdropClick(event, onClose)}
     >
-      <div className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl">
+      <div
+        className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl"
+        onClick={stopModalClick}
+      >
         <button
-          onClick={onClose}
+          onClick={(event) => handleModalCloseClick(event, onClose)}
           className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
         >
           <svg
@@ -2362,6 +2364,29 @@ export function ErrorMsg({ msg }: { msg: string }) {
       Error: {msg}
     </div>
   );
+}
+
+function handleModalBackdropClick(
+  event: React.MouseEvent<HTMLDivElement>,
+  onClose: () => void,
+) {
+  event.stopPropagation();
+  if (event.target !== event.currentTarget) return;
+  event.preventDefault();
+  onClose();
+}
+
+function stopModalClick(event: React.MouseEvent<HTMLElement>) {
+  event.stopPropagation();
+}
+
+function handleModalCloseClick(
+  event: React.MouseEvent<HTMLButtonElement>,
+  onClose: () => void,
+) {
+  event.preventDefault();
+  event.stopPropagation();
+  onClose();
 }
 
 function AnimatedNumber({ value }: { value: number }) {
