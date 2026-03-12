@@ -17,6 +17,7 @@ import {
 } from '@/lib/vote-store';
 import Link from 'next/link';
 import { AuthHeader, LoginModal } from './components';
+import { useGuestBootstrap } from './InstantProvider';
 import { usePrependAnimatedSketches } from './usePrependAnimatedSketches';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
@@ -31,6 +32,16 @@ const browseLinkClass =
 
 function CreateSketchButton() {
   const [showLogin, setShowLogin] = useState(false);
+  const { isBootstrappingGuest } = useGuestBootstrap();
+
+  if (isBootstrappingGuest) {
+    return (
+      <div className={`${createSketchClass} pointer-events-none opacity-0`}>
+        Create Sketch
+      </div>
+    );
+  }
+
   return (
     <>
       {showLogin && (

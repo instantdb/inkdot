@@ -9,6 +9,7 @@ import { db } from '@/lib/db';
 import { useState } from 'react';
 import { BrowsePageHeader } from '../BrowsePageHeader';
 import { AuthHeader, LoginModal, SketchCard } from '../components';
+import { useGuestBootstrap } from '../InstantProvider';
 
 type UpvotedSketch = Parameters<typeof SketchCard>[0]['sketch'];
 type UpvotedUser = {
@@ -36,6 +37,15 @@ function SignedInUpvotedPage() {
 
 function SignedOutUpvotedPage() {
   const [showLogin, setShowLogin] = useState(false);
+  const { isBootstrappingGuest } = useGuestBootstrap();
+
+  if (isBootstrappingGuest) {
+    return (
+      <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
+        <AuthHeader />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -44,13 +54,13 @@ function SignedOutUpvotedPage() {
         <AuthHeader />
         <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-4 px-3 py-6 text-center sm:px-6">
           <p className="text-text-secondary text-base sm:text-lg">
-            Sign in to see the sketches you have upvoted.
+            Creating a guest account failed.
           </p>
           <button
             onClick={() => setShowLogin(true)}
             className="bg-accent text-accent-text shadow-border hover:bg-accent-hover rounded-xl px-5 py-2 text-sm font-semibold shadow-md transition-all hover:shadow-lg hover:shadow-slate-400 active:scale-95 sm:text-base"
           >
-            Sign in
+            Sign in manually
           </button>
         </div>
       </div>

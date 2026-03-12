@@ -121,6 +121,19 @@ const _schema = i.schema({
         label: 'linkedGuestUsers',
       },
     },
+    $usersMigratedPrimaryUser: {
+      forward: {
+        on: '$users',
+        has: 'one',
+        label: 'migratedPrimaryUser',
+        onDelete: 'cascade',
+      },
+      reverse: {
+        on: '$users',
+        has: 'many',
+        label: 'migratedGuestUsers',
+      },
+    },
     userSettingsOwner: {
       forward: {
         on: 'userSettings',

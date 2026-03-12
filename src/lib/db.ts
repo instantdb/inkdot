@@ -6,4 +6,5 @@ export const db = init({
   schema,
   useDateObjects: true,
   firstPartyPath: '/api/instant',
+  verbose: process.env.NODE_ENV === 'development',
 });

@@ -16,22 +16,33 @@ import {
   TemplatePicker,
   type DrawingUserSettings,
 } from '../drawing';
+import { useGuestBootstrap } from '../InstantProvider';
 
 function SignedOutPractice() {
   const [showLogin, setShowLogin] = useState(false);
+  const { isBootstrappingGuest } = useGuestBootstrap();
+
+  if (isBootstrappingGuest) {
+    return (
+      <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
+        <AuthHeader />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-surface text-text-primary flex min-h-[100dvh] flex-col items-center font-sans">
       <AuthHeader />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
         <p className="text-text-secondary text-base sm:text-lg">
-          Sign in to practice drawing
+          Creating a guest account failed.
         </p>
         <button
           onClick={() => setShowLogin(true)}
           className="bg-accent text-accent-text shadow-border hover:bg-accent-hover cursor-pointer rounded-xl px-5 py-2 text-sm font-semibold shadow-md transition-all sm:text-base"
         >
-          Sign in
+          Sign in manually
         </button>
       </div>
     </div>

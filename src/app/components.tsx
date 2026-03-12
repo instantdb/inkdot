@@ -16,6 +16,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { useTheme } from './ThemeProvider';
 import { useRouter } from 'next/navigation';
+import { useGuestBootstrap } from './InstantProvider';
 
 // -- Types --
 
@@ -437,8 +438,12 @@ function HeaderMenu() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { user } = db.useAuth();
+  const isRealUser = user?.type === 'user';
+  const isGuest = user?.type === 'guest';
   const { data } = db.useQuery(
-    user?.id ? { $users: { $: { where: { id: user.id } } } } : null,
+    isRealUser && user.id
+      ? { $users: { $: { where: { id: user.id } } } }
+      : null,
   );
   const handle = data?.$users?.[0]?.handle;
 
@@ -488,13 +493,18 @@ function HeaderMenu() {
               setOpen(false);
             }}
             mySketchesHref={
-              handle ? `/user/${encodeURIComponent(handle)}` : undefined
+              isRealUser && handle
+                ? `/user/${encodeURIComponent(handle)}`
+                : undefined
             }
-            upvotedHref={user?.email ? '/upvoted' : undefined}
+            upvotedHref={isRealUser ? '/upvoted' : undefined}
           />
           <db.SignedIn>
             <div className="border-border my-1 border-t" />
-            <SignedInMenuItems onClose={() => setOpen(false)} />
+            <SignedInMenuItems
+              onClose={() => setOpen(false)}
+              showSignOut={!isGuest}
+            />
           </db.SignedIn>
         </div>
       )}
@@ -572,8 +582,15 @@ function BrowseMenuItems({
   );
 }
 
-function SignedInMenuItems({ onClose }: { onClose: () => void }) {
+function SignedInMenuItems({
+  onClose,
+  showSignOut = true,
+}: {
+  onClose: () => void;
+  showSignOut?: boolean;
+}) {
   const router = useRouter();
+  const { signOutToGuest } = useGuestBootstrap();
 
   return (
     <>
@@ -587,36 +604,41 @@ function SignedInMenuItems({ onClose }: { onClose: () => void }) {
         <ToolIconSvg tool="pen" size={14} />
         Create Sketch
       </button>
-      <div className="border-border my-1 border-t" />
-      <button
-        onClick={() => {
-          db.auth.signOut();
-          onClose();
-        }}
-        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>
-        Sign out
-      </button>
+      {showSignOut && (
+        <>
+          <div className="border-border my-1 border-t" />
+          <button
+            onClick={async () => {
+              onClose();
+              await signOutToGuest();
+            }}
+            className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Sign out
+          </button>
+        </>
+      )}
     </>
   );
 }
 
 export function AuthHeader() {
   const [showLogin, setShowLogin] = useState(false);
+  const { isBootstrappingGuest } = useGuestBootstrap();
 
   return (
     <>
@@ -653,14 +675,16 @@ export function AuthHeader() {
           </span>
         </div>
         <div className="flex items-center gap-2 sm:gap-3">
-          <db.SignedOut>
-            <button
-              onClick={() => setShowLogin(true)}
-              className="bg-accent text-accent-text hover:bg-accent-hover cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold transition-colors sm:rounded-xl sm:px-5 sm:py-2"
-            >
-              Sign in
-            </button>
-          </db.SignedOut>
+          {!isBootstrappingGuest && (
+            <db.SignedOut>
+              <button
+                onClick={() => setShowLogin(true)}
+                className="bg-accent text-accent-text hover:bg-accent-hover cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold transition-colors sm:rounded-xl sm:px-5 sm:py-2"
+              >
+                Sign in
+              </button>
+            </db.SignedOut>
+          )}
           <db.SignedIn>
             <SignedInHeader />
           </db.SignedIn>
@@ -674,7 +698,7 @@ export function AuthHeader() {
 function SignedInHeader() {
   const user = db.useUser();
   const [editingHandle, setEditingHandle] = useState(false);
-  const [upgrading, setUpgrading] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const handleRef = useRef<HTMLInputElement>(null);
   const isGuest = !user.email;
 
@@ -703,16 +727,22 @@ function SignedInHeader() {
 
   return (
     <>
-      {upgrading && <UpgradeModal onClose={() => setUpgrading(false)} />}
-      {isGuest && !upgrading && (
+      {showSignupModal && (
+        <LoginModal
+          onClose={() => setShowSignupModal(false)}
+          title="Sign up / Log in"
+          description="Enter your email to save and vote on sketches."
+        />
+      )}
+      {isGuest && !showSignupModal && (
         <button
-          onClick={() => setUpgrading(true)}
+          onClick={() => setShowSignupModal(true)}
           className="border-border-strong bg-surface text-text-primary hover:bg-hover cursor-pointer rounded-lg border px-4 py-2 text-sm font-semibold transition-all active:scale-95 sm:rounded-xl sm:px-5 sm:py-2"
         >
-          Save account
+          Sign up
         </button>
       )}
-      {!isGuest && !handle && (
+      {!isGuest && !showSignupModal && !handle && (
         <button
           onClick={() => setEditingHandle(true)}
           className="text-text-secondary hover:text-text-primary text-sm transition-colors"
@@ -793,14 +823,20 @@ function SignedInHeader() {
 export function LoginModal({
   onClose,
   redirectTo,
+  title,
+  description,
 }: {
   onClose: () => void;
   redirectTo?: string;
+  title?: string;
+  description?: string;
 }) {
   const [sentEmail, setSentEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const handleSuccess = async () => {
+    setErrorMessage('');
     onClose();
     if (redirectTo) {
       // Small delay to let auth state propagate to React tree
@@ -835,25 +871,45 @@ export function LoginModal({
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
-        <h2
-          className="mb-6 text-center text-2xl font-bold tracking-tight"
-          style={{ fontFamily: 'var(--font-kanit)' }}
-        >
-          <span className="text-slate-700">ink</span>
-          <span className="text-stone-500">dot</span>
-        </h2>
+        {title ? (
+          <h2 className="text-text-primary mb-2 text-center text-lg font-bold">
+            {title}
+          </h2>
+        ) : (
+          <h2
+            className="mb-6 text-center text-2xl font-bold tracking-tight"
+            style={{ fontFamily: 'var(--font-kanit)' }}
+          >
+            <span className="text-slate-700">ink</span>
+            <span className="text-stone-500">dot</span>
+          </h2>
+        )}
+        {sentEmail && (
+          <p className="text-text-primary mb-3 text-center text-sm font-medium">
+            {sentEmail}
+          </p>
+        )}
         {!sentEmail ? (
           <EmailStep
             onSendEmail={setSentEmail}
-            onClose={onClose}
-            onSuccess={handleSuccess}
+            onError={setErrorMessage}
+            description={description}
           />
         ) : (
           <CodeStep
             sentEmail={sentEmail}
-            onBack={() => setSentEmail('')}
+            onBack={() => {
+              setSentEmail('');
+              setErrorMessage('');
+            }}
+            onError={setErrorMessage}
             onSuccess={handleSuccess}
           />
+        )}
+        {errorMessage && (
+          <p className="mt-4 text-center text-sm text-red-600">
+            {errorMessage}
+          </p>
         )}
       </div>
     </div>
@@ -862,27 +918,30 @@ export function LoginModal({
 
 function EmailStep({
   onSendEmail,
-  onClose,
-  onSuccess,
+  onError,
+  description,
 }: {
   onSendEmail: (email: string) => void;
-  onClose?: () => void;
-  onSuccess?: () => void;
+  onError: (message: string) => void;
+  description?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = inputRef.current!.value;
+    onError('');
     onSendEmail(email);
-    db.auth.sendMagicCode({ email }).catch((err) => {
-      alert('Error: ' + err.body?.message);
-      onSendEmail('');
-    });
+    db.auth
+      .sendMagicCode({ email })
+      .catch((err: { body?: { message?: string } }) => {
+        onError(err.body?.message || 'Failed to send code.');
+        onSendEmail('');
+      });
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <p className="text-text-secondary text-center text-sm">
-        Enter your email to sign in or create an account.
+        {description || 'Enter your email to sign in or create an account.'}
       </p>
       <input
         ref={inputRef}
@@ -898,24 +957,6 @@ function EmailStep({
       >
         Send Code
       </button>
-      <div className="relative flex items-center justify-center">
-        <div className="absolute inset-0 flex items-center">
-          <div className="border-border w-full border-t" />
-        </div>
-        <span className="bg-surface text-text-tertiary relative px-3 text-xs">
-          or
-        </span>
-      </div>
-      <button
-        type="button"
-        onClick={async () => {
-          await db.auth.signInAsGuest();
-          (onSuccess || onClose)?.();
-        }}
-        className="border-border text-text-secondary hover:bg-hover w-full rounded-xl border px-4 py-2.5 font-medium transition-colors"
-      >
-        Continue as Guest
-      </button>
     </form>
   );
 }
@@ -923,19 +964,44 @@ function EmailStep({
 function CodeStep({
   sentEmail,
   onBack,
+  onError,
   onSuccess,
 }: {
   sentEmail: string;
   onBack: () => void;
+  onError: (message: string) => void;
   onSuccess?: () => void;
 }) {
-  const submitCode = (code: string) => {
-    db.auth
-      .signInWithMagicCode({ email: sentEmail, code })
-      .then(() => onSuccess?.())
-      .catch((err) => {
-        alert('Error: ' + err.body?.message);
+  const submitCode = async (code: string) => {
+    onError('');
+
+    try {
+      await db.auth.signInWithMagicCode({ email: sentEmail, code });
+
+      const response = await fetch('/api/auth/merge-linked-guest-data', {
+        method: 'POST',
       });
+      if (!response.ok) {
+        const result = (await response.json()) as { error?: string };
+        throw new Error(result.error || 'Failed to merge linked guest data');
+      }
+
+      onSuccess?.();
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : typeof err === 'object' &&
+              err !== null &&
+              'body' in err &&
+              typeof err.body === 'object' &&
+              err.body !== null &&
+              'message' in err.body &&
+              typeof err.body.message === 'string'
+            ? err.body.message
+            : 'Failed to sign in.';
+      onError(message);
+    }
   };
 
   return (
@@ -1040,108 +1106,6 @@ function CodeInput({ onComplete }: { onComplete: (code: string) => void }) {
           className="border-border text-text-primary h-12 w-10 rounded-lg border text-center text-xl font-semibold transition-colors focus:border-slate-500 focus:outline-none"
         />
       ))}
-    </div>
-  );
-}
-
-// -- Upgrade Modal --
-
-export function UpgradeModal({
-  onClose,
-  reason,
-}: {
-  onClose: () => void;
-  reason?: string;
-}) {
-  const [sentEmail, setSentEmail] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 px-4 pt-[10vh] pb-[40vh] backdrop-blur-sm sm:items-center sm:px-0 sm:pt-0 sm:pb-0"
-      onClick={(event) => handleModalBackdropClick(event, onClose)}
-    >
-      <div
-        className="bg-surface relative w-full max-w-sm rounded-2xl p-6 shadow-2xl"
-        onClick={stopModalClick}
-      >
-        <button
-          onClick={(event) => handleModalCloseClick(event, onClose)}
-          className="text-text-tertiary hover:text-text-secondary absolute top-3 right-3 transition-colors"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <h2 className="text-text-primary mb-2 text-center text-lg font-bold">
-          Save your account
-        </h2>
-        <p className="text-text-secondary mb-5 text-center text-sm">
-          {reason || 'Link an email to keep your sketches.'}
-        </p>
-        {!sentEmail ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const email = inputRef.current!.value;
-              setSentEmail(email);
-              db.auth.sendMagicCode({ email }).catch((err) => {
-                alert('Error: ' + err.body?.message);
-                setSentEmail('');
-              });
-            }}
-            className="flex flex-col space-y-4"
-          >
-            <input
-              ref={inputRef}
-              type="email"
-              placeholder="you@example.com"
-              className="border-border w-full rounded-xl border px-4 py-2.5 focus:border-slate-500 focus:outline-none"
-              required
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="bg-accent text-accent-text hover:bg-accent-hover w-full rounded-xl px-4 py-2.5 font-semibold transition-colors"
-            >
-              Send Code
-            </button>
-          </form>
-        ) : (
-          <div className="flex flex-col space-y-4">
-            <p className="text-text-secondary text-center text-sm">
-              We sent a code to{' '}
-              <strong className="text-text-primary">{sentEmail}</strong>
-            </p>
-            <CodeInput
-              onComplete={(code) => {
-                db.auth
-                  .signInWithMagicCode({ email: sentEmail, code })
-                  .then(() => onClose())
-                  .catch((err) => {
-                    alert('Error: ' + err.body?.message);
-                  });
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => setSentEmail('')}
-              className="text-text-tertiary hover:text-text-secondary text-sm"
-            >
-              Use a different email
-            </button>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
@@ -2697,9 +2661,10 @@ export function UpvoteButton({
           )}
         {showUpgrade &&
           createPortal(
-            <UpgradeModal
+            <LoginModal
               onClose={() => setShowUpgrade(false)}
-              reason="Link an email to vote on sketches."
+              title="Sign up / Log in"
+              description="Enter your email to save and vote on sketches."
             />,
             document.body,
           )}
@@ -2730,7 +2695,11 @@ export function UpvoteButton({
         )}
       {showUpgrade &&
         createPortal(
-          <UpgradeModal onClose={() => setShowUpgrade(false)} />,
+          <LoginModal
+            onClose={() => setShowUpgrade(false)}
+            title="Sign up / Log in"
+            description="Enter your email to save and vote on sketches."
+          />,
           document.body,
         )}
       <button
