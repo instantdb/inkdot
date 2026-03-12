@@ -132,8 +132,11 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
   const shapeStartRef = useRef<{ x: number; y: number } | null>(null);
   const currentShapeIdRef = useRef<string | null>(null);
   const shapeOffsetsRef = useRef<ShapeOffsets>(new Map());
-  const moveSelectedRef = useRef<string | null>(null);
+  const moveSelectedIdsRef = useRef<Set<string>>(new Set());
   const moveDragStartRef = useRef<{ x: number; y: number } | null>(null);
+  const moveSelectStartRef = useRef<{ x: number; y: number } | null>(null);
+  const moveSelectCurrentRef = useRef<{ x: number; y: number } | null>(null);
+  const moveModeRef = useRef<'drag' | 'select' | null>(null);
   const moveHoveredRef = useRef<string | null>(null);
   const deletedShapesRef = useRef<Set<string>>(new Set());
   const canvasCacheRef = useRef<ImageData | null>(null);
@@ -161,16 +164,36 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
   // --- Hit testing ---
 
-  const findShapeAt = useCallback((px: number, py: number): string | null => {
+  type ShapeInfo = {
+    id: string;
+    points: { x: number; y: number }[];
+    size: number;
+  };
+
+  const parseStrokePoints = useCallback(
+    (path: string, dx: number, dy: number): { x: number; y: number }[] => {
+      const points: { x: number; y: number }[] = [];
+
+      for (const command of path.split(' ')) {
+        if (!command) continue;
+        const prefix = command[0];
+        if (prefix !== 'M' && prefix !== 'L') continue;
+        const [rawX, rawY] = command
+          .slice(1)
+          .split(',')
+          .map((value) => Number(value));
+        if (!Number.isFinite(rawX) || !Number.isFinite(rawY)) continue;
+        points.push({ x: rawX + dx, y: rawY + dy });
+      }
+
+      return points;
+    },
+    [],
+  );
+
+  const getShapes = useCallback((): ShapeInfo[] => {
     const events = localEventsRef.current;
     const offsets = shapeOffsetsRef.current;
-    const HIT_RADIUS = 20;
-
-    type ShapeInfo = {
-      id: string;
-      points: { x: number; y: number }[];
-      size: number;
-    };
     const shapes: ShapeInfo[] = [];
     const shapeMap = new Map<string, ShapeInfo>();
 
@@ -235,101 +258,173 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
           size: 20,
         };
         shapes.push(s);
+      } else if (evt.type === 'stroke' && evt.path) {
+        const points = parseStrokePoints(evt.path, o.dx, o.dy);
+        if (points.length === 0) continue;
+        const s: ShapeInfo = {
+          id: evt.shapeId,
+          points,
+          size: evt.size || 4,
+        };
+        shapes.push(s);
       }
     }
 
     const deleted = deletedShapesRef.current;
-    for (let i = shapes.length - 1; i >= 0; i--) {
-      const s = shapes[i];
-      if (deleted.has(s.id)) continue;
-      const hitR = Math.max(HIT_RADIUS, s.size / 2 + 4);
-      if (
-        s.points.some(
-          (p) => Math.abs(p.x - px) < hitR && Math.abs(p.y - py) < hitR,
-        )
-      ) {
-        return s.id;
+    return shapes.filter((shape) => !deleted.has(shape.id));
+  }, [parseStrokePoints]);
+
+  const findShapeAt = useCallback(
+    (px: number, py: number): string | null => {
+      const HIT_RADIUS = 20;
+      const shapes = getShapes();
+
+      for (let i = shapes.length - 1; i >= 0; i--) {
+        const s = shapes[i];
+        const hitR = Math.max(HIT_RADIUS, s.size / 2 + 4);
+        if (
+          s.points.some(
+            (p) => Math.abs(p.x - px) < hitR && Math.abs(p.y - py) < hitR,
+          )
+        ) {
+          return s.id;
+        }
       }
-    }
-    return null;
-  }, []);
+      return null;
+    },
+    [getShapes],
+  );
+
+  const findShapesInRect = useCallback(
+    (
+      start: { x: number; y: number },
+      end: { x: number; y: number },
+    ): string[] => {
+      const minX = Math.min(start.x, end.x);
+      const maxX = Math.max(start.x, end.x);
+      const minY = Math.min(start.y, end.y);
+      const maxY = Math.max(start.y, end.y);
+
+      return getShapes()
+        .filter((shape) =>
+          shape.points.some(
+            (point) =>
+              point.x >= minX &&
+              point.x <= maxX &&
+              point.y >= minY &&
+              point.y <= maxY,
+          ),
+        )
+        .map((shape) => shape.id);
+    },
+    [getShapes],
+  );
 
   // --- Selection highlight ---
 
-  const drawHighlight = useCallback((targetId: string) => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!ctx) return;
-    const events = localEventsRef.current;
-    const offsets = shapeOffsetsRef.current;
+  const drawHighlights = useCallback(
+    (targetIds: Iterable<string>) => {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!ctx) return;
+      const events = localEventsRef.current;
+      const offsets = shapeOffsetsRef.current;
 
-    const bgLight = isLightColor(bgColorRef.current);
-    const ringColor = bgLight ? '#3b82f6' : '#60a5fa';
-    const pad = 3;
+      const bgLight = isLightColor(bgColorRef.current);
+      const ringColor = bgLight ? '#3b82f6' : '#60a5fa';
+      const pad = 3;
 
-    ctx.save();
-    let lx = 0,
-      ly = 0;
-    for (const evt of events) {
-      if (evt.shapeId !== targetId) continue;
-      if (evt.type === 'relocate') continue;
-      const o = offsets.get(targetId) || { dx: 0, dy: 0 };
-      const x = evt.x + o.dx;
-      const y = evt.y + o.dy;
-      const size = evt.size || 4;
+      for (const targetId of targetIds) {
+        ctx.save();
+        let lx = 0,
+          ly = 0;
+        for (const evt of events) {
+          if (evt.shapeId !== targetId) continue;
+          if (evt.type === 'relocate') continue;
+          const o = offsets.get(targetId) || { dx: 0, dy: 0 };
+          const x = evt.x + o.dx;
+          const y = evt.y + o.dy;
+          const size = evt.size || 4;
 
-      if (evt.type === 'start') {
-        lx = x;
-        ly = y;
-        ctx.beginPath();
-        ctx.arc(x, y, (size + pad) / 2, 0, Math.PI * 2);
-        ctx.fillStyle = ringColor;
-        ctx.fill();
-      } else if (evt.type === 'move') {
-        ctx.beginPath();
-        ctx.moveTo(lx, ly);
-        ctx.lineTo(x, y);
-        ctx.strokeStyle = ringColor;
-        ctx.lineWidth = size + pad * 2;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.stroke();
-        lx = x;
-        ly = y;
-      } else if (evt.type === 'end') {
-        lx = x;
-        ly = y;
-      } else if (evt.type === 'shape') {
-        const x2 = (evt.x2 ?? evt.x) + o.dx;
-        const y2 = (evt.y2 ?? evt.y) + o.dy;
-        drawShapeOnCanvas(
-          ctx,
-          evt.shape || 'rect',
-          x,
-          y,
-          x2,
-          y2,
-          ringColor,
-          size + pad * 2,
-          1,
-        );
-      } else if (evt.type === 'fill') {
-        ctx.beginPath();
-        ctx.arc(x, y, 10, 0, Math.PI * 2);
-        ctx.strokeStyle = ringColor;
-        ctx.lineWidth = 2;
-        ctx.stroke();
+          if (evt.type === 'start') {
+            lx = x;
+            ly = y;
+            ctx.beginPath();
+            ctx.arc(x, y, (size + pad) / 2, 0, Math.PI * 2);
+            ctx.fillStyle = ringColor;
+            ctx.fill();
+          } else if (evt.type === 'move') {
+            ctx.beginPath();
+            ctx.moveTo(lx, ly);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = ringColor;
+            ctx.lineWidth = size + pad * 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            lx = x;
+            ly = y;
+          } else if (evt.type === 'end') {
+            lx = x;
+            ly = y;
+          } else if (evt.type === 'shape') {
+            const x2 = (evt.x2 ?? evt.x) + o.dx;
+            const y2 = (evt.y2 ?? evt.y) + o.dy;
+            drawShapeOnCanvas(
+              ctx,
+              evt.shape || 'rect',
+              x,
+              y,
+              x2,
+              y2,
+              ringColor,
+              size + pad * 2,
+              1,
+            );
+          } else if (evt.type === 'fill') {
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2);
+            ctx.strokeStyle = ringColor;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          } else if (evt.type === 'stroke' && evt.path) {
+            const points = parseStrokePoints(evt.path, o.dx, o.dy);
+            if (points.length === 0) continue;
+            const lineWidth = size + pad * 2;
+
+            ctx.beginPath();
+            ctx.arc(points[0].x, points[0].y, lineWidth / 2, 0, Math.PI * 2);
+            ctx.fillStyle = ringColor;
+            ctx.fill();
+
+            if (points.length > 1) {
+              ctx.beginPath();
+              ctx.moveTo(points[0].x, points[0].y);
+              for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+              }
+              ctx.strokeStyle = ringColor;
+              ctx.lineWidth = lineWidth;
+              ctx.lineCap = 'round';
+              ctx.lineJoin = 'round';
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.restore();
       }
-    }
-    ctx.restore();
 
-    resetDrawState();
-    for (const evt of events) {
-      if (evt.shapeId !== targetId) continue;
-      if (evt.type === 'relocate') continue;
-      drawEvent(ctx, evt, 1, offsets);
-    }
-  }, []);
+      resetDrawState();
+      for (const targetId of targetIds) {
+        for (const evt of events) {
+          if (evt.shapeId !== targetId) continue;
+          if (evt.type === 'relocate') continue;
+          drawEvent(ctx, evt, 1, offsets);
+        }
+      }
+    },
+    [parseStrokePoints],
+  );
 
   // --- Init canvas ---
 
@@ -405,6 +500,40 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     [],
   );
 
+  const redrawMoveOverlay = useCallback(() => {
+    redrawCanvas(bgColorRef.current);
+
+    const selectedIds = Array.from(moveSelectedIdsRef.current);
+    const highlightIds =
+      moveHoveredRef.current && !selectedIds.includes(moveHoveredRef.current)
+        ? [...selectedIds, moveHoveredRef.current]
+        : selectedIds;
+
+    if (highlightIds.length > 0) {
+      drawHighlights(highlightIds);
+    }
+
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    const selectionStart = moveSelectStartRef.current;
+    const selectionCurrent = moveSelectCurrentRef.current;
+    if (!ctx || !selectionStart || !selectionCurrent) return;
+
+    const x = Math.min(selectionStart.x, selectionCurrent.x);
+    const y = Math.min(selectionStart.y, selectionCurrent.y);
+    const width = Math.abs(selectionCurrent.x - selectionStart.x);
+    const height = Math.abs(selectionCurrent.y - selectionStart.y);
+
+    ctx.save();
+    ctx.setLineDash([8, 6]);
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.08)';
+    ctx.strokeRect(x, y, width, height);
+    ctx.fillRect(x, y, width, height);
+    ctx.restore();
+  }, [drawHighlights, redrawCanvas]);
+
   // --- Trace image loading (canvas mode only) ---
 
   useEffect(() => {
@@ -461,8 +590,11 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
     (t: DrawTool) => {
       const prev = toolRef.current;
       if ((prev === 'move' || prev === 'eraser') && t !== prev) {
-        moveSelectedRef.current = null;
+        moveSelectedIdsRef.current = new Set();
         moveDragStartRef.current = null;
+        moveSelectStartRef.current = null;
+        moveSelectCurrentRef.current = null;
+        moveModeRef.current = null;
         moveHoveredRef.current = null;
         redrawCanvas(bgColorRef.current);
         if (canvasRef.current) canvasRef.current.style.cursor = 'crosshair';
@@ -574,15 +706,25 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       if (currentTool === 'move') {
         const hitId = findShapeAt(pos.x, pos.y);
         if (hitId) {
-          moveSelectedRef.current = hitId;
+          if (!moveSelectedIdsRef.current.has(hitId)) {
+            moveSelectedIdsRef.current = new Set([hitId]);
+          }
           moveDragStartRef.current = pos;
+          moveSelectStartRef.current = null;
+          moveSelectCurrentRef.current = null;
+          moveModeRef.current = 'drag';
           isDrawingRef.current = true;
-          redrawCanvas(bgColorRef.current);
-          drawHighlight(hitId);
+          redrawMoveOverlay();
           if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing';
         } else {
-          moveSelectedRef.current = null;
-          redrawCanvas(bgColorRef.current);
+          moveSelectedIdsRef.current = new Set();
+          moveDragStartRef.current = null;
+          moveSelectStartRef.current = pos;
+          moveSelectCurrentRef.current = pos;
+          moveModeRef.current = 'select';
+          moveHoveredRef.current = null;
+          isDrawingRef.current = true;
+          redrawMoveOverlay();
         }
         return;
       }
@@ -662,7 +804,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       if (ctx) drawEvent(ctx, evt, 1, shapeOffsetsRef.current);
       writeEvent(evt);
     },
-    [getCanvasPos, writeEvent, findShapeAt, drawHighlight, redrawCanvas],
+    [findShapeAt, getCanvasPos, redrawCanvas, redrawMoveOverlay, writeEvent],
   );
 
   const handlePointerMove = useCallback(
@@ -678,8 +820,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         const hitId = findShapeAt(pos.x, pos.y);
         if (hitId !== moveHoveredRef.current) {
           moveHoveredRef.current = hitId;
-          redrawCanvas(bgColorRef.current);
-          if (hitId) drawHighlight(hitId);
+          redrawMoveOverlay();
           const canvas = canvasRef.current;
           if (canvas) {
             canvas.style.cursor = hitId
@@ -693,35 +834,43 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
       // Move tool
       if (currentTool === 'move') {
-        if (isDrawingRef.current) {
-          const sid = moveSelectedRef.current;
-          if (!sid || !moveDragStartRef.current) return;
+        if (isDrawingRef.current && moveModeRef.current === 'drag') {
+          const selectedIds = Array.from(moveSelectedIdsRef.current);
+          if (selectedIds.length === 0 || !moveDragStartRef.current) return;
           const dx = pos.x - moveDragStartRef.current.x;
           const dy = pos.y - moveDragStartRef.current.y;
           if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
-          const orig = shapeOffsetsRef.current.get(sid) || { dx: 0, dy: 0 };
-          shapeOffsetsRef.current.set(sid, {
-            dx: orig.dx + dx,
-            dy: orig.dy + dy,
-          });
+          for (const sid of selectedIds) {
+            const orig = shapeOffsetsRef.current.get(sid) || { dx: 0, dy: 0 };
+            shapeOffsetsRef.current.set(sid, {
+              dx: orig.dx + dx,
+              dy: orig.dy + dy,
+            });
+          }
           moveDragStartRef.current = pos;
-          redrawCanvas(bgColorRef.current);
-          drawHighlight(sid);
+          redrawMoveOverlay();
           if (shouldWriteCursor) writeEvent({ t, ...pos, type: 'cursor' });
-          writeEvent({
-            t,
-            x: dx,
-            y: dy,
-            type: 'relocate',
-            shapeId: sid,
-          });
+          for (const sid of selectedIds) {
+            writeEvent({
+              t,
+              x: dx,
+              y: dy,
+              type: 'relocate',
+              shapeId: sid,
+            });
+          }
+          return;
+        }
+        if (isDrawingRef.current && moveModeRef.current === 'select') {
+          moveSelectCurrentRef.current = pos;
+          redrawMoveOverlay();
+          if (shouldWriteCursor) writeEvent({ t, ...pos, type: 'cursor' });
           return;
         }
         const hitId = findShapeAt(pos.x, pos.y);
         if (hitId !== moveHoveredRef.current) {
           moveHoveredRef.current = hitId;
-          redrawCanvas(bgColorRef.current);
-          if (hitId) drawHighlight(hitId);
+          redrawMoveOverlay();
           const canvas = canvasRef.current;
           if (canvas) canvas.style.cursor = hitId ? 'grab' : 'default';
         }
@@ -777,7 +926,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
         writeEvent({ t, ...pos, type: 'cursor' });
       }
     },
-    [getCanvasPos, writeEvent, redrawCanvas, findShapeAt, drawHighlight],
+    [findShapeAt, getCanvasPos, redrawCanvas, redrawMoveOverlay, writeEvent],
   );
 
   const handlePointerUp = useCallback(
@@ -788,36 +937,54 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
       // Move tool
       if (currentTool === 'move') {
-        const sid = moveSelectedRef.current;
-        if (sid && moveDragStartRef.current) {
+        if (moveModeRef.current === 'drag' && moveDragStartRef.current) {
+          const selectedIds = Array.from(moveSelectedIdsRef.current);
           const dx = pos.x - moveDragStartRef.current.x;
           const dy = pos.y - moveDragStartRef.current.y;
-          if (Math.abs(dx) >= 0.5 || Math.abs(dy) >= 0.5) {
-            const orig = shapeOffsetsRef.current.get(sid) || { dx: 0, dy: 0 };
-            shapeOffsetsRef.current.set(sid, {
-              dx: orig.dx + dx,
-              dy: orig.dy + dy,
-            });
-            writeEvent({
-              t,
-              x: dx,
-              y: dy,
-              type: 'relocate',
-              shapeId: sid,
-            });
+          if (
+            (Math.abs(dx) >= 0.5 || Math.abs(dy) >= 0.5) &&
+            selectedIds.length > 0
+          ) {
+            for (const sid of selectedIds) {
+              const orig = shapeOffsetsRef.current.get(sid) || {
+                dx: 0,
+                dy: 0,
+              };
+              shapeOffsetsRef.current.set(sid, {
+                dx: orig.dx + dx,
+                dy: orig.dy + dy,
+              });
+              writeEvent({
+                t,
+                x: dx,
+                y: dy,
+                type: 'relocate',
+                shapeId: sid,
+              });
+            }
           }
-          redrawCanvas(bgColorRef.current);
+        } else if (
+          moveModeRef.current === 'select' &&
+          moveSelectStartRef.current &&
+          moveSelectCurrentRef.current
+        ) {
+          moveSelectedIdsRef.current = new Set(
+            findShapesInRect(
+              moveSelectStartRef.current,
+              moveSelectCurrentRef.current,
+            ),
+          );
         }
-        moveSelectedRef.current = null;
         moveDragStartRef.current = null;
+        moveSelectStartRef.current = null;
+        moveSelectCurrentRef.current = null;
+        moveModeRef.current = null;
         isDrawingRef.current = false;
         const hoverHit = findShapeAt(pos.x, pos.y);
         moveHoveredRef.current = hoverHit;
-        if (hoverHit) {
-          drawHighlight(hoverHit);
-          if (canvasRef.current) canvasRef.current.style.cursor = 'grab';
-        } else {
-          if (canvasRef.current) canvasRef.current.style.cursor = 'default';
+        redrawMoveOverlay();
+        if (canvasRef.current) {
+          canvasRef.current.style.cursor = hoverHit ? 'grab' : 'default';
         }
         return;
       }
@@ -878,7 +1045,14 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
       });
       currentShapeIdRef.current = null;
     },
-    [getCanvasPos, writeEvent, redrawCanvas, findShapeAt, drawHighlight],
+    [
+      findShapeAt,
+      findShapesInRect,
+      getCanvasPos,
+      redrawCanvas,
+      redrawMoveOverlay,
+      writeEvent,
+    ],
   );
 
   // --- Trace file upload handler ---
@@ -954,6 +1128,14 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
             isDrawingRef.current = false;
             shapeStartRef.current = null;
             currentShapeIdRef.current = null;
+            redrawCanvas(bgColorRef.current);
+          } else if (toolRef.current === 'move') {
+            moveSelectedIdsRef.current = new Set();
+            moveDragStartRef.current = null;
+            moveSelectStartRef.current = null;
+            moveSelectCurrentRef.current = null;
+            moveModeRef.current = null;
+            moveHoveredRef.current = null;
             redrawCanvas(bgColorRef.current);
           }
           break;

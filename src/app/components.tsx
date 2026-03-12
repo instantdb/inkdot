@@ -476,9 +476,13 @@ function HeaderMenu() {
         </svg>
       </button>
       {open && (
-        <div className="border-border bg-surface absolute top-full right-0 z-50 mt-1 min-w-[160px] overflow-hidden rounded-lg border py-1 shadow-lg">
+        <div
+          className="border-border bg-surface absolute top-full right-0 z-50 mt-1 min-w-[160px] overflow-hidden rounded-lg border py-1 shadow-lg"
+          onClick={() => setOpen(false)}
+        >
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setTheme(nextTheme);
             }}
             className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
@@ -488,10 +492,6 @@ function HeaderMenu() {
           </button>
           <div className="border-border my-1 border-t" />
           <BrowseMenuItems
-            onNavigate={(href) => {
-              router.push(href);
-              setOpen(false);
-            }}
             mySketchesHref={
               isRealUser && handle
                 ? `/user/${encodeURIComponent(handle)}`
@@ -513,12 +513,13 @@ function HeaderMenu() {
   );
 }
 
+const menuLinkClass =
+  'text-text-secondary hover:bg-hover flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors';
+
 function BrowseMenuItems({
-  onNavigate,
   mySketchesHref,
   upvotedHref,
 }: {
-  onNavigate: (href: string) => void;
   mySketchesHref?: string;
   upvotedHref?: string;
 }) {
@@ -526,32 +527,20 @@ function BrowseMenuItems({
 
   return (
     <>
-      <button
-        onClick={() => onNavigate('/best')}
-        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-      >
+      <Link href="/best" className={menuLinkClass}>
         <PencilIcon size={14} filled />
         Best
-      </button>
-      <button
-        onClick={() => onNavigate('/newest')}
-        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-      >
+      </Link>
+      <Link href="/newest" className={menuLinkClass}>
         <span aria-hidden="true" className={iconSlotClass} />
         Newest
-      </button>
-      <button
-        onClick={() => onNavigate('/top')}
-        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-      >
+      </Link>
+      <Link href="/top" className={menuLinkClass}>
         <span aria-hidden="true" className={iconSlotClass} />
         Top
-      </button>
+      </Link>
       {mySketchesHref && (
-        <button
-          onClick={() => onNavigate(mySketchesHref)}
-          className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-        >
+        <Link href={mySketchesHref} className={menuLinkClass}>
           <svg
             width="14"
             height="14"
@@ -568,16 +557,13 @@ function BrowseMenuItems({
             <rect x="14" y="14" width="7" height="7" />
           </svg>
           My sketches
-        </button>
+        </Link>
       )}
       {upvotedHref && (
-        <button
-          onClick={() => onNavigate(upvotedHref)}
-          className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-        >
+        <Link href={upvotedHref} className={menuLinkClass}>
           <span aria-hidden="true" className={iconSlotClass} />
           Upvoted
-        </button>
+        </Link>
       )}
     </>
   );
@@ -592,26 +578,20 @@ function SignedInMenuItems({
   onClose: () => void;
   showSignOut?: boolean;
 }) {
-  const router = useRouter();
   const { signOutToGuest } = useGuestBootstrap();
 
   return (
     <>
-      <button
-        onClick={() => {
-          router.push('/new');
-          onClose();
-        }}
-        className="text-text-secondary hover:bg-hover flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors"
-      >
+      <Link href="/new" className={menuLinkClass}>
         <ToolIconSvg tool="pen" size={14} />
         Create Sketch
-      </button>
+      </Link>
       {showSignOut && (
         <>
           <div className="border-border my-1 border-t" />
           <button
-            onClick={async () => {
+            onClick={async (e) => {
+              e.stopPropagation();
               onClose();
               await signOutToGuest();
             }}
