@@ -502,6 +502,7 @@ function HeaderMenu() {
           <db.SignedIn>
             <div className="border-border my-1 border-t" />
             <SignedInMenuItems
+              email={isRealUser ? (user.email ?? undefined) : undefined}
               onClose={() => setOpen(false)}
               showSignOut={!isGuest}
             />
@@ -583,9 +584,11 @@ function BrowseMenuItems({
 }
 
 function SignedInMenuItems({
+  email,
   onClose,
   showSignOut = true,
 }: {
+  email?: string;
   onClose: () => void;
   showSignOut?: boolean;
 }) {
@@ -630,6 +633,16 @@ function SignedInMenuItems({
             </svg>
             Sign out
           </button>
+        </>
+      )}
+      {email && (
+        <>
+          <div className="border-border my-1 border-t" />
+          <div className="px-3 py-2">
+            <div className="text-text-primary truncate text-sm font-medium">
+              {email}
+            </div>
+          </div>
         </>
       )}
     </>
