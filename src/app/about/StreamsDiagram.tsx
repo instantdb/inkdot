@@ -242,16 +242,7 @@ function ParticleSprite({
       fill={
         particle.dim
           ? C.edgeDim
-          : [
-              '#e74c3c',
-              '#3498db',
-              '#2ecc71',
-              '#f39c12',
-              '#9b59b6',
-              '#1abc9c',
-              '#e67e22',
-              '#e84393',
-            ][particle.n % 8]
+          : ['#5b8a9a', '#7a9a82', '#a0896c', '#8b7ea6'][particle.n % 4]
       }
       opacity={particle.dim ? 0.3 : 0.9}
       filter={particle.dim ? undefined : 'url(#particle-glow)'}
@@ -408,7 +399,7 @@ export function StreamsDiagram() {
     [goToStep, stepIdx],
   );
   const next = useCallback(
-    () => goToStep(Math.min(STEPS.length - 1, stepIdx + 1)),
+    () => goToStep(stepIdx === STEPS.length - 1 ? 0 : stepIdx + 1),
     [goToStep, stepIdx],
   );
 
@@ -591,7 +582,7 @@ export function StreamsDiagram() {
             </button>
             <button
               onClick={next}
-              disabled={stepIdx === STEPS.length - 1}
+              disabled={false}
               aria-label="Next step"
               className="text-text-secondary hover:bg-hover flex h-8 w-8 items-center justify-center rounded-lg transition-all active:scale-90 disabled:opacity-20"
             >

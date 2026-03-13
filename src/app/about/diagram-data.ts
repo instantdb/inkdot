@@ -112,6 +112,7 @@ export type EdgeDef = {
   to: string;
   bend?: number;
   stream?: boolean;
+  streamDelay?: number;
   bidi?: boolean;
   enterDelay?: number;
   autoExit?: number;

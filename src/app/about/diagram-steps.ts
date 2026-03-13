@@ -1,6 +1,5 @@
 import {
   type Step,
-  GROW_SPEED,
   PARTICLE_PX_SPEED,
   edgeGeo,
   edgeGrowDurationS,
@@ -8,6 +7,23 @@ import {
 } from './diagram-data';
 
 export const STEPS: Step[] = [
+  {
+    title: 'Streams',
+    description:
+      'Streams are the backbone of inkdot. Every sketch is a stream of drawing actions that can be written, read, stored, and replayed in real time.',
+    activeNodes: [],
+    activeEdges: [],
+    dimNodes: [
+      'writer',
+      'instant1',
+      'instant2',
+      'instant3',
+      'storage',
+      'readerA',
+      'readerB',
+      'readerC',
+    ],
+  },
   {
     title: 'Writer starts streaming',
     description:
@@ -284,14 +300,8 @@ export const STEPS: Step[] = [
           from: 'storage',
           to: 'readerB',
           grow: true,
-          stream: false,
           enterDelay: connectGrow,
-          autoExit: fetchGrow,
-        },
-        {
-          from: 'storage',
-          to: 'readerB',
-          enterDelay: fetchGrow,
+          streamDelay: fetchGrow,
           shrink: true,
           shrinkDelay: fetchGrow,
           shrinkToward: 'to',

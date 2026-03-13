@@ -175,6 +175,7 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
   const activeStreamsRef = useRef(new Map<string, ActiveStreamEdge>());
   const flushRef = useRef<FlushState | null>(null);
   const liveCountsRef = useRef(new Map<string, number>());
+  const replayStorageAvailableRef = useRef<number | null>(null);
 
   const nextParticleIdRef = useRef(0);
   const nextFlushRenderIdRef = useRef(0);
@@ -225,8 +226,8 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
       if (nodeId === 'writer') {
         return writerCountRef.current;
       }
-      if (nodeId === 'storage' && stepIdxRef.current === 5) {
-        return Math.max(nodeArrivedRef.current.get(nodeId) ?? 0, 10);
+      if (nodeId === 'storage' && stepIdxRef.current === 6) {
+        return replayStorageAvailableRef.current ?? 0;
       }
       return nodeArrivedRef.current.get(nodeId) ?? 0;
     }
@@ -452,7 +453,7 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
 
       const tick = () => {
         writerTimerRef.current = null;
-        if (!writerLoopActiveRef.current || stepIdxRef.current >= 4) {
+        if (!writerLoopActiveRef.current || stepIdxRef.current >= 5) {
           writerLoopActiveRef.current = false;
           return;
         }
@@ -480,7 +481,7 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
       startWriterLoop();
     }
 
-    if (stepIdx < 4) {
+    if (stepIdx < 5) {
       startWriterLoop();
     } else {
       stopWriterLoop();
@@ -490,6 +491,10 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
     clearTimeouts(stepTimersRef.current);
     activeStreamsRef.current.clear();
     flushRef.current = null;
+    replayStorageAvailableRef.current =
+      stepIdx === 6
+        ? Math.max(nodeArrivedRef.current.get('storage') ?? 0, 10)
+        : null;
     scheduleStep(0, () => {
       setFlushEdges((prev) => (prev.length === 0 ? prev : []));
     });
@@ -515,15 +520,26 @@ export function useParticles(edges: EdgeDef[], stepIdx: number) {
         activeStreamsRef.current.delete(instanceKey);
       };
 
-      const enterDelayMs = (edge.enterDelay ?? 0) * 1000;
-      if (enterDelayMs > 0) {
-        scheduleStep(enterDelayMs, activate);
+      const streamEnterDelayMs =
+        Math.max(
+          edge.enterDelay ?? 0,
+          edge.streamDelay ?? edge.enterDelay ?? 0,
+        ) * 1000;
+      if (streamEnterDelayMs > 0) {
+        scheduleStep(streamEnterDelayMs, activate);
       } else {
         activate();
       }
 
-      if (edge.autoExit != null) {
-        scheduleStep(edge.autoExit * 1000, deactivate);
+      const exitAt =
+        edge.autoExit == null
+          ? edge.shrinkDelay
+          : edge.shrinkDelay == null
+            ? edge.autoExit
+            : Math.min(edge.autoExit, edge.shrinkDelay);
+
+      if (exitAt != null) {
+        scheduleStep(exitAt * 1000, deactivate);
       }
     });
 
