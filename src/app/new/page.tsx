@@ -133,6 +133,30 @@ function DrawCanvas({
   const finishedRef = useRef(false);
   const streamActiveRef = useRef(false);
 
+  const safelySetPointerCapture = useCallback(
+    (target: HTMLCanvasElement, pointerId: number) => {
+      if (!('setPointerCapture' in target)) return;
+      try {
+        target.setPointerCapture(pointerId);
+      } catch {
+        // iOS Safari can throw for touch pointers when capture isn't available.
+      }
+    },
+    [],
+  );
+
+  const safelyReleasePointerCapture = useCallback(
+    (target: HTMLCanvasElement, pointerId: number) => {
+      if (!('releasePointerCapture' in target)) return;
+      try {
+        target.releasePointerCapture(pointerId);
+      } catch {
+        // Ignore missing/stale capture state.
+      }
+    },
+    [],
+  );
+
   // Drawing hook
   const drawing = useDrawingCanvas({
     userId,
@@ -648,12 +672,12 @@ function DrawCanvas({
           className="w-full cursor-crosshair"
           style={{ touchAction: 'none', backgroundColor: drawing.bgColor }}
           onPointerDown={(e) => {
-            e.currentTarget.setPointerCapture(e.pointerId);
+            safelySetPointerCapture(e.currentTarget, e.pointerId);
             drawing.handlePointerDown(e);
           }}
           onPointerMove={drawing.handlePointerMove}
           onPointerUp={(e) => {
-            e.currentTarget.releasePointerCapture(e.pointerId);
+            safelyReleasePointerCapture(e.currentTarget, e.pointerId);
             drawing.handlePointerUp(e);
           }}
         />
