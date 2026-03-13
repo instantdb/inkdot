@@ -89,7 +89,7 @@ export default function AboutPage() {
 
           <section className="space-y-2">
             <h2 className="text-text-primary text-base font-semibold sm:text-lg">
-              How Instant Streams Work
+              How Streams Work
             </h2>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
               The writer pushes data to Instant over a websocket and Instant

@@ -470,7 +470,7 @@ export function StreamsDiagram() {
             fill={C.navy}
             opacity={1}
           >
-            Instant Servers
+            Servers
           </text>
 
           {/* Edges */}
