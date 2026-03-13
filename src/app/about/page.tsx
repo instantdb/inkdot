@@ -43,13 +43,13 @@ export default function AboutPage() {
               >
                 Streams
               </a>
-              . Queries, auth, votes, and sketches are all real-time via
-              InstantDB. The live drawing uses Instant Streams to broadcast
-              brushstrokes with zero persistence overhead.
+              . Queries, auth, votes, and sketches are all real-time. The live
+              drawing uses Streams to broadcast brushstrokes with zero
+              persistence overhead.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
-              Instant streams never expire, so you can stream after they&apos;re
-              done to replay sketches.
+              Streams never expire, so you can read stream after they&apos;re done to
+              replay sketches.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
               They were built to stream llm-generated responses to clients.
@@ -72,7 +72,7 @@ export default function AboutPage() {
                 AI chat app
               </a>{' '}
               if you want to see how to use streams in your llm-powered apps.
-              Instant also publishes a{' '}
+              There is also a{' '}
               <a
                 href="https://npmjs.com/package/@instantdb/resumable-stream"
                 target="_blank"
@@ -92,15 +92,15 @@ export default function AboutPage() {
               How Streams Work
             </h2>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
-              The writer pushes data to Instant over a websocket and Instant
-              immediately distributes those writes to every listener of the
-              stream through the listener&apos;s websocket or sse connections.
+              The writer pushes data over a websocket and it is immediately
+              distributed to every listener of the stream through the
+              listener&apos;s websocket or sse connections.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
-              As the stream grows, Instant flushes the writes to Instant Storage
-              (backed by S3). When a new client connects, it fetches the chunks
-              from S3 and subscribes to new writes. The new writes are delivered
-              directly from the Instant server.
+              As the stream grows, writes are flushed to Storage (backed by S3).
+              When a new client connects, it fetches the chunks from S3 and
+              subscribes to new writes. The new writes are delivered directly
+              from the server.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
               When the writer is finished, all writes are flushed to Storage and
