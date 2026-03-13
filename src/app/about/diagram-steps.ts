@@ -294,6 +294,7 @@ export const STEPS: Step[] = [
           bidi: true,
           shrink: true,
           shrinkDelay: connectGrow,
+          shrinkToward: 'from',
         },
         // S3 → Reader B (grow line, then stream + shrink with last particle)
         {

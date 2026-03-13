@@ -1,5 +1,145 @@
 import { type NodeDef, C } from './diagram-data';
 
+function PhoneIcon({
+  node,
+  fill,
+  stroke,
+  sw,
+  detailColor,
+  filled,
+  dim,
+}: {
+  node: NodeDef;
+  fill: string;
+  stroke: string;
+  sw: number;
+  detailColor: string;
+  filled: boolean;
+  dim: boolean;
+}) {
+  const pw = 16;
+  const ph = 24;
+  const px = node.cx - pw / 2;
+  const py = node.cy - ph / 2;
+  return (
+    <g className="hidden max-sm:block">
+      {filled && !dim && (
+        <rect
+          x={px + 1}
+          y={py + 1}
+          width={pw}
+          height={ph}
+          rx={3}
+          fill={node.color}
+          opacity={0.2}
+        />
+      )}
+      <rect
+        x={px}
+        y={py}
+        width={pw}
+        height={ph}
+        rx={3}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={sw}
+      />
+      {/* Speaker notch */}
+      <line
+        x1={node.cx - 3}
+        y1={py + 3.5}
+        x2={node.cx + 3}
+        y2={py + 3.5}
+        stroke={detailColor}
+        strokeWidth={0.8}
+        strokeLinecap="round"
+      />
+      {/* Home button */}
+      <circle
+        cx={node.cx}
+        cy={py + ph - 4}
+        r={2}
+        fill="none"
+        stroke={detailColor}
+        strokeWidth={0.8}
+      />
+    </g>
+  );
+}
+
+function MonitorIcon({
+  node,
+  fill,
+  stroke,
+  sw,
+  detailColor,
+  filled,
+  dim,
+}: {
+  node: NodeDef;
+  fill: string;
+  stroke: string;
+  sw: number;
+  detailColor: string;
+  filled: boolean;
+  dim: boolean;
+}) {
+  const mw = 28;
+  const mh = 18;
+  const mx = node.cx - mw / 2;
+  const my = node.cy - mh / 2 - 3;
+  return (
+    <g className="max-sm:hidden sm:block">
+      {filled && !dim && (
+        <rect
+          x={mx + 1}
+          y={my + 1}
+          width={mw}
+          height={mh}
+          rx={2.5}
+          fill={node.color}
+          opacity={0.2}
+        />
+      )}
+      <rect
+        x={mx}
+        y={my}
+        width={mw}
+        height={mh}
+        rx={2.5}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={sw}
+      />
+      <line
+        x1={mx + 3}
+        y1={my + mh - 3}
+        x2={mx + mw - 3}
+        y2={my + mh - 3}
+        stroke={detailColor}
+        strokeWidth={0.6}
+      />
+      <line
+        x1={node.cx}
+        y1={my + mh}
+        x2={node.cx}
+        y2={my + mh + 4}
+        stroke={stroke}
+        strokeWidth={sw}
+      />
+      <line
+        x1={node.cx - 7}
+        y1={my + mh + 4}
+        x2={node.cx + 7}
+        y2={my + mh + 4}
+        stroke={stroke}
+        strokeWidth={sw}
+        strokeLinecap="round"
+      />
+    </g>
+  );
+}
+
 export function CleanNode({
   node,
   filled,
@@ -19,58 +159,11 @@ export function CleanNode({
       : node.color;
 
   if (node.shape === 'circle') {
-    const mw = 28;
-    const mh = 18;
-    const mx = node.cx - mw / 2;
-    const my = node.cy - mh / 2 - 3;
+    const shared = { node, fill, stroke, sw, detailColor, filled, dim };
     return (
       <g>
-        {filled && !dim && (
-          <rect
-            x={mx + 1}
-            y={my + 1}
-            width={mw}
-            height={mh}
-            rx={2.5}
-            fill={node.color}
-            opacity={0.2}
-          />
-        )}
-        <rect
-          x={mx}
-          y={my}
-          width={mw}
-          height={mh}
-          rx={2.5}
-          fill={fill}
-          stroke={stroke}
-          strokeWidth={sw}
-        />
-        <line
-          x1={mx + 3}
-          y1={my + mh - 3}
-          x2={mx + mw - 3}
-          y2={my + mh - 3}
-          stroke={detailColor}
-          strokeWidth={0.6}
-        />
-        <line
-          x1={node.cx}
-          y1={my + mh}
-          x2={node.cx}
-          y2={my + mh + 4}
-          stroke={stroke}
-          strokeWidth={sw}
-        />
-        <line
-          x1={node.cx - 7}
-          y1={my + mh + 4}
-          x2={node.cx + 7}
-          y2={my + mh + 4}
-          stroke={stroke}
-          strokeWidth={sw}
-          strokeLinecap="round"
-        />
+        <PhoneIcon {...shared} />
+        <MonitorIcon {...shared} />
       </g>
     );
   }
