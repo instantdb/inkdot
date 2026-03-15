@@ -699,7 +699,7 @@ export function useDrawingCanvas(opts: UseDrawingCanvasOptions) {
 
   const getCanvasPos = useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
-      const canvas = canvasRef.current!;
+      const canvas = canvasRef.current ?? e.currentTarget;
       const rect = canvas.getBoundingClientRect();
       const scaleX = CANVAS_W / rect.width;
       const scaleY = CANVAS_H / rect.height;
