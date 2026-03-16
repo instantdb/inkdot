@@ -128,6 +128,9 @@ function HomeBrowseLinks({
       >
         Top
       </Link>
+      <Link href="/about" className={browseLinkClass}>
+        About
+      </Link>
     </div>
   );
 }

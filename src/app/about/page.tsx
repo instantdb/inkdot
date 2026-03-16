@@ -44,12 +44,13 @@ export default function AboutPage() {
                 Streams
               </a>
               . Queries, auth, votes, and sketches are all real-time. The live
-              drawing uses Streams to broadcast brushstrokes with zero
-              persistence overhead.
+              drawing puts a json line per pointer event into the stream. Then
+              the player subscribes to the stream and replays the events to
+              generate shapes.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
-              Streams never expire, so you can read stream after they&apos;re
-              done to replay sketches.
+              Streams never expire, so you can read the stream it is done to
+              replay sketches.
             </p>
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
               They were built to stream llm-generated responses to clients.
@@ -91,6 +92,7 @@ export default function AboutPage() {
             <h2 className="text-text-primary text-base font-semibold sm:text-lg">
               How Streams Work
             </h2>
+            <StreamsDiagram />
             <p className="text-text-secondary text-sm leading-relaxed sm:text-base">
               The writer pushes data over a websocket and it is immediately
               distributed to every listener of the stream through the
@@ -111,7 +113,6 @@ export default function AboutPage() {
               but allows the streams to grow beyond what could safely fit in
               memory.
             </p>
-            <StreamsDiagram />
           </section>
         </div>
       </div>
