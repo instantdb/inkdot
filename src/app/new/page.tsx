@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { id } from '@instantdb/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -203,29 +203,30 @@ function DrawCanvas({
       for (const evt of remixEvents) {
         writer.write(JSON.stringify(evt) + '\n');
       }
-    } else {
-      writer.write(
-        JSON.stringify({
-          t: 0,
-          x: 0,
-          y: 0,
-          type: 'bg',
-          color: drawing.bgColor,
-        }) + '\n',
-      );
     }
 
-    writer.write(
-      JSON.stringify({
-        t: 0,
-        x: 0,
-        y: 0,
-        type: 'state',
-        tool: drawing.tool,
-        color: drawing.penColor,
-        size: drawing.brushSize,
-      }) + '\n',
-    );
+    // Write initial bg + state events so trim/playback knows the bg color
+    // and initial tool settings. Push to localEventsRef so the trim view
+    // can read them back.
+    const initialBgEvt: StrokeEvent = {
+      t: 0,
+      x: 0,
+      y: 0,
+      type: 'bg',
+      color: drawing.bgColor,
+    };
+    const initialStateEvt: StrokeEvent = {
+      t: 0,
+      x: 0,
+      y: 0,
+      type: 'state',
+      tool: drawing.tool,
+      color: drawing.penColor,
+      size: drawing.brushSize,
+    };
+    writer.write(JSON.stringify(initialBgEvt) + '\n');
+    writer.write(JSON.stringify(initialStateEvt) + '\n');
+    drawing.localEventsRef.current.splice(0, 0, initialBgEvt, initialStateEvt);
 
     // Start the timestamp clock AFTER writing remix/initial events
     // so the first real drawing event has t≈0 and playback doesn't
@@ -806,6 +807,15 @@ function TrimPhase({
     replayStart: 0,
   });
 
+  // Determine bg color from events
+  const eventBgColor = useMemo(() => {
+    let bg = DEFAULT_BG;
+    for (const evt of events) {
+      if (evt.type === 'bg') bg = evt.color || DEFAULT_BG;
+    }
+    return bg;
+  }, [events]);
+
   const redrawUpTo = useCallback(
     (targetTime: number) => {
       const canvas = canvasRef.current;
@@ -930,7 +940,7 @@ function TrimPhase({
         if (loopRef.current) {
           state.eventIdx = 0;
           state.replayStart = performance.now();
-          renderEventsToCanvas(ctx, [], { bgColor: DEFAULT_BG });
+          renderEventsToCanvas(ctx, [], { bgColor: eventBgColor });
           replayState.tool = '';
           replayState.color = '';
           replayState.size = 4;
@@ -951,7 +961,7 @@ function TrimPhase({
 
     animRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(animRef.current);
-  }, [playing, events, maxTime, redrawUpTo]);
+  }, [playing, events, maxTime, redrawUpTo, eventBgColor]);
 
   // Initialize: start playing from 0
   useEffect(() => {
@@ -959,13 +969,13 @@ function TrimPhase({
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    ctx.fillStyle = DEFAULT_BG;
+    ctx.fillStyle = eventBgColor;
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
     const state = stateRef.current;
     state.replayStart = performance.now();
     state.eventIdx = 0;
-  }, []);
+  }, [eventBgColor]);
 
   const scrubTo = useCallback(
     (targetTime: number) => {
@@ -1137,7 +1147,7 @@ function TrimPhase({
           width={CANVAS_W}
           height={CANVAS_H}
           className="w-full"
-          style={{ backgroundColor: DEFAULT_BG }}
+          style={{ backgroundColor: eventBgColor }}
         />
         <CursorOverlay cursorRef={cursorRef} />
       </div>
